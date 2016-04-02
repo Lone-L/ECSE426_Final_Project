@@ -18,11 +18,9 @@ void Temperature_Init(void);
 int start_Thread_TEMPERATURE(void);
 
 extern osThreadId tid_Thread_TEMPERATURE;
-
 extern ADC_HandleTypeDef ADC1_handle;
 
-
-
-#define TEMPERATURE_SIGNAL 0x0001
+#define TEMPERATURE_SIGNAL 0x0001	/* Signal from temperature sensor when new data is ready */
+#define NUCLEO_TEMP_SIGNAL 0x0002	/* Signal from Nucleo board when it wants to read temp data */
 
 #endif

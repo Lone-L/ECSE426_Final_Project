@@ -71,12 +71,33 @@ void HAL_SPI_MspInit(SPI_HandleTypeDef *hspi)
 		GPIO_InitStructure.Pin = NUCLEO_SPI_SCK_PIN;
 		HAL_GPIO_Init(NUCLEO_SPI_SCK_GPIO_PORT, &GPIO_InitStructure);
 
-		/* SPI  MOSI pin configuration */
+		/* SPI MOSI pin configuration */
 		GPIO_InitStructure.Pin =  NUCLEO_SPI_MOSI_PIN;
 		HAL_GPIO_Init(NUCLEO_SPI_MOSI_GPIO_PORT, &GPIO_InitStructure);
 
 		/* SPI MISO pin configuration */
 		GPIO_InitStructure.Pin = NUCLEO_SPI_MISO_PIN;
 		HAL_GPIO_Init(NUCLEO_SPI_MISO_GPIO_PORT, &GPIO_InitStructure);
+		
+		/* SPI CS pin configuration */
+		GPIO_InitStructure.Pin   = NUCLEO_SPI_CS_PIN;
+		GPIO_InitStructure.Mode  = GPIO_MODE_OUTPUT_PP;
+		GPIO_InitStructure.Speed = GPIO_SPEED_FREQ_MEDIUM;
+		HAL_GPIO_Init(NUCLEO_SPI_CS_GPIO_PORT, &GPIO_InitStructure);
+
+		/* Deselect : Chip Select high */
+//		HAL_GPIO_WritePin(NUCLEO_SPI_CS_GPIO_PORT, NUCLEO_SPI_CS_PIN, GPIO_PIN_SET);
+		
+		/* ACCEL_DATAREADY pin configuration */
+		GPIO_InitStructure.Pin = NUCLEO_SPI_ACCEL_DATAREADY_PIN;
+		HAL_GPIO_Init(NUCLEO_SPI_ACCEL_DATAREADY_PORT, &GPIO_InitStructure);
+		
+		/* TEMP_DATAREADY pin configuration */
+		GPIO_InitStructure.Pin = NUCLEO_SPI_TEMP_DATAREADY_PIN;
+		HAL_GPIO_Init(NUCLEO_SPI_TEMP_DATAREADY_PORT, &GPIO_InitStructure);
+		
+		/* DOUBLETAP pin configuration */
+		GPIO_InitStructure.Pin = NUCLEO_SPI_DOUBLETAP_PIN;
+		HAL_GPIO_Init(NUCLEO_SPI_DOUBLETAP_GPIO_PORT, &GPIO_InitStructure);
 	}
 }

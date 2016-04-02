@@ -48,3 +48,4 @@
 .\objects\accelerometer.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stddef.h
 .\objects\accelerometer.o: .\Headers\accelerometer.h
 .\objects\accelerometer.o: .\Headers\kalmanfilter.h
+.\objects\accelerometer.o: .\Headers\nucleo_spi.h

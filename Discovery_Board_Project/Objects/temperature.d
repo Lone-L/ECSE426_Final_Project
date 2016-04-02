@@ -46,3 +46,4 @@
 .\objects\temperature.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stddef.h
 .\objects\temperature.o: .\Headers\kalmanfilter.h
 .\objects\temperature.o: .\Headers\temperature.h
+.\objects\temperature.o: .\Headers\nucleo_spi.h

@@ -3,6 +3,7 @@
 #include "cmsis_os.h"                   // ARM::CMSIS:RTOS:Keil RTX
 #include "accelerometer.h"
 #include "kalmanfilter.h"
+#include "nucleo_spi.h"
 
 #include "stm32f4xx_hal.h"              // Keil::Device:STM32Cube HAL:Common
 #include "cmsis_os.h"                   // ARM::CMSIS:RTOS:Keil RTX
@@ -18,9 +19,15 @@ void Thread_ACCELEROMETER (void const *argument);                 // thread func
 osThreadId tid_Thread_ACCELEROMETER;                              // thread id
 osThreadDef(Thread_ACCELEROMETER, osPriorityAboveNormal, 1, 0);		  // thread definition struct (last argument default stack size)
 
+static void doubletap_timer_elapsed(const void *arg);
+osTimerDef(doubletap_timer, doubletap_timer_elapsed);
+
 /* Accelerometer mutex to protect shared flags */
 osMutexId accel_mutex;
 osMutexDef(accel_mutex);
+
+/* Which angle (roll/pitch) to read in a NUCLEO_ACCEL_SIGNAL, set by NucleoSPI module. */
+int angle_type;
 
 /**
   * @brief  Initialize the accelerometer.
@@ -124,7 +131,7 @@ static void Accelerometer_GetRollPitch(float ax, float ay, float az, float *pitc
 }
 
 /* Detects Double-Taps */
-static void Accelerometer_StateMachine(float accel_mag)
+static int Accelerometer_DetectDoubletap(float accel_mag)
 {
 	static int counter = 0;
 	static int peaks = 0;
@@ -132,17 +139,18 @@ static void Accelerometer_StateMachine(float accel_mag)
 	static int debug = 0;
 	
 	if (in_a_peak) {
-		if (accel_mag < 1.4) {
+		if (accel_mag < DOUBLETAP_THRESHOLD) {
 			++peaks;
 			in_a_peak = 0;
 			
 			if (peaks == 2) {
 				++debug;
 				printf("Double-tap: %d!\n", debug);
+				return 1;
 			}
 		}
 	} else {
-		if (accel_mag > 1.3)
+		if (accel_mag > DOUBLETAP_THRESHOLD)
 			in_a_peak = 1;
 	}
 	
@@ -153,6 +161,13 @@ static void Accelerometer_StateMachine(float accel_mag)
 		peaks = 0;
 		in_a_peak = 0;
 	}
+	
+	return 0;
+}
+
+static void doubletap_timer_elapsed(const void *arg)
+{
+	NucleoSPI_ResetDoubletap();
 }
 
 /**
@@ -191,22 +206,46 @@ void Thread_ACCELEROMETER (void const *argument)
 	float ax, ay, az;
 	float roll, pitch;
 	float filtered_roll, filtered_pitch;
+
+
+	osTimerId doubletap_timer_id;
+	osEvent evt;
 	
 	while(1)
 	{
-		/* Wait for accelerometer signal */
-		/* Should also wait for SPI signal for read request. No need to send data all the time. */
-		osSignalWait(ACCELEROMETER_SIGNAL, osWaitForever);
+		/* Wait for accelerometer new data signal or Nucleo board SPI signal for read request.
+		   No need to send data all the time. */
+		evt = osSignalWait(0x00, osWaitForever);	/* Waits for all signals */
 		
-		Accelerometer_ReadAccel(&ax, &ay, &az);
-		Accelerometer_Calibrate(&ax, &ay, &az);
-			
-		Accelerometer_GetRollPitch(ax, ay, az, &pitch, &roll);		
-		Kalmanfilter_asm(&pitch, &filtered_pitch, 1, &kstate_pitch);	/* filter the pitch angle */
-		Kalmanfilter_asm(&roll, &filtered_roll, 1, &kstate_roll);			/* filter the roll angle 	*/
-		
-		Accelerometer_StateMachine(sqrtf(ax * ax + ay * ay + az * az));
-		/* Add code to send filtered_pitch and filtered_roll to Nucleo Board via SPI. */
+		if (evt.status == osEventSignal) {
+			if (evt.value.signals == ACCELEROMETER_SIGNAL) {
+				Accelerometer_ReadAccel(&ax, &ay, &az);
+				Accelerometer_Calibrate(&ax, &ay, &az);
+					
+				Accelerometer_GetRollPitch(ax, ay, az, &pitch, &roll);		
+				Kalmanfilter_asm(&pitch, &filtered_pitch, 1, &kstate_pitch);	/* filter the pitch angle */
+				Kalmanfilter_asm(&roll, &filtered_roll, 1, &kstate_roll);			/* filter the roll angle 	*/
+				
+				if (Accelerometer_DetectDoubletap(sqrtf(ax * ax + ay * ay + az * az))) {
+					NucleoSPI_SetDoubletap();
+					
+					/* Use a pulsed interrupt. Reset the Doubletap pin after some time. */
+					doubletap_timer_id = osTimerCreate(osTimer(doubletap_timer), osTimerOnce, NULL);
+					osTimerStart(doubletap_timer_id, DOUBLETAP_TIMEOUT_MS);
+				}
+				
+				NucleoSPI_SetAccelDataready();
+			} else if (evt.value.signals == NUCLEO_ACCEL_SIGNAL) {
+				if (angle_type == ANGLE_TYPE_ROLL) {
+					NucleoSPI_SendFloatValue(filtered_roll);
+				} else if (angle_type == ANGLE_TYPE_PITCH) {
+					NucleoSPI_SendFloatValue(filtered_pitch);
+				}
+
+				/* Turn off Dataready pin after sent data. */
+				NucleoSPI_ResetAccelDataready();
+			}
+		}
 	}
 }
 	
