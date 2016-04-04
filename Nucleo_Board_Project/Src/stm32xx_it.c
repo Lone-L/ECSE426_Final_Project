@@ -41,6 +41,8 @@
 #include "stm32xx_it.h"
 #include "debug.h"
 
+#include "discovery_spi.h"
+
 /** @addtogroup X-CUBE-BLE1_Applications
  *  @{
  */
@@ -61,6 +63,8 @@ volatile uint32_t ms_counter = 0;
 volatile uint8_t button_event = 0;
 /* SPI handler declared in "main.c" file */
 extern SPI_HandleTypeDef SpiHandle;
+extern SPI_HandleTypeDef discovery_SpiHandle;
+
 /* Private function prototypes -----------------------------------------------*/
 /* Private functions ---------------------------------------------------------*/
 
@@ -147,16 +151,30 @@ void BNRG_SPI_EXTI_IRQHandler(void)
   HAL_GPIO_EXTI_IRQHandler(BNRG_SPI_EXTI_PIN);
 }
 
+void PUSH_BUTTON_EXTI_IRQHandler(void)
+{
+	HAL_GPIO_EXTI_IRQHandler(BUTTON_KEY);
+	button_event = 1;
+}
 
 /**
-  * @brief  This function handles the Push Button interrupt request.
+  * @brief  This function handles the DISCOVERY_SPI interrupt request.
   * @param  None
   * @retval None
   */
-void PUSH_BUTTON_EXTI_IRQHandler(void)
+void DISCOVERY_SPI_IRQHandler(void)
 {
-  HAL_GPIO_EXTI_IRQHandler(KEY_BUTTON_PIN);
-  button_event = 1;
+	HAL_SPI_IRQHandler(&discovery_SpiHandle);
+}
+
+/**
+  * @brief  This function handles the Double-Tap interrupt request.
+  * @param  None
+  * @retval None
+  */
+void DISCOVERY_SPI_DOUBLETAP_EXTI_IRQHandler(void)
+{
+  HAL_GPIO_EXTI_IRQHandler(DISCOVERY_SPI_DOUBLETAP_PIN);
 }
 
 /******************************************************************************/

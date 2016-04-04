@@ -19,7 +19,6 @@ extern int angle_type;
 
 /* SIGNALS used to resume thread */
 #define ACCELEROMETER_SIGNAL 0x0001		/* Accelerometer has new data */
-#define NUCLEO_ACCEL_SIGNAL	 0x0002		/* Nucleo board wants to read data */
 
 /* Angle types */
 #define ANGLE_TYPE_ROLL		0

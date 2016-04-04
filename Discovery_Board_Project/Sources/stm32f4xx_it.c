@@ -213,16 +213,6 @@ void ADC_IRQHandler(void)
 }
 
 /**
-  * @brief  This function handles SPI2 interrupt request.
-  * @param  None
-  * @retval None
-  */
-void SPI2_IRQHandler(void)
-{
-	HAL_SPI_IRQHandler(&nucleo_SpiHandle);
-}
-
-/**
   * @}
   */ 
 

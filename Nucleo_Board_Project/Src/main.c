@@ -47,6 +47,10 @@
 #include "stm32_bluenrg_ble.h"
 #include "bluenrg_utils.h"
 
+#include "accelerometer.h"
+#include "temperature.h"
+#include "discovery_spi.h"
+
 #include <string.h>
 #include <stdio.h>
 
@@ -155,7 +159,7 @@ int main(void)
 
   /* Initialize the BlueNRG SPI driver */
   BNRG_SPI_Init();
-  
+
   /* Initialize the BlueNRG HCI */
   HCI_Init();
 
@@ -274,12 +278,18 @@ int main(void)
   /* Set output power level */
   ret = aci_hal_set_tx_power_level(1,4);
 
+	/* Initialize SPI communication with Discovery board */
+	DiscoverySPI_Init();
+	
   while(1)
   {
     HCI_Process();
+		Accelerometer_Process();
+		Temperature_Process();
     User_Process(&axes_data);
 #if NEW_SERVICES
     Update_Time_Characteristics();
+		
 #endif
   }
 }
@@ -299,9 +309,9 @@ void User_Process(AxesRaw_t* p_axes)
   }  
 
   /* Check if the user has pushed the button */
-  if(BSP_PB_GetState(BUTTON_KEY) == RESET)
-  {
-    while (BSP_PB_GetState(BUTTON_KEY) == RESET);
+//  if(BSP_PB_GetState(BUTTON_KEY) == RESET)
+ // {
+//    while (BSP_PB_GetState(BUTTON_KEY) == RESET);
     
     //BSP_LED_Toggle(LED2); //used for debugging (BSP_LED_Init() above must be also enabled)
     
@@ -312,9 +322,9 @@ void User_Process(AxesRaw_t* p_axes)
       p_axes->AXIS_Y -= 1;
       p_axes->AXIS_Z += 2;
       //PRINTF("ACC: X=%6d Y=%6d Z=%6d\r\n", p_axes->AXIS_X, p_axes->AXIS_Y, p_axes->AXIS_Z);
-      Acc_Update(p_axes);
+//      Acc_Update(p_axes);
     }
-  }
+//  }
 }
 
 /**

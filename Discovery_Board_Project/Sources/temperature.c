@@ -21,36 +21,28 @@ void Thread_TEMPERATURE(const void *argument)
 	float temperature = 0, filtered_temp = 0;
 	KalmanState kstate = {0.01, 0.3, 0.0, 0.1, 0.0};
 
-	osEvent evt;
 	HAL_StatusTypeDef rc;
 
 	while (1) {
-		/* Wait for temperature new data signal or Nucleo board SPI signal for read request.
-		   No need to send data all the time. */
-		evt = osSignalWait(0x00, osWaitForever);	/* Waits for all signals */
+		/* Wait for temperature new data signal. */
+		osSignalWait(TEMPERATURE_SIGNAL, osWaitForever);
+	
+		rc = HAL_ADC_PollForConversion(&ADC1_handle, 1);
 		
-		if (evt.status == osEventSignal) {
-			if (evt.value.signals == TEMPERATURE_SIGNAL) {			
-				rc = HAL_ADC_PollForConversion(&ADC1_handle, 1);
-				
-				if (rc != HAL_OK) {
-					printf("not okay :(\n");
-					continue;
-					/* what should you do about it?? */
-				}
-				
-				v_sense = HAL_ADC_GetValue(&ADC1_handle);	/* Read register from the ADC */
-				
-				tempinvolts = (float) v_sense * (V_REF / 4096);	/* Scale the reading into V (resolution is 12bits with VREF+ = 3.3V) */
-				temperature = (float) (tempinvolts - V_25) / AVG_SLOPE + TEMP_REF;	/* Formula for temperature from doc_05 p.230 */
-				
-				Kalmanfilter_asm(&temperature, &filtered_temp, 1, &kstate);
-				NucleoSPI_SetTempDataready();
-			} else if (evt.value.signals == NUCLEO_TEMP_SIGNAL) {
-				NucleoSPI_SendFloatValue(filtered_temp);
-				NucleoSPI_ResetTempDataready();
-			}
+		if (rc != HAL_OK) {
+			printf("not okay :(\n");
+			continue;
+			/* what should you do about it?? */
 		}
+		
+		v_sense = HAL_ADC_GetValue(&ADC1_handle);	/* Read register from the ADC */
+		
+		tempinvolts = (float) v_sense * (V_REF / 4096);	/* Scale the reading into V (resolution is 12bits with VREF+ = 3.3V) */
+		temperature = (float) (tempinvolts - V_25) / AVG_SLOPE + TEMP_REF;	/* Formula for temperature from doc_05 p.230 */
+		
+		Kalmanfilter_asm(&temperature, &filtered_temp, 1, &kstate);
+		
+		NucleoSPI_SendFloatValue(NUCLEO_SPI_TEMP_TYPE, 12.1);
 	}
 }
 

@@ -21,28 +21,23 @@ Target DLL:      STLink\ST-LINKIII-KEIL_SWO.dll V2.0.15.0_KEIL
 Dialog DLL:      TCM.DLL V1.14.5.0
  
 <h2>Project:</h2>
-\\campus.mcgill.ca\EMF\ELE\gsavad\My Documents\Microprocessor Systems\ECSE426_Final_Project\BLE_SampleProject\BLE_SampleProject.uvprojx
-Project File Date:  03/31/2016
+\\campus.mcgill.ca\EMF\ELE\gsavad\My Documents\Microprocessor Systems\ECSE426_Final_Project\Nucleo_Board_Project\BLE_SampleProject.uvprojx
+Project File Date:  04/02/2016
 
 <h2>Output:</h2>
 *** Using Compiler 'V5.05 update 2 (build 169)', folder: 'C:\Keil_v5\ARM\ARMCC\Bin'
 Build target 'Application'
-compiling bluenrg_interface.c...
-compiling clock.c...
-compiling cube_hal_f4.c...
-compiling stm32xx_it.c...
-compiling main.c...
-compiling sensor_service.c...
-compiling hci.c...
-BLE\STM32_BlueNRG\SimpleBlueNRG_HCI\hci\hci.c(178): warning:  #223-D: function "Hal_Write_Serial" declared implicitly
-    Hal_Write_Serial(data1, data2, n_bytes1, n_bytes2);
-BLE\STM32_BlueNRG\SimpleBlueNRG_HCI\hci\hci.c: 1 warning, 0 errors
-compiling bluenrg_utils_small.c...
-compiling stm32f4xx_nucleo.c...
-compiling stm32_bluenrg_ble.c...
+compiling temperature.c...
+.\Inc\discovery_spi.h(11): warning:  #1295-D: Deprecated declaration DiscoverySPI_ReadFloatValue - give arg types
+  float DiscoverySPI_ReadFloatValue();
+Src\temperature.c: 1 warning, 0 errors
+compiling accelerometer.c...
+.\Inc\discovery_spi.h(11): warning:  #1295-D: Deprecated declaration DiscoverySPI_ReadFloatValue - give arg types
+  float DiscoverySPI_ReadFloatValue();
+Src\accelerometer.c: 1 warning, 0 errors
 linking...
-Program Size: Code=17536 RO-data=768 RW-data=108 ZI-data=2916  
-".\Objects\BLE_SampleProject.axf" - 0 Error(s), 1 Warning(s).
+Program Size: Code=18472 RO-data=768 RW-data=140 ZI-data=3004  
+".\Objects\BLE_SampleProject.axf" - 0 Error(s), 2 Warning(s).
 
 <h2>Software Packages used:</h2>
 
@@ -53,7 +48,7 @@ Package Vendor: Keil
    * Component: STDOUT Variant: ITM Version: 1.0.0
 
 <h2>Collection of Component include folders:</h2>
-  \\campus.mcgill.ca\EMF\ELE\gsavad\My Documents\Microprocessor Systems\ECSE426_Final_Project\BLE_SampleProject\RTE
+  \\campus.mcgill.ca\EMF\ELE\gsavad\My Documents\Microprocessor Systems\ECSE426_Final_Project\Nucleo_Board_Project\RTE
   C:\Keil_v5\ARM\PACK\Keil\STM32F4xx_DFP\2.7.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include
 
 <h2>Collection of Component Files used:</h2>
