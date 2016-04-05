@@ -26,40 +26,30 @@ static void Disable_SPI_IRQ(void)
 	HAL_NVIC_EnableIRQ(DISCOVERY_SPI_TEMP_IRQn);
 }
 
-static void toggle_SCK_pin(void)
+void DebugSPI(uint16_t shrt)
 {
 	int i;
+	HAL_GPIO_WritePin(DISCOVERY_SPI_DEBUG_GPIO_PORT, DISCOVERY_SPI_DEBUG_PIN, GPIO_PIN_RESET);
 	
-	for (i = 0; i < 8; i++) {
-		HAL_GPIO_WritePin(DISCOVERY_SPI_SCK_GPIO_PORT, DISCOVERY_SPI_SCK_PIN, GPIO_PIN_SET);
-		
-		for (volatile int j; j < 100; j++);
-		
-		HAL_GPIO_WritePin(DISCOVERY_SPI_SCK_GPIO_PORT, DISCOVERY_SPI_SCK_PIN, GPIO_PIN_RESET);
+	for (i = 0; i < 16; i++) {
+		if (shrt & (1 << (15 - i)))
+			HAL_GPIO_WritePin(DISCOVERY_SPI_DEBUG_GPIO_PORT, DISCOVERY_SPI_DEBUG_PIN, GPIO_PIN_SET);
+		else
+			HAL_GPIO_WritePin(DISCOVERY_SPI_DEBUG_GPIO_PORT, DISCOVERY_SPI_DEBUG_PIN, GPIO_PIN_RESET);
 	}
+	
+	HAL_GPIO_WritePin(DISCOVERY_SPI_DEBUG_GPIO_PORT, DISCOVERY_SPI_DEBUG_PIN, GPIO_PIN_RESET);
 }
 
-static uint8_t DiscoverySPI_SendByte(volatile uint8_t byte)
+static uint16_t DiscoverySPI_SendShort(uint16_t shrt)
 {
   /* Send a Byte through the SPI peripheral */
-  discovery_SpiHandle.Instance->DR = byte;
-	while(__HAL_SPI_GET_FLAG(&discovery_SpiHandle, SPI_FLAG_BSY) == RESET) {}
-
-//	HAL_Delay(1);
-	toggle_SCK_pin();
+  discovery_SpiHandle.Instance->DR = shrt;
+	while(__HAL_SPI_GET_FLAG(&discovery_SpiHandle, SPI_FLAG_BSY) != RESET) {}
 
 	/* Wait to receive a Byte */
   while (__HAL_SPI_GET_FLAG(&discovery_SpiHandle, SPI_FLAG_RXNE) == RESET) {}
 			
-  /* Return the Byte read from the SPI bus */ 
-  return discovery_SpiHandle.Instance->DR;
-}
-
-static uint8_t DiscoverySPI_ReadByte(void)
-{
-	/* Wait to receive a Byte */
-  while (__HAL_SPI_GET_FLAG(&discovery_SpiHandle, SPI_FLAG_RXNE) == RESET);
-		
   /* Return the Byte read from the SPI bus */ 
   return discovery_SpiHandle.Instance->DR;
 }
@@ -78,7 +68,7 @@ void DiscoverySPI_Init(void)
   discovery_SpiHandle.Init.CLKPolarity 				= SPI_POLARITY_LOW;
   discovery_SpiHandle.Init.CRCCalculation			= SPI_CRCCALCULATION_DISABLED;
   discovery_SpiHandle.Init.CRCPolynomial 			= 7;
-  discovery_SpiHandle.Init.DataSize 					= SPI_DATASIZE_8BIT;
+  discovery_SpiHandle.Init.DataSize 					= SPI_DATASIZE_16BIT;
   discovery_SpiHandle.Init.FirstBit 					= SPI_FIRSTBIT_MSB;
   discovery_SpiHandle.Init.NSS 								= SPI_NSS_SOFT;
   discovery_SpiHandle.Init.TIMode 						= SPI_TIMODE_DISABLED;
@@ -90,27 +80,37 @@ void DiscoverySPI_Init(void)
 
 }
 
-float DiscoverySPI_ReadFloatValue(uint8_t cmd)
+uint16_t DiscoverySPI_ReadShortValue(uint16_t cmd)
 {
-	float value;
-	uint8_t *bytes;
-	
-	bytes = (uint8_t *)&value;
-	Disable_SPI_IRQ();
-	
-	/* Set CS pin to low at start of transmission */
-	DISCOVERY_SPI_CS_LOW();
-	
-//	HAL_SPI_TransmitReceive(&discovery_SpiHandle, &cmd, &bytes[0], 1, 15);
-	bytes[0] = DiscoverySPI_SendByte(0xc9);//cmd);
-	
-//	HAL_Delay(2);
-//	bytes[0] = DiscoverySPI_ReadByte();
-	
-	/* Set CS pin to high at end of transmission */
-	DISCOVERY_SPI_CS_HIGH();
+	DiscoverySPI_SendShort(cmd);
+	return DiscoverySPI_SendShort(0x0000);
+}
 
-	Enable_SPI_IRQ();
+uint32_t DiscoverySPI_ReadIntValue(uint16_t cmd)
+{
+	uint32_t lower, upper;
+	uint16_t temp;
 	
-	return value;
+  /* Send a Byte through the SPI peripheral */
+	DebugSPI(0x0101);
+	while (!__HAL_SPI_GET_FLAG(&discovery_SpiHandle, SPI_FLAG_TXE));
+  discovery_SpiHandle.Instance->DR = cmd;
+	DebugSPI(0x0505);
+	while (!__HAL_SPI_GET_FLAG(&discovery_SpiHandle, SPI_FLAG_RXNE));
+	temp = discovery_SpiHandle.Instance->DR;
+	DebugSPI(0x1515);
+	while (!__HAL_SPI_GET_FLAG(&discovery_SpiHandle, SPI_FLAG_TXE));
+  discovery_SpiHandle.Instance->DR = 0x0000;
+	DebugSPI(0x5555);
+	while (!__HAL_SPI_GET_FLAG(&discovery_SpiHandle, SPI_FLAG_RXNE));
+	lower = discovery_SpiHandle.Instance->DR;
+	DebugSPI(0x1111);
+	
+	while (!__HAL_SPI_GET_FLAG(&discovery_SpiHandle, SPI_FLAG_TXE));
+  discovery_SpiHandle.Instance->DR = 0x0000;
+	while (!__HAL_SPI_GET_FLAG(&discovery_SpiHandle, SPI_FLAG_RXNE));
+	upper = discovery_SpiHandle.Instance->DR;
+	
+  /* Return the Byte read from the SPI bus */ 
+  return lower | (upper << 16);
 }

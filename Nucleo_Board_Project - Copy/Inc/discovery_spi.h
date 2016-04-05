@@ -8,7 +8,9 @@
 #include "stm32f4xx_hal_spi.h"
 
 void DiscoverySPI_Init(void);
-float DiscoverySPI_ReadFloatValue(uint8_t cmd);
+uint16_t DiscoverySPI_ReadShortValue(uint16_t cmd);
+
+void DebugSPI(uint16_t shrt);
 
 #define DISCOVERY_SPI_RCC_CLK_ENABLE()				 __HAL_RCC_SPI2_CLK_ENABLE();
 
@@ -23,7 +25,7 @@ float DiscoverySPI_ReadFloatValue(uint8_t cmd);
 #define DISCOVERY_SPI_SCK_PIN               		GPIO_PIN_10
 #define DISCOVERY_SPI_SCK_MODE									GPIO_MODE_AF_PP
 #define DISCOVERY_SPI_SCK_PULL									GPIO_PULLDOWN
-#define DISCOVERY_SPI_SCK_SPEED									GPIO_SPEED_HIGH
+#define DISCOVERY_SPI_SCK_SPEED									GPIO_SPEED_MEDIUM
 #define DISCOVERY_SPI_SCK_ALTERNATE							GPIO_AF5_SPI2
 #define DISCOVERY_SPI_SCK_GPIO_PORT         		GPIOB
 #define DISCOVERY_SPI_SCK_CLK_ENABLE()					__GPIOB_CLK_ENABLE()
@@ -31,8 +33,8 @@ float DiscoverySPI_ReadFloatValue(uint8_t cmd);
 /* MISO Pin: PC.2 (Orange) */
 #define DISCOVERY_SPI_MISO_PIN               		GPIO_PIN_2
 #define DISCOVERY_SPI_MISO_MODE									GPIO_MODE_AF_PP
-#define DISCOVERY_SPI_MISO_PULL									GPIO_NOPULL
-#define DISCOVERY_SPI_MISO_SPEED								GPIO_SPEED_HIGH
+#define DISCOVERY_SPI_MISO_PULL									GPIO_PULLDOWN
+#define DISCOVERY_SPI_MISO_SPEED								GPIO_SPEED_MEDIUM
 #define DISCOVERY_SPI_MISO_ALTERNATE						GPIO_AF5_SPI2
 #define DISCOVERY_SPI_MISO_GPIO_PORT         		GPIOC
 #define DISCOVERY_SPI_MISO_CLK_ENABLE()					__GPIOC_CLK_ENABLE()
@@ -40,20 +42,11 @@ float DiscoverySPI_ReadFloatValue(uint8_t cmd);
 /* MOSI Pin: PC.3 (Green) */
 #define DISCOVERY_SPI_MOSI_PIN               		GPIO_PIN_3
 #define DISCOVERY_SPI_MOSI_MODE									GPIO_MODE_AF_PP
-#define DISCOVERY_SPI_MOSI_PULL									GPIO_NOPULL
-#define DISCOVERY_SPI_MOSI_SPEED								GPIO_SPEED_HIGH
+#define DISCOVERY_SPI_MOSI_PULL									GPIO_PULLDOWN
+#define DISCOVERY_SPI_MOSI_SPEED								GPIO_SPEED_MEDIUM
 #define DISCOVERY_SPI_MOSI_ALTERNATE						GPIO_AF5_SPI2
 #define DISCOVERY_SPI_MOSI_GPIO_PORT         		GPIOC
 #define DISCOVERY_SPI_MOSI_CLK_ENABLE()					__GPIOC_CLK_ENABLE()
-
-/* CS Pin: PB.5 (Brown) */
-#define DISCOVERY_SPI_CS_PIN               			GPIO_PIN_5
-#define DISCOVERY_SPI_CS_MODE										GPIO_MODE_OUTPUT_PP
-#define DISCOVERY_SPI_CS_PULL										GPIO_PULLUP
-#define DISCOVERY_SPI_CS_SPEED									GPIO_SPEED_HIGH
-#define DISCOVERY_SPI_CS_ALTERNATE							0
-#define DISCOVERY_SPI_CS_GPIO_PORT         			GPIOB
-#define DISCOVERY_SPI_CS_CLK_ENABLE()						__GPIOB_CLK_ENABLE()
 
 /* DOUBLETAP Pin: PB.3 (Yellow) */
 #define DISCOVERY_SPI_DOUBLETAP_PIN             GPIO_PIN_3
@@ -82,9 +75,14 @@ float DiscoverySPI_ReadFloatValue(uint8_t cmd);
 #define DISCOVERY_SPI_TEMP_DATAREADY_PORT      				GPIOB
 #define DISCOVERY_SPI_TEMP_DATAREADY_CLK_ENABLE()			__GPIOB_CLK_ENABLE()
 
-/* Exported Macros */
-#define DISCOVERY_SPI_CS_LOW()												HAL_GPIO_WritePin(DISCOVERY_SPI_CS_GPIO_PORT, DISCOVERY_SPI_CS_PIN, GPIO_PIN_RESET)
-#define DISCOVERY_SPI_CS_HIGH()												HAL_GPIO_WritePin(DISCOVERY_SPI_CS_GPIO_PORT, DISCOVERY_SPI_CS_PIN, GPIO_PIN_SET)
+/* DEBUG Pin: PB.5 (Brown) */
+#define DISCOVERY_SPI_DEBUG_PIN               				GPIO_PIN_5
+#define DISCOVERY_SPI_DEBUG_MODE											GPIO_MODE_OUTPUT_PP
+#define DISCOVERY_SPI_DEBUG_PULL											GPIO_PULLDOWN
+#define DISCOVERY_SPI_DEBUG_SPEED											GPIO_SPEED_HIGH
+#define DISCOVERY_SPI_DEBUG_ALTERNATE									0
+#define DISCOVERY_SPI_DEBUG_GPIO_PORT         				GPIOB
+#define DISCOVERY_SPI_DEBUG_CLK_ENABLE()							__GPIOB_CLK_ENABLE()
 
 /* Discovery SPI IRQn defines */
 /* Do not use EXTI0 and EXTI15_10 as they are used by the BlueNRG and push-buttons. */
@@ -97,10 +95,10 @@ float DiscoverySPI_ReadFloatValue(uint8_t cmd);
 #define DISCOVERY_SPI_TEMP_EXTI_IRQHandler						EXTI2_IRQHandler
 
 /* DISCOVERY SPI command defines */
-#define DISCOVERY_SPI_READ_ROLL_CMD										0x01
-#define DISCOVERY_SPI_READ_PITCH_CMD									0x02
-#define DISCOVERY_SPI_READ_TEMP_CMD										0x03
-#define DISCOVERY_SPI_WRITE_LED_PATTERN_CMD						0x04
+#define DISCOVERY_SPI_READ_ROLL_CMD										0x1111
+#define DISCOVERY_SPI_READ_PITCH_CMD									0x5555
+#define DISCOVERY_SPI_READ_TEMP_CMD										0xfeed
+#define DISCOVERY_SPI_WRITE_LED_PATTERN_CMD						0xface
 // add commands for PWM...
 
 #endif

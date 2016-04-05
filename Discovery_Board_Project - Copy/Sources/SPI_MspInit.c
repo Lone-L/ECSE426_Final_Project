@@ -65,7 +65,7 @@ void HAL_SPI_MspInit(SPI_HandleTypeDef *hspi)
 		
 		GPIO_InitStructure.Mode  = GPIO_MODE_AF_PP;
 		GPIO_InitStructure.Pull  = GPIO_PULLDOWN;
-		GPIO_InitStructure.Speed = GPIO_SPEED_LOW;
+		GPIO_InitStructure.Speed = GPIO_SPEED_MEDIUM;
 		GPIO_InitStructure.Alternate = GPIO_AF5_SPI2;
 
 		/* SPI SCK pin configuration */
@@ -79,12 +79,6 @@ void HAL_SPI_MspInit(SPI_HandleTypeDef *hspi)
 		/* SPI MISO pin configuration */
 		GPIO_InitStructure.Pin = NUCLEO_SPI_MISO_PIN;
 		HAL_GPIO_Init(NUCLEO_SPI_MISO_GPIO_PORT, &GPIO_InitStructure);
-		
-		/* SPI CS pin configuration */
-		GPIO_InitStructure.Pin   = NUCLEO_SPI_CS_PIN;
-		GPIO_InitStructure.Mode  = GPIO_MODE_INPUT;	/* We are slave */
-		GPIO_InitStructure.Speed = GPIO_SPEED_FREQ_MEDIUM;
-		HAL_GPIO_Init(NUCLEO_SPI_CS_GPIO_PORT, &GPIO_InitStructure);
 		
 		/* ACCEL_DATAREADY pin configuration */
 		GPIO_InitStructure.Mode = GPIO_MODE_OUTPUT_PP;

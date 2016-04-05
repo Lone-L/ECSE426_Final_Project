@@ -34,7 +34,8 @@ uint32_t HAL_GetTick(void) {
 /**
   * System Clock Configuration
   */
-void SystemClock_Config(void) {
+void SystemClock_Config(void)
+{
   RCC_OscInitTypeDef RCC_OscInitStruct;
   RCC_ClkInitTypeDef RCC_ClkInitStruct;
 

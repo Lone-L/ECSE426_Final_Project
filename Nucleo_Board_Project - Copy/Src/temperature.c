@@ -23,7 +23,8 @@ void Temperature_Process(void)
 	float temperature;
 	
 	if (Temperature_IsDataReady()) {
-		temperature = DiscoverySPI_ReadFloatValue(DISCOVERY_SPI_READ_TEMP_CMD);
-		printf("Temperature: %f\n", temperature);
+		uint8_t byte;
+//		byte = DiscoverySPI_ReadByteValue(DISCOVERY_SPI_READ_TEMP_CMD);
+//		DebugSPI(byte);
 	}
 }

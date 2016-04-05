@@ -18,8 +18,8 @@ extern int angle_type;
 #define DOUBLETAP_THRESHOLD		((float)1.4)
 
 /* SIGNALS used to resume thread */
-#define ACCELEROMETER_SIGNAL 0x0001		/* Accelerometer has new data */
-#define NUCLEO_ACCEL_SIGNAL	 0x0002		/* Nucleo board wants to read data */
+#define ACCELEROMETER_SIGNAL								0x0001		/* Accelerometer has new data */
+#define NUCLEO_ACCEL_SIGNAL	 								0x0002		/* Nucleo board wants to read data */
 
 /* Angle types */
 #define ANGLE_TYPE_ROLL		0

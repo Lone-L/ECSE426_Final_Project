@@ -21,19 +21,23 @@ Target DLL:      STLink\ST-LINKIII-KEIL_SWO.dll V2.0.15.0_KEIL
 Dialog DLL:      TCM.DLL V1.14.5.0
  
 <h2>Project:</h2>
-\\campus.mcgill.ca\EMF\ELE\gsavad\My Documents\Microprocessor Systems\ECSE426_Final_Project\Nucleo_Board_Project\BLE_SampleProject.uvprojx
+\\campus.mcgill.ca\EMF\ELE\gsavad\My Documents\Microprocessor Systems\ECSE426_Final_Project\Nucleo_Board_Project - Copy\BLE_SampleProject.uvprojx
 Project File Date:  04/02/2016
 
 <h2>Output:</h2>
 *** Using Compiler 'V5.05 update 2 (build 169)', folder: 'C:\Keil_v5\ARM\ARMCC\Bin'
 Build target 'Application'
 compiling discovery_spi.c...
-Src\discovery_spi.c(58): warning:  #177-D: function "DiscoverySPI_ReadByte" was declared but never referenced
-  static uint8_t DiscoverySPI_ReadByte(void)
-Src\discovery_spi.c: 1 warning, 0 errors
+Src\discovery_spi.c(92): warning:  #550-D: variable "temp" was set but never used
+        uint16_t temp;
+Src\discovery_spi.c(10): warning:  #177-D: function "Enable_SPI_IRQ" was declared but never referenced
+  static void Enable_SPI_IRQ(void)
+Src\discovery_spi.c(22): warning:  #177-D: function "Disable_SPI_IRQ" was declared but never referenced
+  static void Disable_SPI_IRQ(void)
+Src\discovery_spi.c: 3 warnings, 0 errors
 linking...
-Program Size: Code=22228 RO-data=944 RW-data=120 ZI-data=3000  
-".\Objects\BLE_SampleProject.axf" - 0 Error(s), 1 Warning(s).
+Program Size: Code=18324 RO-data=768 RW-data=120 ZI-data=3000  
+".\Objects\BLE_SampleProject.axf" - 0 Error(s), 3 Warning(s).
 
 <h2>Software Packages used:</h2>
 
@@ -44,7 +48,7 @@ Package Vendor: Keil
    * Component: STDOUT Variant: ITM Version: 1.0.0
 
 <h2>Collection of Component include folders:</h2>
-  \\campus.mcgill.ca\EMF\ELE\gsavad\My Documents\Microprocessor Systems\ECSE426_Final_Project\Nucleo_Board_Project\RTE
+  \\campus.mcgill.ca\EMF\ELE\gsavad\My Documents\Microprocessor Systems\ECSE426_Final_Project\Nucleo_Board_Project - Copy\RTE
   C:\Keil_v5\ARM\PACK\Keil\STM32F4xx_DFP\2.7.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include
 
 <h2>Collection of Component Files used:</h2>

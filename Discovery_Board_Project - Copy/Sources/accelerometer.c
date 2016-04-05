@@ -221,6 +221,7 @@ void Thread_ACCELEROMETER (void const *argument)
 		
 		if (evt.status == osEventSignal) {
 			if (evt.value.signals == ACCELEROMETER_SIGNAL) {
+				printf("accelerometer_signal\n");
 				Accelerometer_ReadAccel(&ax, &ay, &az);
 				Accelerometer_Calibrate(&ax, &ay, &az);
 					
@@ -238,12 +239,11 @@ void Thread_ACCELEROMETER (void const *argument)
 				NucleoSPI_SetAccelDataready();
 			} else if (evt.value.signals == NUCLEO_ACCEL_SIGNAL) {
 				if (angle_type == ANGLE_TYPE_ROLL) {
-					NucleoSPI_SendFloatValue(filtered_roll);
+					NucleoSPI_SendInt(0xdeadbeef);
 				} else if (angle_type == ANGLE_TYPE_PITCH) {
-					NucleoSPI_SendFloatValue(filtered_pitch);
+					NucleoSPI_SendInt(0xcafebabe);
 				}
-
-				/* Turn off Dataready pin after sent data. */
+				
 				NucleoSPI_ResetAccelDataready();
 			}
 		}

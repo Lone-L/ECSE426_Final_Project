@@ -41,6 +41,7 @@
 #include "main.h"
 #include "stm32f4xx_it.h"
 #include "temperature.h"
+#include "nucleo_spi.h"
 
 /** @addtogroup STM32F4xx_HAL_Examples
   * @{
@@ -219,7 +220,8 @@ void ADC_IRQHandler(void)
   */
 void SPI2_IRQHandler(void)
 {
-	HAL_SPI_IRQHandler(&nucleo_SpiHandle);
+	NucleoSPI_RxISR(&nucleo_SpiHandle);
+//	HAL_SPI_IRQHandler(&nucleo_SpiHandle);
 }
 
 /**
