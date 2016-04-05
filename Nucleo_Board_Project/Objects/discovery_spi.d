@@ -29,5 +29,3 @@
 .\objects\discovery_spi.o: .\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_pwr.h
 .\objects\discovery_spi.o: .\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_pwr_ex.h
 .\objects\discovery_spi.o: .\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_spi.h
-.\objects\discovery_spi.o: .\Inc\accelerometer.h
-.\objects\discovery_spi.o: .\Inc\temperature.h

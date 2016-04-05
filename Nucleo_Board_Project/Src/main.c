@@ -132,7 +132,7 @@ int main(void)
   uint8_t  hwVersion;
   uint16_t fwVersion;
   
-  int ret; 
+  int ret;  
   
   /* STM32Cube HAL library initialization:
    *  - Configure the Flash prefetch, Flash preread and Buffer caches

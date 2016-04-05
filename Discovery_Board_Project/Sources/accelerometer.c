@@ -209,30 +209,36 @@ void Thread_ACCELEROMETER (void const *argument)
 	float filtered_roll, filtered_pitch;
 
 	osTimerId doubletap_timer_id;
+	osEvent evt;
 	
 	doubletap_timer_id = osTimerCreate(osTimer(doubletap_timer), osTimerOnce, NULL);
 	
 	while(1)
 	{
-		/* Wait for accelerometer new data signal. */
-		osSignalWait(ACCELEROMETER_SIGNAL, osWaitForever);
+		/* Wait for accelerometer new data signal or Nucleo board SPI signal for read request.
+		   No need to send data all the time. */
+		evt = osSignalWait(0x00, osWaitForever);	/* Waits for all signals */
+		
+		if (evt.status == osEventSignal) {
+			if (evt.value.signals == ACCELEROMETER_SIGNAL) {
+				printf("accelerometer_signal\n");
+				Accelerometer_ReadAccel(&ax, &ay, &az);
+				Accelerometer_Calibrate(&ax, &ay, &az);
+					
+				Accelerometer_GetRollPitch(ax, ay, az, &pitch, &roll);		
+				Kalmanfilter_asm(&pitch, &filtered_pitch, 1, &kstate_pitch);	/* filter the pitch angle */
+				Kalmanfilter_asm(&roll, &filtered_roll, 1, &kstate_roll);			/* filter the roll angle 	*/
+				
+				if (Accelerometer_DetectDoubletap(sqrtf(ax * ax + ay * ay + az * az))) {
+					NucleoSPI_SetDoubletap();
+					
+					/* Use a pulsed interrupt. Reset the Doubletap pin after some time. */
+					osTimerStart(doubletap_timer_id, DOUBLETAP_TIMEOUT_MS);
+				}
 
-		Accelerometer_ReadAccel(&ax, &ay, &az);
-		Accelerometer_Calibrate(&ax, &ay, &az);
-			
-		Accelerometer_GetRollPitch(ax, ay, az, &pitch, &roll);		
-		Kalmanfilter_asm(&pitch, &filtered_pitch, 1, &kstate_pitch);	/* filter the pitch angle */
-		Kalmanfilter_asm(&roll, &filtered_roll, 1, &kstate_roll);			/* filter the roll angle 	*/
-		
-		if (Accelerometer_DetectDoubletap(sqrtf(ax * ax + ay * ay + az * az))) {
-			NucleoSPI_SetDoubletap();
-			
-			/* Use a pulsed interrupt. Reset the Doubletap pin after some time. */
-			osTimerStart(doubletap_timer_id, DOUBLETAP_TIMEOUT_MS);
+				NucleoSPI_SetAccelDataready();
+			}
 		}
-		
-		NucleoSPI_SendFloatValue(NUCLEO_SPI_ACCEL_ROLL_TYPE, 0.5);
-		NucleoSPI_SendFloatValue(NUCLEO_SPI_ACCEL_PITCH_TYPE, 1.9);
 	}
 }
 	

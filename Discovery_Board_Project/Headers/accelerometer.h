@@ -18,11 +18,7 @@ extern int angle_type;
 #define DOUBLETAP_THRESHOLD		((float)1.4)
 
 /* SIGNALS used to resume thread */
-#define ACCELEROMETER_SIGNAL 0x0001		/* Accelerometer has new data */
-
-/* Angle types */
-#define ANGLE_TYPE_ROLL		0
-#define ANGLE_TYPE_PITCH	1
+#define ACCELEROMETER_SIGNAL								0x0001		/* Accelerometer has new data */
 
 /* Milliseconds to keep doubletap pin high upon detection. */
 #define DOUBLETAP_TIMEOUT_MS	1

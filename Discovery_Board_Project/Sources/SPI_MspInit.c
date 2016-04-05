@@ -60,12 +60,12 @@ void HAL_SPI_MspInit(SPI_HandleTypeDef *hspi)
 		__SPI2_CLK_ENABLE();
 
 		/* Enable SCK, MOSI and MISO GPIO clocks */
-		__GPIOB_CLK_ENABLE();
 		__GPIOC_CLK_ENABLE();
-
+		__GPIOB_CLK_ENABLE();
+		
 		GPIO_InitStructure.Mode  = GPIO_MODE_AF_PP;
 		GPIO_InitStructure.Pull  = GPIO_PULLDOWN;
-		GPIO_InitStructure.Speed = GPIO_SPEED_FREQ_MEDIUM;
+		GPIO_InitStructure.Speed = GPIO_SPEED_MEDIUM;
 		GPIO_InitStructure.Alternate = GPIO_AF5_SPI2;
 
 		/* SPI SCK pin configuration */
@@ -80,9 +80,17 @@ void HAL_SPI_MspInit(SPI_HandleTypeDef *hspi)
 		GPIO_InitStructure.Pin = NUCLEO_SPI_MISO_PIN;
 		HAL_GPIO_Init(NUCLEO_SPI_MISO_GPIO_PORT, &GPIO_InitStructure);
 		
+		/* ACCEL_DATAREADY pin configuration */
+		GPIO_InitStructure.Mode = GPIO_MODE_OUTPUT_PP;
+		GPIO_InitStructure.Pin = NUCLEO_SPI_ACCEL_DATAREADY_PIN;
+		HAL_GPIO_Init(NUCLEO_SPI_ACCEL_DATAREADY_PORT, &GPIO_InitStructure);
+		
+		/* TEMP_DATAREADY pin configuration */
+		GPIO_InitStructure.Pin = NUCLEO_SPI_TEMP_DATAREADY_PIN;
+		HAL_GPIO_Init(NUCLEO_SPI_TEMP_DATAREADY_PORT, &GPIO_InitStructure);
+		
 		/* DOUBLETAP pin configuration */
 		GPIO_InitStructure.Pin = NUCLEO_SPI_DOUBLETAP_PIN;
-		GPIO_InitStructure.Mode = GPIO_MODE_OUTPUT_PP;
 		HAL_GPIO_Init(NUCLEO_SPI_DOUBLETAP_GPIO_PORT, &GPIO_InitStructure);
 	}
 }

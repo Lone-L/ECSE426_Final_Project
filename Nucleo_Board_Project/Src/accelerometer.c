@@ -1,38 +1,22 @@
 #include "accelerometer.h"
 #include "discovery_spi.h"
 
-static volatile int ACCELEROMETER_ROLL_DATAREADY_FLAG = 0;
-static volatile int ACCELEROMETER_PITCH_DATAREADY_FLAG = 0;
+static volatile int ACCELEROMETER_DATAREADY_FLAG = 0;
 static volatile int ACCELEROMETER_DOUBLETAP_FLAG = 0;
 
-int Accelerometer_IsRollDataReady(void)
+int Accelerometer_IsDataReady(void)
 {
-	return ACCELEROMETER_ROLL_DATAREADY_FLAG;
+	return ACCELEROMETER_DATAREADY_FLAG;
 }
 
-void Accelerometer_SetRollDatareadyFlag(void)
+void Accelerometer_SetDatareadyFlag(void)
 {
-	ACCELEROMETER_ROLL_DATAREADY_FLAG = 1;
+	ACCELEROMETER_DATAREADY_FLAG = 1;
 }
 
-void Accelerometer_ResetRollDatareadyFlag(void)
+void Accelerometer_ResetDatareadyFlag(void)
 {
-	ACCELEROMETER_ROLL_DATAREADY_FLAG = 0;
-}
-
-int Accelerometer_IsPitchDataReady(void)
-{
-	return ACCELEROMETER_PITCH_DATAREADY_FLAG;
-}
-
-void Accelerometer_SetPitchDatareadyFlag(void)
-{
-	ACCELEROMETER_PITCH_DATAREADY_FLAG = 1;
-}
-
-void Accelerometer_ResetPitchDatareadyFlag(void)
-{
-	ACCELEROMETER_PITCH_DATAREADY_FLAG = 0;
+	ACCELEROMETER_DATAREADY_FLAG = 0;
 }
 
 int Accelerometer_DoubleTap(void)
@@ -50,33 +34,19 @@ void Accelerometer_ResetDoubletapFlag(void)
 	ACCELEROMETER_DOUBLETAP_FLAG = 0;
 }
 
+/* use watchpoints for debug!!! */
+float roll, pitch;
+int doubletapped = 0;
+
 void Accelerometer_Process(void)
 {
-	float roll;
-	float pitch;
-	
-	if (Accelerometer_IsRollDataReady()) {
-		roll = DiscoverySPI_ReadFloatValue();
+	if (Accelerometer_IsDataReady()) {
+		pitch = DiscoverySPI_ReadFloatValue(DISCOVERY_SPI_READ_PITCH_CMD);
+		roll = DiscoverySPI_ReadFloatValue(DISCOVERY_SPI_READ_ROLL_CMD);
+		Accelerometer_ResetDatareadyFlag();
+	}
 
-		if (roll != (float)0.5)
-			HAL_GPIO_WritePin(DISCOVERY_SPI_DEBUG_PORT, DISCOVERY_SPI_DEBUG_PIN, GPIO_PIN_SET);
-//			DebugSPI(0xaa);
-		
-		Accelerometer_ResetRollDatareadyFlag();
-	}
-	
-	if (Accelerometer_IsPitchDataReady()) {
-		pitch = DiscoverySPI_ReadFloatValue();
-		
-		if (pitch != (float)1.9)
-			HAL_GPIO_WritePin(DISCOVERY_SPI_DEBUG_PORT, DISCOVERY_SPI_DEBUG_PIN, GPIO_PIN_SET);
-//			DebugSPI(0x71);
-		
-		Accelerometer_ResetPitchDatareadyFlag();
-	}
-		
 	if (Accelerometer_DoubleTap()) {
-		Accelerometer_ResetDoubletapFlag();
-		DebugSPI(0x44);
+		doubletapped = !doubletapped;
 	}
 }

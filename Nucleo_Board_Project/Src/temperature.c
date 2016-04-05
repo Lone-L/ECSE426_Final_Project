@@ -18,19 +18,13 @@ void Temperature_ResetDatareadyFlag(void)
 	TEMPERATURE_DATAREADY_FLAG = 0;
 }
 
+/* watchpoint!! */
+float temperature;
+
 void Temperature_Process(void)
 {
-	float temperature;
-	
 	if (Temperature_IsDataReady()) {
-		uint8_t byte = DiscoverySPI_ReadByteValue(DISCOVERY_SPI_READ_TEMP_CMD);
-		DebugSPI(byte);
-//		temperature = DiscoverySPI_ReadFloatValue();
-
-//		if (temperature != (float)12.1)
-//			HAL_GPIO_WritePin(DISCOVERY_SPI_DEBUG_PORT, DISCOVERY_SPI_DEBUG_PIN, GPIO_PIN_SET);
-//			DebugSPI(0xcc);
-		
+		temperature = DiscoverySPI_ReadFloatValue(DISCOVERY_SPI_READ_TEMP_CMD);
 		Temperature_ResetDatareadyFlag();
 	}
 }
