@@ -27,13 +27,22 @@ Project File Date:  04/02/2016
 <h2>Output:</h2>
 *** Using Compiler 'V5.05 update 2 (build 169)', folder: 'C:\Keil_v5\ARM\ARMCC\Bin'
 Build target 'Application'
+compiling discovery_spi.c...
+Src\discovery_spi.c(91): warning:  #550-D: variable "dummy" was set but never used
+        uint16_t dummy;
+Src\discovery_spi.c(10): warning:  #177-D: function "Enable_SPI_IRQ" was declared but never referenced
+  static void Enable_SPI_IRQ(void)
+Src\discovery_spi.c(22): warning:  #177-D: function "Disable_SPI_IRQ" was declared but never referenced
+  static void Disable_SPI_IRQ(void)
+Src\discovery_spi.c: 3 warnings, 0 errors
+compiling temperature.c...
 compiling accelerometer.c...
-Src\accelerometer.c(40): warning:  #177-D: variable "test" was declared but never referenced
+Src\accelerometer.c(44): warning:  #177-D: variable "test" was declared but never referenced
         uint32_t test;
 Src\accelerometer.c: 1 warning, 0 errors
 linking...
-Program Size: Code=18280 RO-data=768 RW-data=120 ZI-data=3000  
-".\Objects\BLE_SampleProject.axf" - 0 Error(s), 1 Warning(s).
+Program Size: Code=18176 RO-data=768 RW-data=136 ZI-data=3000  
+".\Objects\BLE_SampleProject.axf" - 0 Error(s), 4 Warning(s).
 
 <h2>Software Packages used:</h2>
 

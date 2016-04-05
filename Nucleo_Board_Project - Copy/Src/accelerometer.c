@@ -34,22 +34,22 @@ void Accelerometer_ResetDoubletapFlag(void)
 	ACCELEROMETER_DOUBLETAP_FLAG = 0;
 }
 
+/* use watchpoints for debug!!! */
+float roll, pitch;
+int doubletapped = 0;
+
 void Accelerometer_Process(void)
 {
-	float roll, pitch;
+	
 	uint32_t test;
 	
 	if (Accelerometer_IsDataReady()) {
 		pitch = DiscoverySPI_ReadFloatValue(DISCOVERY_SPI_READ_PITCH_CMD);
 		roll = DiscoverySPI_ReadFloatValue(DISCOVERY_SPI_READ_ROLL_CMD);
-
-		if (pitch == (float)0.5 && roll == (float)1.9)
-			DebugSPI(0xaaaa);
-		
 		Accelerometer_ResetDatareadyFlag();
 	}
 
 	if (Accelerometer_DoubleTap()) {
-		printf("Double-tap!\n");
+		doubletapped = !doubletapped;
 	}
 }

@@ -3,7 +3,7 @@
 <title>Static Call Graph - [.\Objects\Blinky.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image .\Objects\Blinky.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5050169: Last Updated: Tue Apr 05 17:41:23 2016
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5050169: Last Updated: Tue Apr 05 18:20:05 2016
 <BR><P>
 <H3>Maximum Stack Usage =        188 bytes + Unknown(Functions without stacksize, Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
@@ -435,10 +435,22 @@ Global Symbols
 <BR>[Calls]<UL><LI><a href="#[c6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GPIO_WritePin
 <LI><a href="#[c5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GPIO_Init
 </UL>
-<BR>[Called By]<UL><LI><a href="#[ca]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_SPI_Init
+<BR>[Called By]<UL><LI><a href="#[cb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_SPI_Init
 </UL>
 
-<P><STRONG><a name="[c7]"></a>NucleoSPI_ResetAccelDataready</STRONG> (Thumb, 16 bytes, Stack size 8 bytes, nucleo_spi.o(.text))
+<P><STRONG><a name="[c7]"></a>NucleoSPI_ResetTempDataready</STRONG> (Thumb, 14 bytes, Stack size 8 bytes, nucleo_spi.o(.text))
+<BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = NucleoSPI_ResetTempDataready
+</UL>
+<BR>[Calls]<UL><LI><a href="#[c6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GPIO_WritePin
+</UL>
+<BR>[Called By]<UL><LI><a href="#[bc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;NucleoSPI_RxISR
+</UL>
+
+<P><STRONG><a name="[c9]"></a>NucleoSPI_SendFloat</STRONG> (Thumb, 118 bytes, Stack size 0 bytes, nucleo_spi.o(.text))
+<BR><BR>[Called By]<UL><LI><a href="#[bc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;NucleoSPI_RxISR
+</UL>
+
+<P><STRONG><a name="[c8]"></a>NucleoSPI_ResetAccelDataready</STRONG> (Thumb, 16 bytes, Stack size 8 bytes, nucleo_spi.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = NucleoSPI_ResetAccelDataready
 </UL>
 <BR>[Calls]<UL><LI><a href="#[c6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GPIO_WritePin
@@ -446,15 +458,12 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[bc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;NucleoSPI_RxISR
 </UL>
 
-<P><STRONG><a name="[c8]"></a>NucleoSPI_SendFloat</STRONG> (Thumb, 118 bytes, Stack size 0 bytes, nucleo_spi.o(.text))
-<BR><BR>[Called By]<UL><LI><a href="#[bc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;NucleoSPI_RxISR
-</UL>
-
-<P><STRONG><a name="[bc]"></a>NucleoSPI_RxISR</STRONG> (Thumb, 104 bytes, Stack size 16 bytes, nucleo_spi.o(.text))
+<P><STRONG><a name="[bc]"></a>NucleoSPI_RxISR</STRONG> (Thumb, 116 bytes, Stack size 16 bytes, nucleo_spi.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 24<LI>Call Chain = NucleoSPI_RxISR &rArr; NucleoSPI_ResetAccelDataready
 </UL>
-<BR>[Calls]<UL><LI><a href="#[c8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;NucleoSPI_SendFloat
-<LI><a href="#[c7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;NucleoSPI_ResetAccelDataready
+<BR>[Calls]<UL><LI><a href="#[c8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;NucleoSPI_ResetAccelDataready
+<LI><a href="#[c9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;NucleoSPI_SendFloat
+<LI><a href="#[c7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;NucleoSPI_ResetTempDataready
 </UL>
 <BR>[Called By]<UL><LI><a href="#[2e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SPI2_IRQHandler
 </UL>
@@ -463,8 +472,8 @@ Global Symbols
 <P><STRONG><a name="[98]"></a>NucleoSPI_Init</STRONG> (Thumb, 162 bytes, Stack size 8 bytes, nucleo_spi.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 72<LI>Call Chain = NucleoSPI_Init &rArr; HAL_SPI_Init &rArr; HAL_SPI_MspInit &rArr; HAL_GPIO_Init
 </UL>
-<BR>[Calls]<UL><LI><a href="#[ca]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_SPI_Init
-<LI><a href="#[c9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_SPI_DeInit
+<BR>[Calls]<UL><LI><a href="#[cb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_SPI_Init
+<LI><a href="#[ca]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_SPI_DeInit
 <LI><a href="#[a0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_NVIC_SetPriority
 <LI><a href="#[a1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_NVIC_EnableIRQ
 <LI><a href="#[ae]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2printf
@@ -486,10 +495,6 @@ Global Symbols
 <BR>[Calls]<UL><LI><a href="#[c6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GPIO_WritePin
 </UL>
 <BR>[Called By]<UL><LI><a href="#[86]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Thread_TEMPERATURE
-</UL>
-
-<P><STRONG><a name="[cb]"></a>NucleoSPI_ResetTempDataready</STRONG> (Thumb, 14 bytes, Stack size 8 bytes, nucleo_spi.o(.text), UNUSED)
-<BR><BR>[Calls]<UL><LI><a href="#[c6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GPIO_WritePin
 </UL>
 
 <P><STRONG><a name="[b5]"></a>NucleoSPI_SetDoubletap</STRONG> (Thumb, 14 bytes, Stack size 8 bytes, nucleo_spi.o(.text))
@@ -537,8 +542,8 @@ Global Symbols
 <BR><BR>[Stack]<UL><LI>Max Depth = 80<LI>Call Chain = LIS3DSH_Init &rArr; HAL_SPI_Init &rArr; HAL_SPI_MspInit &rArr; HAL_GPIO_Init
 </UL>
 <BR>[Calls]<UL><LI><a href="#[d0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LIS3DSH_Write
-<LI><a href="#[ca]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_SPI_Init
-<LI><a href="#[c9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_SPI_DeInit
+<LI><a href="#[cb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_SPI_Init
+<LI><a href="#[ca]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_SPI_DeInit
 <LI><a href="#[ae]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2printf
 </UL>
 <BR>[Called By]<UL><LI><a href="#[99]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Accelerometer_Init
@@ -933,8 +938,8 @@ Global Symbols
 <P><STRONG><a name="[c6]"></a>HAL_GPIO_WritePin</STRONG> (Thumb, 12 bytes, Stack size 0 bytes, stm32f4xx_hal_gpio.o(.text))
 <BR><BR>[Called By]<UL><LI><a href="#[d1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LIS3DSH_Read
 <LI><a href="#[d0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LIS3DSH_Write
-<LI><a href="#[cb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;NucleoSPI_ResetTempDataready
-<LI><a href="#[c7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;NucleoSPI_ResetAccelDataready
+<LI><a href="#[c8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;NucleoSPI_ResetAccelDataready
+<LI><a href="#[c7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;NucleoSPI_ResetTempDataready
 <LI><a href="#[c4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_SPI_MspInit
 <LI><a href="#[bf]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;NucleoSPI_SetTempDataready
 <LI><a href="#[b5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;NucleoSPI_SetDoubletap
@@ -1015,7 +1020,7 @@ Global Symbols
 <BR><BR>[Calls]<UL><LI><a href="#[ff]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_RCC_CSSCallback
 </UL>
 
-<P><STRONG><a name="[ca]"></a>HAL_SPI_Init</STRONG> (Thumb, 136 bytes, Stack size 8 bytes, stm32f4xx_hal_spi.o(.text))
+<P><STRONG><a name="[cb]"></a>HAL_SPI_Init</STRONG> (Thumb, 136 bytes, Stack size 8 bytes, stm32f4xx_hal_spi.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 64<LI>Call Chain = HAL_SPI_Init &rArr; HAL_SPI_MspInit &rArr; HAL_GPIO_Init
 </UL>
 <BR>[Calls]<UL><LI><a href="#[c4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_SPI_MspInit
@@ -1025,10 +1030,10 @@ Global Symbols
 </UL>
 
 <P><STRONG><a name="[100]"></a>HAL_SPI_MspDeInit</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, stm32f4xx_hal_spi.o(.text))
-<BR><BR>[Called By]<UL><LI><a href="#[c9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_SPI_DeInit
+<BR><BR>[Called By]<UL><LI><a href="#[ca]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_SPI_DeInit
 </UL>
 
-<P><STRONG><a name="[c9]"></a>HAL_SPI_DeInit</STRONG> (Thumb, 48 bytes, Stack size 8 bytes, stm32f4xx_hal_spi.o(.text))
+<P><STRONG><a name="[ca]"></a>HAL_SPI_DeInit</STRONG> (Thumb, 48 bytes, Stack size 8 bytes, stm32f4xx_hal_spi.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = HAL_SPI_DeInit
 </UL>
 <BR>[Calls]<UL><LI><a href="#[100]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_SPI_MspDeInit

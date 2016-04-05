@@ -22,6 +22,8 @@ void NucleoSPI_RxISR(SPI_HandleTypeDef *hspi)
 			NucleoSPI_ResetAccelDataready();
 			break;
 		case NUCLEO_SPI_READ_TEMP_CMD:
+			NucleoSPI_SendFloat(12.1);
+			NucleoSPI_ResetTempDataready();
 			break;
 		case NUCLEO_SPI_WRITE_LED_PATTERN_CMD:
 			/* Signal LED thread */

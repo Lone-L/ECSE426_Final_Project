@@ -18,14 +18,13 @@ void Temperature_ResetDatareadyFlag(void)
 	TEMPERATURE_DATAREADY_FLAG = 0;
 }
 
+/* watchpoint!! */
+float temperature;
+
 void Temperature_Process(void)
 {
-	uint16_t temperature;
-	
-//	if (Temperature_IsDataReady()) {
-//		DiscoverySPI_ReadShortValue(DISCOVERY_SPI_READ_TEMP_CMD);
-//		temperature = DiscoverySPI_ReadShortValue(0x0000);
-//		DebugSPI(temperature);
-//		Temperature_ResetDatareadyFlag();
-//	}
+	if (Temperature_IsDataReady()) {
+		temperature = DiscoverySPI_ReadFloatValue(DISCOVERY_SPI_READ_TEMP_CMD);
+		Temperature_ResetDatareadyFlag();
+	}
 }

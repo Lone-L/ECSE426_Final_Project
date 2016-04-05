@@ -75,14 +75,14 @@ void DebugSPI(uint16_t shrt);
 #define DISCOVERY_SPI_TEMP_DATAREADY_PORT      				GPIOB
 #define DISCOVERY_SPI_TEMP_DATAREADY_CLK_ENABLE()			__GPIOB_CLK_ENABLE()
 
-/* DEBUG Pin: PB.5 (Brown) */
-#define DISCOVERY_SPI_DEBUG_PIN               				GPIO_PIN_5
-#define DISCOVERY_SPI_DEBUG_MODE											GPIO_MODE_OUTPUT_PP
-#define DISCOVERY_SPI_DEBUG_PULL											GPIO_PULLDOWN
-#define DISCOVERY_SPI_DEBUG_SPEED											GPIO_SPEED_HIGH
-#define DISCOVERY_SPI_DEBUG_ALTERNATE									0
-#define DISCOVERY_SPI_DEBUG_GPIO_PORT         				GPIOB
-#define DISCOVERY_SPI_DEBUG_CLK_ENABLE()							__GPIOB_CLK_ENABLE()
+///* DEBUG Pin: PB.5 (Brown) */
+//#define DISCOVERY_SPI_DEBUG_PIN               				GPIO_PIN_5
+//#define DISCOVERY_SPI_DEBUG_MODE											GPIO_MODE_OUTPUT_PP
+//#define DISCOVERY_SPI_DEBUG_PULL											GPIO_PULLDOWN
+//#define DISCOVERY_SPI_DEBUG_SPEED											GPIO_SPEED_HIGH
+//#define DISCOVERY_SPI_DEBUG_ALTERNATE									0
+//#define DISCOVERY_SPI_DEBUG_GPIO_PORT         				GPIOB
+//#define DISCOVERY_SPI_DEBUG_CLK_ENABLE()							__GPIOB_CLK_ENABLE()
 
 /* Discovery SPI IRQn defines */
 /* Do not use EXTI0 and EXTI15_10 as they are used by the BlueNRG and push-buttons. */

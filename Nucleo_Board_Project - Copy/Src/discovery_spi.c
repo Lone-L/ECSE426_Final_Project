@@ -26,20 +26,20 @@ static void Disable_SPI_IRQ(void)
 	HAL_NVIC_EnableIRQ(DISCOVERY_SPI_TEMP_IRQn);
 }
 
-void DebugSPI(uint16_t shrt)
-{
-	int i;
-	HAL_GPIO_WritePin(DISCOVERY_SPI_DEBUG_GPIO_PORT, DISCOVERY_SPI_DEBUG_PIN, GPIO_PIN_RESET);
-	
-	for (i = 0; i < 16; i++) {
-		if (shrt & (1 << (15 - i)))
-			HAL_GPIO_WritePin(DISCOVERY_SPI_DEBUG_GPIO_PORT, DISCOVERY_SPI_DEBUG_PIN, GPIO_PIN_SET);
-		else
-			HAL_GPIO_WritePin(DISCOVERY_SPI_DEBUG_GPIO_PORT, DISCOVERY_SPI_DEBUG_PIN, GPIO_PIN_RESET);
-	}
-	
-	HAL_GPIO_WritePin(DISCOVERY_SPI_DEBUG_GPIO_PORT, DISCOVERY_SPI_DEBUG_PIN, GPIO_PIN_RESET);
-}
+//void DebugSPI(uint16_t shrt)
+//{
+//	int i;
+//	HAL_GPIO_WritePin(DISCOVERY_SPI_DEBUG_GPIO_PORT, DISCOVERY_SPI_DEBUG_PIN, GPIO_PIN_RESET);
+//	
+//	for (i = 0; i < 16; i++) {
+//		if (shrt & (1 << (15 - i)))
+//			HAL_GPIO_WritePin(DISCOVERY_SPI_DEBUG_GPIO_PORT, DISCOVERY_SPI_DEBUG_PIN, GPIO_PIN_SET);
+//		else
+//			HAL_GPIO_WritePin(DISCOVERY_SPI_DEBUG_GPIO_PORT, DISCOVERY_SPI_DEBUG_PIN, GPIO_PIN_RESET);
+//	}
+//	
+//	HAL_GPIO_WritePin(DISCOVERY_SPI_DEBUG_GPIO_PORT, DISCOVERY_SPI_DEBUG_PIN, GPIO_PIN_RESET);
+//}
 
 static uint16_t DiscoverySPI_SendShort(uint16_t shrt)
 {
@@ -94,6 +94,10 @@ float DiscoverySPI_ReadFloatValue(uint16_t cmd)
 	while (__HAL_SPI_GET_FLAG(&discovery_SpiHandle, SPI_FLAG_TXE) == RESET);
 	while (__HAL_SPI_GET_FLAG(&discovery_SpiHandle, SPI_FLAG_RXNE) == RESET);
 	dummy = discovery_SpiHandle.Instance->DR;
+
+	/* maybe add more delay to make sure slave has time to put its first reply short. Some times communication stops randomly */
+	for (volatile int i = 0; i < 100; i++);
+	
 	discovery_SpiHandle.Instance->DR = 0x0000;
 	while (__HAL_SPI_GET_FLAG(&discovery_SpiHandle, SPI_FLAG_TXE) == RESET);
 	while (__HAL_SPI_GET_FLAG(&discovery_SpiHandle, SPI_FLAG_RXNE) == RESET);
