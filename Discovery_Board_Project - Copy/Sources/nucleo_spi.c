@@ -11,21 +11,16 @@ void NucleoSPI_RxISR(SPI_HandleTypeDef *hspi)
 	
 	cmd = hspi->Instance->DR;
 	
-	printf("%04x\n", cmd);
-	
 	switch (cmd) {
 		case NUCLEO_SPI_READ_ROLL_CMD:
-			angle_type = ANGLE_TYPE_ROLL;
-			printf("read roll cmd\n");
-			osSignalSet(tid_Thread_ACCELEROMETER, NUCLEO_ACCEL_SIGNAL);
+			NucleoSPI_SendShort(0xdead);
+			NucleoSPI_ResetAccelDataready();
 			break;
 		case NUCLEO_SPI_READ_PITCH_CMD:
-			angle_type = ANGLE_TYPE_PITCH;
-			printf("send pitch cmd\n");
-			osSignalSet(tid_Thread_ACCELEROMETER, NUCLEO_ACCEL_SIGNAL);
+			NucleoSPI_SendShort(0xbeef);
+			NucleoSPI_ResetAccelDataready();
 			break;
 		case NUCLEO_SPI_READ_TEMP_CMD:
-			osSignalSet(tid_Thread_TEMPERATURE, NUCLEO_TEMP_SIGNAL);
 			break;
 		case NUCLEO_SPI_WRITE_LED_PATTERN_CMD:
 			/* Signal LED thread */
@@ -33,44 +28,22 @@ void NucleoSPI_RxISR(SPI_HandleTypeDef *hspi)
 		default:
 			break;
 	}
+
 }
 
-void NucleoSPI_SendShort(uint16_t shrt)
+uint16_t NucleoSPI_SendShort(uint16_t shrt)
 {
-  /* Loop while DR register is not empty */
-//	printf("waiting BSY\n");
-//  while (__HAL_SPI_GET_FLAG(&nucleo_SpiHandle, SPI_FLAG_BSY) != RESET){}
-		
-	printf("sending %04x\n", shrt);
-
   /* Send a Byte through the SPI peripheral */
 	nucleo_SpiHandle.Instance->DR = shrt;
 	while (__HAL_SPI_GET_FLAG(&nucleo_SpiHandle, SPI_FLAG_TXE) != RESET){}
-	while (__HAL_SPI_GET_FLAG(&nucleo_SpiHandle, SPI_FLAG_BSY) != RESET){}
+		
+	return nucleo_SpiHandle.Instance->DR;
 }
 
 void NucleoSPI_SendInt(uint32_t val)
 {
-	printf("sending %08x\n", val);
-	HAL_NVIC_DisableIRQ(SPI2_IRQn);
-	__disable_irq();
-	
-	printf("Waiting TXE1\n");
-	while (!__HAL_SPI_GET_FLAG(&nucleo_SpiHandle, SPI_FLAG_TXE));
-	*(volatile uint16_t *)&(nucleo_SpiHandle.Instance->DR) = val & 0xffff;
-	printf("Waiting RXNE1\n");
-	while (!__HAL_SPI_GET_FLAG(&nucleo_SpiHandle, SPI_FLAG_RXNE));
-	printf("%04x\n", nucleo_SpiHandle.Instance->DR);
-	
-	printf("Waiting TXE2\n");
-	while (!__HAL_SPI_GET_FLAG(&nucleo_SpiHandle, SPI_FLAG_TXE));
-	*(volatile uint16_t *)&(nucleo_SpiHandle.Instance->DR) = val >> 16;
-	printf("Waiting RXNE\n");
-	while (!__HAL_SPI_GET_FLAG(&nucleo_SpiHandle, SPI_FLAG_RXNE));
-	printf("%04x\n", nucleo_SpiHandle.Instance->DR);
-	
-	__enable_irq();
-	HAL_NVIC_EnableIRQ(SPI2_IRQn);
+	NucleoSPI_SendShort(val >> 16);
+	NucleoSPI_SendShort(val & 0xffff);
 }
 
 void NucleoSPI_Init(void)

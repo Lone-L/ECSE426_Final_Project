@@ -47,8 +47,8 @@ void Thread_TEMPERATURE(const void *argument)
 				Kalmanfilter_asm(&temperature, &filtered_temp, 1, &kstate);
 				NucleoSPI_SetTempDataready();
 			} else if (evt.value.signals == NUCLEO_TEMP_SIGNAL) {
-				NucleoSPI_SendShort(0xcafe);
-				NucleoSPI_ResetTempDataready();
+//				NucleoSPI_SendShort(0xcafe);
+//				NucleoSPI_ResetTempDataready();
 			}
 		}
 	}

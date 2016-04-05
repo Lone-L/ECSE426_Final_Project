@@ -97,8 +97,8 @@ void DebugSPI(uint16_t shrt);
 /* DISCOVERY SPI command defines */
 #define DISCOVERY_SPI_READ_ROLL_CMD										0x1111
 #define DISCOVERY_SPI_READ_PITCH_CMD									0x5555
-#define DISCOVERY_SPI_READ_TEMP_CMD										0xfeed
-#define DISCOVERY_SPI_WRITE_LED_PATTERN_CMD						0xface
+#define DISCOVERY_SPI_READ_TEMP_CMD										0x1234
+#define DISCOVERY_SPI_WRITE_LED_PATTERN_CMD						0xbeef
 // add commands for PWM...
 
 #endif

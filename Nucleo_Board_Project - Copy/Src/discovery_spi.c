@@ -45,7 +45,7 @@ static uint16_t DiscoverySPI_SendShort(uint16_t shrt)
 {
   /* Send a Byte through the SPI peripheral */
   discovery_SpiHandle.Instance->DR = shrt;
-	while(__HAL_SPI_GET_FLAG(&discovery_SpiHandle, SPI_FLAG_BSY) != RESET) {}
+	while(__HAL_SPI_GET_FLAG(&discovery_SpiHandle, SPI_FLAG_TXE) == RESET) {}
 
 	/* Wait to receive a Byte */
   while (__HAL_SPI_GET_FLAG(&discovery_SpiHandle, SPI_FLAG_RXNE) == RESET) {}
@@ -82,35 +82,15 @@ void DiscoverySPI_Init(void)
 
 uint16_t DiscoverySPI_ReadShortValue(uint16_t cmd)
 {
-	DiscoverySPI_SendShort(cmd);
-	return DiscoverySPI_SendShort(0x0000);
+	return DiscoverySPI_SendShort(cmd);
 }
 
 uint32_t DiscoverySPI_ReadIntValue(uint16_t cmd)
 {
-	uint32_t lower, upper;
-	uint16_t temp;
+	uint32_t upper, lower;
 	
-  /* Send a Byte through the SPI peripheral */
-	DebugSPI(0x0101);
-	while (!__HAL_SPI_GET_FLAG(&discovery_SpiHandle, SPI_FLAG_TXE));
-  discovery_SpiHandle.Instance->DR = cmd;
-	DebugSPI(0x0505);
-	while (!__HAL_SPI_GET_FLAG(&discovery_SpiHandle, SPI_FLAG_RXNE));
-	temp = discovery_SpiHandle.Instance->DR;
-	DebugSPI(0x1515);
-	while (!__HAL_SPI_GET_FLAG(&discovery_SpiHandle, SPI_FLAG_TXE));
-  discovery_SpiHandle.Instance->DR = 0x0000;
-	DebugSPI(0x5555);
-	while (!__HAL_SPI_GET_FLAG(&discovery_SpiHandle, SPI_FLAG_RXNE));
-	lower = discovery_SpiHandle.Instance->DR;
-	DebugSPI(0x1111);
-	
-	while (!__HAL_SPI_GET_FLAG(&discovery_SpiHandle, SPI_FLAG_TXE));
-  discovery_SpiHandle.Instance->DR = 0x0000;
-	while (!__HAL_SPI_GET_FLAG(&discovery_SpiHandle, SPI_FLAG_RXNE));
-	upper = discovery_SpiHandle.Instance->DR;
-	
-  /* Return the Byte read from the SPI bus */ 
-  return lower | (upper << 16);
+	DiscoverySPI_ReadShortValue(cmd);
+	upper = DiscoverySPI_ReadShortValue(0x0007);
+	lower = DiscoverySPI_ReadShortValue(0x0000);
+	return lower | (upper << 16);
 }

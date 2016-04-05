@@ -8,7 +8,8 @@
 #include "stm32f4xx_hal_spi.h"
 
 void NucleoSPI_Init(void);
-void NucleoSPI_SendShort(uint16_t shrt);
+uint16_t NucleoSPI_SendShort(uint16_t shrt);
+void NucleoSPI_SendInt(uint32_t val);
 
 void NucleoSPI_RxISR(SPI_HandleTypeDef *hspi);
 
@@ -35,13 +36,13 @@ void NucleoSPI_ResetDoubletap(void);
 #define NUCLEO_SPI_ACCEL_DATAREADY_PIN			GPIO_PIN_8									/* PC.8 */		/* Black */
 #define NUCLEO_SPI_ACCEL_DATAREADY_PORT			GPIOC												/* GPIOC */
 
-#define NUCLEO_SPI_TEMP_DATAREADY_PIN				GPIO_PIN_9									/* PC.9 */		/* Gray */
+#define NUCLEO_SPI_TEMP_DATAREADY_PIN				GPIO_PIN_1									/* PC.1 */		/* Gray */
 #define NUCLEO_SPI_TEMP_DATAREADY_PORT			GPIOC												/* GPIOC */
 
 /* Nucleo SPI command defines */
 #define NUCLEO_SPI_READ_ROLL_CMD						0x1111
 #define NUCLEO_SPI_READ_PITCH_CMD						0x5555
-#define NUCLEO_SPI_READ_TEMP_CMD						0xdead
+#define NUCLEO_SPI_READ_TEMP_CMD						0x1234
 #define NUCLEO_SPI_WRITE_LED_PATTERN_CMD		0xbeef
 
 // add commands for PWM...

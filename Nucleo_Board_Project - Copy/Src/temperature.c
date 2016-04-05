@@ -20,11 +20,12 @@ void Temperature_ResetDatareadyFlag(void)
 
 void Temperature_Process(void)
 {
-	float temperature;
+	uint16_t temperature;
 	
-	if (Temperature_IsDataReady()) {
-		uint8_t byte;
-//		byte = DiscoverySPI_ReadByteValue(DISCOVERY_SPI_READ_TEMP_CMD);
-//		DebugSPI(byte);
-	}
+//	if (Temperature_IsDataReady()) {
+//		DiscoverySPI_ReadShortValue(DISCOVERY_SPI_READ_TEMP_CMD);
+//		temperature = DiscoverySPI_ReadShortValue(0x0000);
+//		DebugSPI(temperature);
+//		Temperature_ResetDatareadyFlag();
+//	}
 }

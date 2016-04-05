@@ -27,17 +27,29 @@ Project File Date:  04/02/2016
 <h2>Output:</h2>
 *** Using Compiler 'V5.05 update 2 (build 169)', folder: 'C:\Keil_v5\ARM\ARMCC\Bin'
 Build target 'Application'
+compiling stm32xx_it.c...
+compiling main.c...
 compiling discovery_spi.c...
-Src\discovery_spi.c(92): warning:  #550-D: variable "temp" was set but never used
-        uint16_t temp;
 Src\discovery_spi.c(10): warning:  #177-D: function "Enable_SPI_IRQ" was declared but never referenced
   static void Enable_SPI_IRQ(void)
 Src\discovery_spi.c(22): warning:  #177-D: function "Disable_SPI_IRQ" was declared but never referenced
   static void Disable_SPI_IRQ(void)
-Src\discovery_spi.c: 3 warnings, 0 errors
+Src\discovery_spi.c: 2 warnings, 0 errors
+compiling SPI_MspInit.c...
+compiling EXTI_handler_cb.c...
+compiling temperature.c...
+Src\temperature.c(23): warning:  #177-D: variable "temperature" was declared but never referenced
+        uint16_t temperature;
+Src\temperature.c: 1 warning, 0 errors
+compiling accelerometer.c...
+Src\accelerometer.c(39): warning:  #177-D: variable "cakes" was declared but never referenced
+        uint16_t roll, pitch, cakes;
+Src\accelerometer.c(40): warning:  #177-D: variable "test" was declared but never referenced
+        uint32_t test;
+Src\accelerometer.c: 2 warnings, 0 errors
 linking...
-Program Size: Code=18324 RO-data=768 RW-data=120 ZI-data=3000  
-".\Objects\BLE_SampleProject.axf" - 0 Error(s), 3 Warning(s).
+Program Size: Code=18196 RO-data=768 RW-data=120 ZI-data=3000  
+".\Objects\BLE_SampleProject.axf" - 0 Error(s), 5 Warning(s).
 
 <h2>Software Packages used:</h2>
 
