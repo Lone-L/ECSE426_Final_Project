@@ -16,6 +16,7 @@
 
 void Temperature_Init(void);
 int start_Thread_TEMPERATURE(void);
+float Temperature_GetCurrentTemp(void);
 
 extern osThreadId tid_Thread_TEMPERATURE;
 extern ADC_HandleTypeDef ADC1_handle;

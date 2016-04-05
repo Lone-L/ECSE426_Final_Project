@@ -774,17 +774,17 @@ ARM Macro Assembler    Page 12
 Command Line: --debug --xref --diag_suppress=9931 --cpu=Cortex-M4.fp --apcs=int
 erwork --depend=.\objects\startup_stm32f401xe.d -o.\objects\startup_stm32f401xe
 .o -I"\campus.mcgill.ca\EMF\ELE\gsavad\My Documents\Microprocessor Systems\ECSE
-426_Final_Project\Nucleo_Board_Project - Copy\RTE" -IC:\Keil_v5\ARM\PACK\Keil\S
-TM32F4xx_DFP\2.7.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include -IC:\Keil_v5\ARM\C
-MSIS\Include --predefine="__UVISION_VERSION SETA 515" --predefine="_RTE_ SETA 1
-" --predefine="STM32F401xE SETA 1" --list=.\listings\startup_stm32f401xe.lst st
+426_Final_Project\Nucleo_Board_Project\RTE" -IC:\Keil_v5\ARM\PACK\Keil\STM32F4x
+x_DFP\2.7.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include -IC:\Keil_v5\ARM\CMSIS\In
+clude --predefine="__UVISION_VERSION SETA 515" --predefine="_RTE_ SETA 1" --pre
+define="STM32F401xE SETA 1" --list=.\listings\startup_stm32f401xe.lst startup_s
 
 
 
 ARM Macro Assembler    Page 13 
 
 
-artup_stm32f401xe.s
+tm32f401xe.s
 
 
 

@@ -9,10 +9,11 @@ void ACCELEROMETER_Callback(void);
 extern int start_Thread_ACCELEROMETER (void);
 void Accelerometer_Init               (void);
 
+float Accelerometer_GetCurrentRoll(void);
+float Accelerometer_GetCurrentPitch(void);
+
 extern osThreadId tid_Thread_ACCELEROMETER;
 extern osMutexId accel_mutex;
-
-extern int angle_type;
 
 /* Threshold in g's for doubletap detection */
 #define DOUBLETAP_THRESHOLD		((float)1.4)

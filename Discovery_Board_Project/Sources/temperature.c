@@ -10,6 +10,7 @@ osThreadId tid_Thread_TEMPERATURE;                          // thread id
 osThreadDef(Thread_TEMPERATURE, osPriorityHigh, 1, 0);	// thread definition struct (last argument default stack size)
 
 ADC_HandleTypeDef ADC1_handle;
+static float filtered_temp = 0;
 
 /*----------------------------------------------------------------------------
  *      Thread  'Temperature': Reads Temperature 
@@ -18,7 +19,7 @@ void Thread_TEMPERATURE(const void *argument)
 {
 	uint32_t v_sense;
 	float tempinvolts = 0;
-	float temperature = 0, filtered_temp = 0;
+	float temperature = 0;
 	KalmanState kstate = {0.01, 0.3, 0.0, 0.1, 0.0};
 
 	osEvent evt;
@@ -114,4 +115,9 @@ void HAL_ADC_MspInit(ADC_HandleTypeDef* hadc)
 void Temperature_Init(void)
 {
 	initialize_ADC();
+}
+
+float Temperature_GetCurrentTemp(void)
+{
+	return filtered_temp;
 }

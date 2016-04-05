@@ -36,7 +36,7 @@ void Accelerometer_ResetDoubletapFlag(void)
 
 /* use watchpoints for debug!!! */
 float roll, pitch;
-int doubletapped = 0;
+int doubletapped;
 
 void Accelerometer_Process(void)
 {
@@ -47,6 +47,7 @@ void Accelerometer_Process(void)
 	}
 
 	if (Accelerometer_DoubleTap()) {
-		doubletapped = !doubletapped;
+		doubletapped = 1;
+		Accelerometer_ResetDoubletapFlag();
 	}
 }

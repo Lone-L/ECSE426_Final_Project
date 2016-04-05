@@ -26,8 +26,8 @@ osTimerDef(doubletap_timer, doubletap_timer_elapsed);
 osMutexId accel_mutex;
 osMutexDef(accel_mutex);
 
-/* Which angle (roll/pitch) to read in a NUCLEO_ACCEL_SIGNAL, set by NucleoSPI module. */
-int angle_type;
+/* Current filtered roll and pitch angles */
+static float filtered_roll, filtered_pitch;
 
 /**
   * @brief  Initialize the accelerometer.
@@ -206,7 +206,6 @@ void Thread_ACCELEROMETER (void const *argument)
 	
 	float ax, ay, az;
 	float roll, pitch;
-	float filtered_roll, filtered_pitch;
 
 	osTimerId doubletap_timer_id;
 	osEvent evt;
@@ -221,7 +220,6 @@ void Thread_ACCELEROMETER (void const *argument)
 		
 		if (evt.status == osEventSignal) {
 			if (evt.value.signals == ACCELEROMETER_SIGNAL) {
-				printf("accelerometer_signal\n");
 				Accelerometer_ReadAccel(&ax, &ay, &az);
 				Accelerometer_Calibrate(&ax, &ay, &az);
 					
@@ -241,7 +239,17 @@ void Thread_ACCELEROMETER (void const *argument)
 		}
 	}
 }
-	
+
+float Accelerometer_GetCurrentRoll(void)
+{
+	return filtered_roll;
+}
+
+float Accelerometer_GetCurrentPitch(void)
+{
+	return filtered_pitch;
+}
+
 /*----------------------------------------------------------------------------
  *      
  *---------------------------------------------------------------------------*/

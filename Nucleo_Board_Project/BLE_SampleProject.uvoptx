@@ -219,14 +219,12 @@
           <WinNumber>1</WinNumber>
           <ItemText>temperature</ItemText>
         </Ww>
-      </WatchWindow1>
-      <WatchWindow2>
         <Ww>
-          <count>0</count>
-          <WinNumber>2</WinNumber>
-          <ItemText>roll</ItemText>
+          <count>3</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>doubletapped</ItemText>
         </Ww>
-      </WatchWindow2>
+      </WatchWindow1>
       <Tracepoint>
         <THDelay>0</THDelay>
       </Tracepoint>

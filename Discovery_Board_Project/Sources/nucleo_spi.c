@@ -14,15 +14,15 @@ void NucleoSPI_RxISR(SPI_HandleTypeDef *hspi)
 
 	switch (cmd) {
 		case NUCLEO_SPI_READ_ROLL_CMD:
-			NucleoSPI_SendFloat(1.9);
+			NucleoSPI_SendFloat(Accelerometer_GetCurrentRoll());
 			NucleoSPI_ResetAccelDataready();
 			break;
 		case NUCLEO_SPI_READ_PITCH_CMD:
-			NucleoSPI_SendFloat(0.5);
+			NucleoSPI_SendFloat(Accelerometer_GetCurrentPitch());
 			NucleoSPI_ResetAccelDataready();
 			break;
 		case NUCLEO_SPI_READ_TEMP_CMD:
-			NucleoSPI_SendFloat(12.1);
+			NucleoSPI_SendFloat(Temperature_GetCurrentTemp());
 			NucleoSPI_ResetTempDataready();
 			break;
 		case NUCLEO_SPI_WRITE_LED_PATTERN_CMD:
