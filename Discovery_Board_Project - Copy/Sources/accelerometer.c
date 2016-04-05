@@ -235,16 +235,8 @@ void Thread_ACCELEROMETER (void const *argument)
 					/* Use a pulsed interrupt. Reset the Doubletap pin after some time. */
 					osTimerStart(doubletap_timer_id, DOUBLETAP_TIMEOUT_MS);
 				}
-				
+
 				NucleoSPI_SetAccelDataready();
-			} else if (evt.value.signals == NUCLEO_ACCEL_SIGNAL) {
-				if (angle_type == ANGLE_TYPE_ROLL) {
-//					NucleoSPI_SendInt(0xdeadbeef);
-				} else if (angle_type == ANGLE_TYPE_PITCH) {
-//					NucleoSPI_SendInt(0xcafebabe);
-				}
-				
-//				NucleoSPI_ResetAccelDataready();
 			}
 		}
 	}

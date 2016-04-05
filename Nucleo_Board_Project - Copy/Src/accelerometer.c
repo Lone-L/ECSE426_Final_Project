@@ -36,22 +36,16 @@ void Accelerometer_ResetDoubletapFlag(void)
 
 void Accelerometer_Process(void)
 {
-	uint16_t roll, pitch, cakes;
+	float roll, pitch;
 	uint32_t test;
 	
 	if (Accelerometer_IsDataReady()) {
-//		test = DiscoverySPI_ReadIntValue(DISCOVERY_SPI_READ_ROLL_CMD);
-		DiscoverySPI_ReadShortValue(DISCOVERY_SPI_READ_PITCH_CMD);
-		pitch = DiscoverySPI_ReadShortValue(DISCOVERY_SPI_READ_ROLL_CMD);
-		roll = DiscoverySPI_ReadShortValue(0x0000);
-//		cakes = DiscoverySPI_ReadShortValue(0x0000);
-//		DiscoverySPI_ReadShortValue(0xdead);
-//		DiscoverySPI_ReadShortValue(0xbeef);
-//		DebugSPI(test >> 16);
-//		DebugSPI(test & 0xffff);
-		DebugSPI(roll);
-	  DebugSPI(pitch);
-//		DebugSPI(cakes);
+		pitch = DiscoverySPI_ReadFloatValue(DISCOVERY_SPI_READ_PITCH_CMD);
+		roll = DiscoverySPI_ReadFloatValue(DISCOVERY_SPI_READ_ROLL_CMD);
+
+		if (pitch == (float)0.5 && roll == (float)1.9)
+			DebugSPI(0xaaaa);
+		
 		Accelerometer_ResetDatareadyFlag();
 	}
 

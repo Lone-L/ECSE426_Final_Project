@@ -9,15 +9,16 @@ void NucleoSPI_RxISR(SPI_HandleTypeDef *hspi)
 {
 	uint16_t cmd;
 	
+	__HAL_SPI_DISABLE_IT(hspi, SPI_FLAG_RXNE);
 	cmd = hspi->Instance->DR;
-	
+
 	switch (cmd) {
 		case NUCLEO_SPI_READ_ROLL_CMD:
-			NucleoSPI_SendShort(0xdead);
+			NucleoSPI_SendFloat(1.9);
 			NucleoSPI_ResetAccelDataready();
 			break;
 		case NUCLEO_SPI_READ_PITCH_CMD:
-			NucleoSPI_SendShort(0xbeef);
+			NucleoSPI_SendFloat(0.5);
 			NucleoSPI_ResetAccelDataready();
 			break;
 		case NUCLEO_SPI_READ_TEMP_CMD:
@@ -29,21 +30,23 @@ void NucleoSPI_RxISR(SPI_HandleTypeDef *hspi)
 			break;
 	}
 
+	__HAL_SPI_ENABLE_IT(hspi, SPI_FLAG_RXNE);
 }
 
-uint16_t NucleoSPI_SendShort(uint16_t shrt)
+void NucleoSPI_SendFloat(float val)
 {
-  /* Send a Byte through the SPI peripheral */
-	nucleo_SpiHandle.Instance->DR = shrt;
-	while (__HAL_SPI_GET_FLAG(&nucleo_SpiHandle, SPI_FLAG_TXE) != RESET){}
-		
-	return nucleo_SpiHandle.Instance->DR;
-}
-
-void NucleoSPI_SendInt(uint32_t val)
-{
-	NucleoSPI_SendShort(val >> 16);
-	NucleoSPI_SendShort(val & 0xffff);
+	uint32_t x = *(uint32_t *)&val;
+	uint16_t dummy;
+	
+	nucleo_SpiHandle.Instance->DR = x >> 16;
+	while (__HAL_SPI_GET_FLAG(&nucleo_SpiHandle, SPI_FLAG_TXE) == RESET);
+	while (__HAL_SPI_GET_FLAG(&nucleo_SpiHandle, SPI_FLAG_RXNE) == RESET);
+	dummy = nucleo_SpiHandle.Instance->DR;
+	nucleo_SpiHandle.Instance->DR = x & 0xffff;
+	while (__HAL_SPI_GET_FLAG(&nucleo_SpiHandle, SPI_FLAG_TXE) == RESET);
+	while (__HAL_SPI_GET_FLAG(&nucleo_SpiHandle, SPI_FLAG_RXNE) == RESET);
+	dummy = nucleo_SpiHandle.Instance->DR;
+	while (__HAL_SPI_GET_FLAG(&nucleo_SpiHandle, SPI_FLAG_BSY) != RESET);
 }
 
 void NucleoSPI_Init(void)

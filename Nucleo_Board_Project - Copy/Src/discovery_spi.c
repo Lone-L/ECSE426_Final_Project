@@ -85,12 +85,25 @@ uint16_t DiscoverySPI_ReadShortValue(uint16_t cmd)
 	return DiscoverySPI_SendShort(cmd);
 }
 
-uint32_t DiscoverySPI_ReadIntValue(uint16_t cmd)
+float DiscoverySPI_ReadFloatValue(uint16_t cmd)
 {
-	uint32_t upper, lower;
+	uint32_t upper, lower, x;
+	uint16_t dummy;
 	
-	DiscoverySPI_ReadShortValue(cmd);
-	upper = DiscoverySPI_ReadShortValue(0x0007);
-	lower = DiscoverySPI_ReadShortValue(0x0000);
-	return lower | (upper << 16);
+	discovery_SpiHandle.Instance->DR = cmd;
+	while (__HAL_SPI_GET_FLAG(&discovery_SpiHandle, SPI_FLAG_TXE) == RESET);
+	while (__HAL_SPI_GET_FLAG(&discovery_SpiHandle, SPI_FLAG_RXNE) == RESET);
+	dummy = discovery_SpiHandle.Instance->DR;
+	discovery_SpiHandle.Instance->DR = 0x0000;
+	while (__HAL_SPI_GET_FLAG(&discovery_SpiHandle, SPI_FLAG_TXE) == RESET);
+	while (__HAL_SPI_GET_FLAG(&discovery_SpiHandle, SPI_FLAG_RXNE) == RESET);
+	upper = discovery_SpiHandle.Instance->DR;
+	discovery_SpiHandle.Instance->DR = 0x0000;
+	while (__HAL_SPI_GET_FLAG(&discovery_SpiHandle, SPI_FLAG_TXE) == RESET);
+	while (__HAL_SPI_GET_FLAG(&discovery_SpiHandle, SPI_FLAG_RXNE) == RESET);
+	lower = discovery_SpiHandle.Instance->DR;
+	while (__HAL_SPI_GET_FLAG(&discovery_SpiHandle, SPI_FLAG_BSY) != RESET);
+	
+	x = lower | (upper << 16);
+	return *(float *)&x;
 }

@@ -8,7 +8,7 @@
 #include "stm32f4xx_hal_spi.h"
 
 void DiscoverySPI_Init(void);
-uint16_t DiscoverySPI_ReadShortValue(uint16_t cmd);
+float DiscoverySPI_ReadFloatValue(uint16_t cmd);
 
 void DebugSPI(uint16_t shrt);
 

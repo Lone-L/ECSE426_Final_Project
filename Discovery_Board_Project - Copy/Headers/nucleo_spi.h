@@ -8,8 +8,7 @@
 #include "stm32f4xx_hal_spi.h"
 
 void NucleoSPI_Init(void);
-uint16_t NucleoSPI_SendShort(uint16_t shrt);
-void NucleoSPI_SendInt(uint32_t val);
+void NucleoSPI_SendFloat(float val);
 
 void NucleoSPI_RxISR(SPI_HandleTypeDef *hspi);
 
