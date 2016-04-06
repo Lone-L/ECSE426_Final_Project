@@ -221,7 +221,6 @@ void ADC_IRQHandler(void)
 void SPI2_IRQHandler(void)
 {
 	NucleoSPI_RxISR(&nucleo_SpiHandle);
-//	HAL_SPI_IRQHandler(&nucleo_SpiHandle);
 }
 
 /**

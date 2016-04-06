@@ -23,4 +23,6 @@ extern ADC_HandleTypeDef ADC1_handle;
 
 #define TEMPERATURE_SIGNAL 									0x0001	/* Signal from temperature sensor when new data is ready */
 
+#define TEMP_DATAREADY_TIMEOUT_MS			10
+
 #endif

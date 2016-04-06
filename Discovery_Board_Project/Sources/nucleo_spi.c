@@ -9,7 +9,9 @@ void NucleoSPI_RxISR(SPI_HandleTypeDef *hspi)
 {
 	uint16_t cmd;
 	
+	__disable_irq();
 	__HAL_SPI_DISABLE_IT(hspi, SPI_FLAG_RXNE);
+
 	cmd = hspi->Instance->DR;
 
 	switch (cmd) {
@@ -25,14 +27,17 @@ void NucleoSPI_RxISR(SPI_HandleTypeDef *hspi)
 			NucleoSPI_SendFloat(Temperature_GetCurrentTemp());
 			NucleoSPI_ResetTempDataready();
 			break;
-		case NUCLEO_SPI_WRITE_LED_PATTERN_CMD:
+//		case NUCLEO_SPI_WRITE_LED_PATTERN_CMD:
 			/* Signal LED thread */
-			break;
+//			break;
 		default:
+			NucleoSPI_ResetAccelDataready();
+			NucleoSPI_ResetTempDataready();
 			break;
 	}
 
 	__HAL_SPI_ENABLE_IT(hspi, SPI_FLAG_RXNE);
+	__enable_irq();
 }
 
 void NucleoSPI_SendFloat(float val)
@@ -82,8 +87,9 @@ void NucleoSPI_Init(void)
 	HAL_NVIC_EnableIRQ(SPI2_IRQn);
 }
 
-void NucleoSPI_SetAccelDataready(void)
+void NucleoSPI_SetAccelDataready(osTimerId id, uint32_t millis)
 {
+	osTimerStart(id, millis);
 	HAL_GPIO_WritePin(NUCLEO_SPI_ACCEL_DATAREADY_PORT, NUCLEO_SPI_ACCEL_DATAREADY_PIN, GPIO_PIN_SET);
 }
 
@@ -92,8 +98,9 @@ void NucleoSPI_ResetAccelDataready(void)
 	HAL_GPIO_WritePin(NUCLEO_SPI_ACCEL_DATAREADY_PORT, NUCLEO_SPI_ACCEL_DATAREADY_PIN, GPIO_PIN_RESET);
 }
 
-void NucleoSPI_SetTempDataready(void)
+void NucleoSPI_SetTempDataready(osTimerId id, uint32_t millis)
 {
+	osTimerStart(id, millis);
 	HAL_GPIO_WritePin(NUCLEO_SPI_TEMP_DATAREADY_PORT, NUCLEO_SPI_TEMP_DATAREADY_PIN, GPIO_PIN_SET);
 }
 
@@ -102,8 +109,9 @@ void NucleoSPI_ResetTempDataready(void)
 	HAL_GPIO_WritePin(NUCLEO_SPI_TEMP_DATAREADY_PORT, NUCLEO_SPI_TEMP_DATAREADY_PIN, GPIO_PIN_RESET);
 }
 
-void NucleoSPI_SetDoubletap(void)
+void NucleoSPI_SetDoubletap(osTimerId id, uint32_t millis)
 {
+	osTimerStart(id, millis);
 	HAL_GPIO_WritePin(NUCLEO_SPI_DOUBLETAP_GPIO_PORT, NUCLEO_SPI_DOUBLETAP_PIN, GPIO_PIN_SET);
 }
 

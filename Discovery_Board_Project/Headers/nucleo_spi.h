@@ -6,18 +6,21 @@
 #include "stm32f4xx_hal_gpio.h"
 #include "stm32f4xx_hal_rcc.h"
 #include "stm32f4xx_hal_spi.h"
+#include "cmsis_os.h"
 
 void NucleoSPI_Init(void);
 void NucleoSPI_SendFloat(float val);
 
 void NucleoSPI_RxISR(SPI_HandleTypeDef *hspi);
 
-void NucleoSPI_SetAccelDataready(void);
+void NucleoSPI_SetAccelDataready(osTimerId id, uint32_t millisec);
 void NucleoSPI_ResetAccelDataready(void);
-void NucleoSPI_SetTempDataready(void);
+void NucleoSPI_SetTempDataready(osTimerId id, uint32_t millisec);
 void NucleoSPI_ResetTempDataready(void);
-void NucleoSPI_SetDoubletap(void);
+void NucleoSPI_SetDoubletap(osTimerId id, uint32_t millisec);
 void NucleoSPI_ResetDoubletap(void);
+
+typedef void (*timeout_cb_fn)(void);
 
 /* Nucleo SPI pin defines */
 #define NUCLEO_SPI_SCK_PIN               		GPIO_PIN_10                 /* PB.10 */		/* Blue */
@@ -48,6 +51,6 @@ void NucleoSPI_ResetDoubletap(void);
 
 /* Timeout for wait */
 #define NUCLEO_SPI_TIMEOUT		100000
-#define WAIT_FOR_FLAG_UNTIL_TIMEOUT(h,f,v,t) do {int n = (t); while (__HAL_SPI_GET_FLAG((h),(f)) == (v)) {if (!--n) return;}} while (0)
+#define WAIT_FOR_FLAG_UNTIL_TIMEOUT(h,f,v,t) do {int n = (t); while (__HAL_SPI_GET_FLAG((h),(f)) == (v)) {if (!--n){NucleoSPI_ResetAccelDataready();NucleoSPI_ResetTempDataready(); return;}}} while (0)
 
 #endif

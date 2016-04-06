@@ -20,14 +20,16 @@ osThreadId tid_Thread_ACCELEROMETER;                              // thread id
 osThreadDef(Thread_ACCELEROMETER, osPriorityAboveNormal, 1, 0);		  // thread definition struct (last argument default stack size)
 
 static void doubletap_timer_elapsed(const void *arg);
+static void accel_dataready_timer_elapsed(const void *arg);
 osTimerDef(doubletap_timer, doubletap_timer_elapsed);
+osTimerDef(accel_dataready_timer, accel_dataready_timer_elapsed);
 
 /* Accelerometer mutex to protect shared flags */
 osMutexId accel_mutex;
 osMutexDef(accel_mutex);
 
 /* Current filtered roll and pitch angles */
-static float filtered_roll, filtered_pitch;
+static float filtered_roll = 0.0, filtered_pitch = 0.0;
 
 /**
   * @brief  Initialize the accelerometer.
@@ -156,7 +158,7 @@ static int Accelerometer_DetectDoubletap(float accel_mag)
 	
 	++counter;
 	
-	if (counter == 30) {
+	if (counter == 10) {
 		counter = 0;
 		peaks = 0;
 		in_a_peak = 0;
@@ -167,8 +169,12 @@ static int Accelerometer_DetectDoubletap(float accel_mag)
 
 static void doubletap_timer_elapsed(const void *arg)
 {
-	printf("elapsed double tap\n");
 	NucleoSPI_ResetDoubletap();
+}
+
+static void accel_dataready_timer_elapsed(const void *arg)
+{
+	NucleoSPI_ResetAccelDataready();
 }
 
 /**
@@ -207,36 +213,28 @@ void Thread_ACCELEROMETER (void const *argument)
 	float ax, ay, az;
 	float roll, pitch;
 
-	osTimerId doubletap_timer_id;
-	osEvent evt;
+	osTimerId doubletap_timer_id, accel_dataready_timer_id;
 	
 	doubletap_timer_id = osTimerCreate(osTimer(doubletap_timer), osTimerOnce, NULL);
+	accel_dataready_timer_id = osTimerCreate(osTimer(accel_dataready_timer), osTimerOnce, NULL);
 	
 	while(1)
 	{
 		/* Wait for accelerometer new data signal or Nucleo board SPI signal for read request.
 		   No need to send data all the time. */
-		evt = osSignalWait(0x00, osWaitForever);	/* Waits for all signals */
-		
-		if (evt.status == osEventSignal) {
-			if (evt.value.signals == ACCELEROMETER_SIGNAL) {
-				Accelerometer_ReadAccel(&ax, &ay, &az);
-				Accelerometer_Calibrate(&ax, &ay, &az);
-					
-				Accelerometer_GetRollPitch(ax, ay, az, &pitch, &roll);		
-				Kalmanfilter_asm(&pitch, &filtered_pitch, 1, &kstate_pitch);	/* filter the pitch angle */
-				Kalmanfilter_asm(&roll, &filtered_roll, 1, &kstate_roll);			/* filter the roll angle 	*/
-				
-				if (Accelerometer_DetectDoubletap(sqrtf(ax * ax + ay * ay + az * az))) {
-					NucleoSPI_SetDoubletap();
-					
-					/* Use a pulsed interrupt. Reset the Doubletap pin after some time. */
-					osTimerStart(doubletap_timer_id, DOUBLETAP_TIMEOUT_MS);
-				}
+		osSignalWait(ACCELEROMETER_SIGNAL, osWaitForever);
 
-				NucleoSPI_SetAccelDataready();
-			}
-		}
+		Accelerometer_ReadAccel(&ax, &ay, &az);
+		Accelerometer_Calibrate(&ax, &ay, &az);
+					
+		Accelerometer_GetRollPitch(ax, ay, az, &pitch, &roll);		
+		Kalmanfilter_asm(&pitch, &filtered_pitch, 1, &kstate_pitch);	/* filter the pitch angle */
+		Kalmanfilter_asm(&roll, &filtered_roll, 1, &kstate_roll);			/* filter the roll angle 	*/
+				
+		if (Accelerometer_DetectDoubletap(sqrtf(ax * ax + ay * ay + az * az)))
+			NucleoSPI_SetDoubletap(doubletap_timer_id, DOUBLETAP_TIMEOUT_MS);
+
+		NucleoSPI_SetAccelDataready(accel_dataready_timer_id, ACCEL_DATAREADY_TIMEOUT_MS);
 	}
 }
 

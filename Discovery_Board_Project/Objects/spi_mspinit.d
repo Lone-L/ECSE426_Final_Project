@@ -44,3 +44,5 @@
 .\objects\spi_mspinit.o: C:\Keil_v5\ARM\PACK\Keil\STM32F4xx_DFP\2.7.0\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_uart.h
 .\objects\spi_mspinit.o: C:\Keil_v5\ARM\PACK\Keil\STM32F4xx_DFP\2.7.0\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_usart.h
 .\objects\spi_mspinit.o: .\Headers\nucleo_spi.h
+.\objects\spi_mspinit.o: C:\Keil_v5\ARM\PACK\ARM\CMSIS\4.5.0\CMSIS\RTOS\RTX\INC\cmsis_os.h
+.\objects\spi_mspinit.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stddef.h
