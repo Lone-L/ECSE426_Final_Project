@@ -46,4 +46,8 @@ void NucleoSPI_ResetDoubletap(void);
 
 // add commands for PWM...
 
+/* Timeout for wait */
+#define NUCLEO_SPI_TIMEOUT		100000
+#define WAIT_FOR_FLAG_UNTIL_TIMEOUT(h,f,v,t) do {int n = (t); while (__HAL_SPI_GET_FLAG((h),(f)) == (v)) {if (!--n) return;}} while (0)
+
 #endif

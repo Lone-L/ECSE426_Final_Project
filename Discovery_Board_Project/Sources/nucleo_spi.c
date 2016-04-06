@@ -41,14 +41,14 @@ void NucleoSPI_SendFloat(float val)
 	uint16_t dummy;
 	
 	nucleo_SpiHandle.Instance->DR = x >> 16;
-	while (__HAL_SPI_GET_FLAG(&nucleo_SpiHandle, SPI_FLAG_TXE) == RESET);
-	while (__HAL_SPI_GET_FLAG(&nucleo_SpiHandle, SPI_FLAG_RXNE) == RESET);
+	WAIT_FOR_FLAG_UNTIL_TIMEOUT(&nucleo_SpiHandle, SPI_FLAG_TXE, RESET, NUCLEO_SPI_TIMEOUT);
+	WAIT_FOR_FLAG_UNTIL_TIMEOUT(&nucleo_SpiHandle, SPI_FLAG_RXNE, RESET, NUCLEO_SPI_TIMEOUT);
 	dummy = nucleo_SpiHandle.Instance->DR;
 	nucleo_SpiHandle.Instance->DR = x & 0xffff;
-	while (__HAL_SPI_GET_FLAG(&nucleo_SpiHandle, SPI_FLAG_TXE) == RESET);
-	while (__HAL_SPI_GET_FLAG(&nucleo_SpiHandle, SPI_FLAG_RXNE) == RESET);
+	WAIT_FOR_FLAG_UNTIL_TIMEOUT(&nucleo_SpiHandle, SPI_FLAG_TXE, RESET, NUCLEO_SPI_TIMEOUT);
+	WAIT_FOR_FLAG_UNTIL_TIMEOUT(&nucleo_SpiHandle, SPI_FLAG_RXNE, RESET, NUCLEO_SPI_TIMEOUT);
 	dummy = nucleo_SpiHandle.Instance->DR;
-	while (__HAL_SPI_GET_FLAG(&nucleo_SpiHandle, SPI_FLAG_BSY) != RESET);
+	WAIT_FOR_FLAG_UNTIL_TIMEOUT(&nucleo_SpiHandle, SPI_FLAG_BSY, SET, NUCLEO_SPI_TIMEOUT);
 }
 
 void NucleoSPI_Init(void)
