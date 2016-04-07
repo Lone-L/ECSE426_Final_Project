@@ -20,7 +20,7 @@ float DiscoverySPI_ReadFloatValue(uint16_t cmd);
 
 /* see http://stm32f4-discovery.com/2014/04/library-05-spi-for-stm32f4xx/ */
 /* SCK Pin: PB.10 (Blue) */
-#define DISCOVERY_SPI_SCK_PIN               		GPIO_PIN_10
+#define DISCOVERY_SPI_SCK_PIN               		GPIO_PIN_13
 #define DISCOVERY_SPI_SCK_MODE									GPIO_MODE_AF_PP
 #define DISCOVERY_SPI_SCK_PULL									GPIO_PULLDOWN
 #define DISCOVERY_SPI_SCK_SPEED									GPIO_SPEED_MEDIUM
@@ -29,22 +29,22 @@ float DiscoverySPI_ReadFloatValue(uint16_t cmd);
 #define DISCOVERY_SPI_SCK_CLK_ENABLE()					__GPIOB_CLK_ENABLE()
 
 /* MISO Pin: PC.2 (Orange) */
-#define DISCOVERY_SPI_MISO_PIN               		GPIO_PIN_2
+#define DISCOVERY_SPI_MISO_PIN               		GPIO_PIN_14
 #define DISCOVERY_SPI_MISO_MODE									GPIO_MODE_AF_PP
 #define DISCOVERY_SPI_MISO_PULL									GPIO_PULLDOWN
 #define DISCOVERY_SPI_MISO_SPEED								GPIO_SPEED_MEDIUM
 #define DISCOVERY_SPI_MISO_ALTERNATE						GPIO_AF5_SPI2
-#define DISCOVERY_SPI_MISO_GPIO_PORT         		GPIOC
-#define DISCOVERY_SPI_MISO_CLK_ENABLE()					__GPIOC_CLK_ENABLE()
+#define DISCOVERY_SPI_MISO_GPIO_PORT         		GPIOB
+#define DISCOVERY_SPI_MISO_CLK_ENABLE()					__GPIOB_CLK_ENABLE()
 
 /* MOSI Pin: PC.3 (Green) */
-#define DISCOVERY_SPI_MOSI_PIN               		GPIO_PIN_3
+#define DISCOVERY_SPI_MOSI_PIN               		GPIO_PIN_15
 #define DISCOVERY_SPI_MOSI_MODE									GPIO_MODE_AF_PP
 #define DISCOVERY_SPI_MOSI_PULL									GPIO_PULLDOWN
 #define DISCOVERY_SPI_MOSI_SPEED								GPIO_SPEED_MEDIUM
 #define DISCOVERY_SPI_MOSI_ALTERNATE						GPIO_AF5_SPI2
-#define DISCOVERY_SPI_MOSI_GPIO_PORT         		GPIOC
-#define DISCOVERY_SPI_MOSI_CLK_ENABLE()					__GPIOC_CLK_ENABLE()
+#define DISCOVERY_SPI_MOSI_GPIO_PORT         		GPIOB
+#define DISCOVERY_SPI_MOSI_CLK_ENABLE()					__GPIOB_CLK_ENABLE()
 
 /* DOUBLETAP Pin: PB.3 (Yellow) */
 #define DISCOVERY_SPI_DOUBLETAP_PIN             GPIO_PIN_3

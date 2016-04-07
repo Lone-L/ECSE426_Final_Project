@@ -1,5 +1,6 @@
 #include "accelerometer.h"
 #include "discovery_spi.h"
+#include "sensor_service.h"
 
 static volatile int ACCELEROMETER_DATAREADY_FLAG = 0;
 static volatile int ACCELEROMETER_DOUBLETAP_FLAG = 0;
@@ -37,6 +38,7 @@ void Accelerometer_ResetDoubletapFlag(void)
 /* use watchpoints for debug!!! */
 float roll, pitch;
 int doubletap_count = 0;
+extern AxesRaw_t bitchNroll;
 
 void Accelerometer_Process(void)
 {
@@ -45,9 +47,14 @@ void Accelerometer_Process(void)
 		roll = DiscoverySPI_ReadFloatValue(DISCOVERY_SPI_READ_ROLL_CMD);
 		Accelerometer_ResetDatareadyFlag();
 	}
-
 	if (Accelerometer_DoubleTap()) {
+    Free_Fall_Notify();
 		++doubletap_count;
 		Accelerometer_ResetDoubletapFlag();
 	}
+	bitchNroll.AXIS_X = pitch;
+	bitchNroll.AXIS_Y = roll;
+	bitchNroll.AXIS_Z = 0;
+	Acc_Update(&bitchNroll);
+
 }

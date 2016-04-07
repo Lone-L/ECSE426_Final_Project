@@ -85,6 +85,7 @@
 extern volatile uint8_t set_connectable;
 extern volatile int connected;
 extern AxesRaw_t axes_data;
+extern AxesRaw_t bitchNroll_data;
 uint8_t bnrg_expansion_board = IDB04A1; /* at startup, suppose the X-NUCLEO-IDB04A1 is used */
 /**
  * @}
@@ -279,10 +280,14 @@ int main(void)
   ret = aci_hal_set_tx_power_level(1,4);
 
 	/* Initialize SPI communication with Discovery board */
+	
 	DiscoverySPI_Init();
+	
 	
   while(1)
   {
+
+		//HAL_Delay(100);
     HCI_Process();
 		Accelerometer_Process();
 		Temperature_Process();
@@ -309,11 +314,11 @@ void User_Process(AxesRaw_t* p_axes)
   }  
 
   /* Check if the user has pushed the button */
-//  if(BSP_PB_GetState(BUTTON_KEY) == RESET)
- // {
-//    while (BSP_PB_GetState(BUTTON_KEY) == RESET);
+  if(BSP_PB_GetState(BUTTON_KEY) == RESET)
+  {
+    while (BSP_PB_GetState(BUTTON_KEY) == RESET);
     
-    //BSP_LED_Toggle(LED2); //used for debugging (BSP_LED_Init() above must be also enabled)
+    BSP_LED_Toggle(LED2); //used for debugging (BSP_LED_Init() above must be also enabled)
     
     if(connected)
     {
@@ -321,10 +326,10 @@ void User_Process(AxesRaw_t* p_axes)
       p_axes->AXIS_X += 1;
       p_axes->AXIS_Y -= 1;
       p_axes->AXIS_Z += 2;
-      //PRINTF("ACC: X=%6d Y=%6d Z=%6d\r\n", p_axes->AXIS_X, p_axes->AXIS_Y, p_axes->AXIS_Z);
-//      Acc_Update(p_axes);
+      PRINTF("ACC: X=%6d Y=%6d Z=%6d\r\n", p_axes->AXIS_X, p_axes->AXIS_Y, p_axes->AXIS_Z);
+      Free_Fall_Notify();
     }
-//  }
+  }
 }
 
 /**

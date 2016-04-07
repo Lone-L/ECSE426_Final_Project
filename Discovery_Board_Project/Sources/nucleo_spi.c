@@ -4,11 +4,10 @@
 #include "temperature.h"
 
 SPI_HandleTypeDef nucleo_SpiHandle;
-
+int counter = 0;
 void NucleoSPI_RxISR(SPI_HandleTypeDef *hspi)
 {
 	uint16_t cmd;
-	
 	__disable_irq();
 	__HAL_SPI_DISABLE_IT(hspi, SPI_FLAG_RXNE);
 
@@ -17,14 +16,17 @@ void NucleoSPI_RxISR(SPI_HandleTypeDef *hspi)
 	switch (cmd) {
 		case NUCLEO_SPI_READ_ROLL_CMD:
 			NucleoSPI_SendFloat(Accelerometer_GetCurrentRoll());
+//			NucleoSPI_SendFloat(0.0);
 			NucleoSPI_ResetAccelDataready();
 			break;
 		case NUCLEO_SPI_READ_PITCH_CMD:
 			NucleoSPI_SendFloat(Accelerometer_GetCurrentPitch());
+//			NucleoSPI_SendFloat(44.3);
 			NucleoSPI_ResetAccelDataready();
 			break;
 		case NUCLEO_SPI_READ_TEMP_CMD:
 			NucleoSPI_SendFloat(Temperature_GetCurrentTemp());
+//			NucleoSPI_SendFloat(42);
 			NucleoSPI_ResetTempDataready();
 			break;
 //		case NUCLEO_SPI_WRITE_LED_PATTERN_CMD:
@@ -111,6 +113,8 @@ void NucleoSPI_ResetTempDataready(void)
 
 void NucleoSPI_SetDoubletap(osTimerId id, uint32_t millis)
 {
+	/* There is a very weird issue where a double tap detection sometimes causes the board to keep sending
+		 garbage value for the roll/pitch/temp, and requires reset to fix. No idea why... */
 	osTimerStart(id, millis);
 	HAL_GPIO_WritePin(NUCLEO_SPI_DOUBLETAP_GPIO_PORT, NUCLEO_SPI_DOUBLETAP_PIN, GPIO_PIN_SET);
 }

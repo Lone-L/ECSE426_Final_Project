@@ -222,7 +222,12 @@
         <Ww>
           <count>3</count>
           <WinNumber>1</WinNumber>
-          <ItemText>doubletapped</ItemText>
+          <ItemText>doubletap_count</ItemText>
+        </Ww>
+        <Ww>
+          <count>4</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>doubletap_interrupt_count</ItemText>
         </Ww>
       </WatchWindow1>
       <Tracepoint>

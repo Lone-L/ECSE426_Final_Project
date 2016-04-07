@@ -57,6 +57,7 @@ volatile uint8_t set_connectable = 1;
 volatile uint16_t connection_handle = 0;
 volatile uint8_t notification_enabled = FALSE;
 volatile AxesRaw_t axes_data = {0, 0, 0};
+volatile AxesRaw_t bitchNroll = {0 , 0, 0};
 uint16_t sampleServHandle, TXCharHandle, RXCharHandle;
 uint16_t accServHandle, freeFallCharHandle, accCharHandle;
 uint16_t envSensServHandle, tempCharHandle, pressCharHandle, humidityCharHandle;
@@ -202,13 +203,14 @@ tBleStatus Acc_Update(AxesRaw_t *data)
   STORE_LE_16(buff+4,data->AXIS_Z);
 	
   ret = aci_gatt_update_char_value(accServHandle, accCharHandle, 0, 6, buff);
-	
+	//printf("hello world");
   if (ret != BLE_STATUS_SUCCESS){
     PRINTF("Error while updating ACC characteristic.\n") ;
     return BLE_STATUS_ERROR ;
   }
   return BLE_STATUS_SUCCESS;	
 }
+
 
 /**
  * @brief  Add the Environmental Sensor service.
@@ -417,7 +419,7 @@ void setConnectable(void)
 {  
   tBleStatus ret;
   
-  const char local_name[] = {AD_TYPE_COMPLETE_LOCAL_NAME,'B','l','u','e','N','R','G'};
+  const char local_name[] = {AD_TYPE_COMPLETE_LOCAL_NAME,'B','l','u','e','N','R','G','_','G','a','M'};
   
   /* disable scan response */
   hci_le_set_scan_resp_data(0,NULL);
@@ -470,7 +472,7 @@ void GAP_DisconnectionComplete_CB(void)
 void Read_Request_CB(uint16_t handle)
 {  
   if(handle == accCharHandle + 1){
-    Acc_Update((AxesRaw_t*)&axes_data);
+    Acc_Update((AxesRaw_t*)&bitchNroll);
   }  
   else if(handle == tempCharHandle + 1){
     int16_t data;

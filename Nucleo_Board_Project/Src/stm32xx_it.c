@@ -166,9 +166,13 @@ void PUSH_BUTTON_EXTI_IRQHandler(void)
   * @param  None
   * @retval None
   */
+int doubletap_interrupt_count = 0;
 void DISCOVERY_SPI_DOUBLETAP_EXTI_IRQHandler(void)
 {
-  HAL_GPIO_EXTI_IRQHandler(DISCOVERY_SPI_DOUBLETAP_PIN);
+	
+  doubletap_interrupt_count++;
+	HAL_GPIO_EXTI_IRQHandler(DISCOVERY_SPI_DOUBLETAP_PIN);
+	
 }
 
 /**
