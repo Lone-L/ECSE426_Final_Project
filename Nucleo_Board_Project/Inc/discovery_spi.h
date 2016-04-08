@@ -10,6 +10,8 @@
 void DiscoverySPI_Init(void);
 float DiscoverySPI_ReadFloatValue(uint16_t cmd);
 
+extern SPI_HandleTypeDef discovery_SpiHandle;
+
 #define DISCOVERY_SPI_RCC_CLK_ENABLE()				 __HAL_RCC_SPI2_CLK_ENABLE();
 
 // SPI Instance

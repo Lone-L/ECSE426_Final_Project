@@ -33,6 +33,7 @@ float DiscoverySPI_ReadFloatValue(uint16_t cmd)
 	uint32_t upper, lower, x;
 	uint16_t dummy;
 	
+	while (__HAL_SPI_GET_FLAG(&discovery_SpiHandle, SPI_FLAG_TXE) == RESET);
 	discovery_SpiHandle.Instance->DR = cmd;
 	while (__HAL_SPI_GET_FLAG(&discovery_SpiHandle, SPI_FLAG_TXE) == RESET);
 	while (__HAL_SPI_GET_FLAG(&discovery_SpiHandle, SPI_FLAG_RXNE) == RESET);

@@ -32,19 +32,20 @@ typedef void (*timeout_cb_fn)(void);
 #define NUCLEO_SPI_MOSI_PIN              		GPIO_PIN_3                  /* PC.3 */		/* Green */
 #define NUCLEO_SPI_MOSI_GPIO_PORT        		GPIOC                       /* GPIOC */
 
-#define NUCLEO_SPI_DOUBLETAP_PIN						GPIO_PIN_6									/* PC.6 */		/* Yellow */
-#define NUCLEO_SPI_DOUBLETAP_GPIO_PORT			GPIOC												/* GPIOC */
+#define NUCLEO_SPI_DOUBLETAP_PIN				GPIO_PIN_6					/* PC.6 */		/* Yellow */
+#define NUCLEO_SPI_DOUBLETAP_GPIO_PORT			GPIOC						/* GPIOC */
 
-#define NUCLEO_SPI_ACCEL_DATAREADY_PIN			GPIO_PIN_8									/* PC.8 */		/* Black */
-#define NUCLEO_SPI_ACCEL_DATAREADY_PORT			GPIOC												/* GPIOC */
+#define NUCLEO_SPI_ACCEL_DATAREADY_PIN			GPIO_PIN_8					/* PC.8 */		/* Black */
+#define NUCLEO_SPI_ACCEL_DATAREADY_PORT			GPIOC						/* GPIOC */
 
-#define NUCLEO_SPI_TEMP_DATAREADY_PIN				GPIO_PIN_1									/* PC.1 */		/* Gray */
-#define NUCLEO_SPI_TEMP_DATAREADY_PORT			GPIOC												/* GPIOC */
+#define NUCLEO_SPI_TEMP_DATAREADY_PIN			GPIO_PIN_1					/* PC.1 */		/* Gray */
+#define NUCLEO_SPI_TEMP_DATAREADY_PORT			GPIOC						/* GPIOC */
 
+//#define NUCLEO_SPI_ERROR_PIN
 /* Nucleo SPI command defines */
-#define NUCLEO_SPI_READ_ROLL_CMD						0x1111
-#define NUCLEO_SPI_READ_PITCH_CMD						0x5555
-#define NUCLEO_SPI_READ_TEMP_CMD						0x1234
+#define NUCLEO_SPI_READ_ROLL_CMD				0x1111
+#define NUCLEO_SPI_READ_PITCH_CMD				0x5555
+#define NUCLEO_SPI_READ_TEMP_CMD				0x1234
 #define NUCLEO_SPI_WRITE_LED_PATTERN_CMD		0xbeef
 
 // add commands for PWM...

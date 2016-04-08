@@ -5,6 +5,9 @@
 
 SPI_HandleTypeDef nucleo_SpiHandle;
 int counter = 0;
+uint16_t copy;
+int tmp;
+
 void NucleoSPI_RxISR(SPI_HandleTypeDef *hspi)
 {
 	uint16_t cmd;
@@ -12,27 +15,33 @@ void NucleoSPI_RxISR(SPI_HandleTypeDef *hspi)
 	__HAL_SPI_DISABLE_IT(hspi, SPI_FLAG_RXNE);
 
 	cmd = hspi->Instance->DR;
+	
+	if (cmd != 0x0)
+		copy = cmd;
 
 	switch (cmd) {
 		case NUCLEO_SPI_READ_ROLL_CMD:
 			NucleoSPI_SendFloat(Accelerometer_GetCurrentRoll());
-//			NucleoSPI_SendFloat(0.0);
 			NucleoSPI_ResetAccelDataready();
 			break;
 		case NUCLEO_SPI_READ_PITCH_CMD:
 			NucleoSPI_SendFloat(Accelerometer_GetCurrentPitch());
-//			NucleoSPI_SendFloat(44.3);
 			NucleoSPI_ResetAccelDataready();
 			break;
 		case NUCLEO_SPI_READ_TEMP_CMD:
 			NucleoSPI_SendFloat(Temperature_GetCurrentTemp());
-//			NucleoSPI_SendFloat(42);
 			NucleoSPI_ResetTempDataready();
 			break;
 //		case NUCLEO_SPI_WRITE_LED_PATTERN_CMD:
 			/* Signal LED thread */
 //			break;
+		case 0x0000:
+			break;
 		default:
+//			NucleoSPI_SendFloat(0.0);
+//			NucleoSPI_SetErrorAlert();
+			tmp++;
+			NVIC_SystemReset();
 			NucleoSPI_ResetAccelDataready();
 			NucleoSPI_ResetTempDataready();
 			break;
@@ -40,13 +49,14 @@ void NucleoSPI_RxISR(SPI_HandleTypeDef *hspi)
 
 	__HAL_SPI_ENABLE_IT(hspi, SPI_FLAG_RXNE);
 	__enable_irq();
+	++counter;
 }
 
 void NucleoSPI_SendFloat(float val)
 {
 	uint32_t x = *(uint32_t *)&val;
 	uint16_t dummy;
-	
+
 	nucleo_SpiHandle.Instance->DR = x >> 16;
 	WAIT_FOR_FLAG_UNTIL_TIMEOUT(&nucleo_SpiHandle, SPI_FLAG_TXE, RESET, NUCLEO_SPI_TIMEOUT);
 	WAIT_FOR_FLAG_UNTIL_TIMEOUT(&nucleo_SpiHandle, SPI_FLAG_RXNE, RESET, NUCLEO_SPI_TIMEOUT);
@@ -65,19 +75,19 @@ void NucleoSPI_Init(void)
 	__HAL_RCC_SPI2_CLK_ENABLE();
 	
   HAL_SPI_DeInit(&nucleo_SpiHandle);
-  nucleo_SpiHandle.Instance 							  = SPI2;	/* SPI1 is used by the LIS3DSH driver. */
+  nucleo_SpiHandle.Instance 				= SPI2;	/* SPI1 is used by the LIS3DSH driver. */
   nucleo_SpiHandle.Init.BaudRatePrescaler 	= SPI_BAUDRATEPRESCALER_4;
-  nucleo_SpiHandle.Init.Direction 					= SPI_DIRECTION_2LINES;
-  nucleo_SpiHandle.Init.CLKPhase 						= SPI_PHASE_1EDGE;
-  nucleo_SpiHandle.Init.CLKPolarity 				= SPI_POLARITY_LOW;
-  nucleo_SpiHandle.Init.CRCCalculation			= SPI_CRCCALCULATION_DISABLED;
-  nucleo_SpiHandle.Init.CRCPolynomial 			= 7;
-  nucleo_SpiHandle.Init.DataSize 						= SPI_DATASIZE_16BIT;
-  nucleo_SpiHandle.Init.FirstBit 						= SPI_FIRSTBIT_MSB;
-  nucleo_SpiHandle.Init.NSS 								= SPI_NSS_SOFT;
-  nucleo_SpiHandle.Init.TIMode 							= SPI_TIMODE_DISABLED;
-  nucleo_SpiHandle.Init.Mode 								= SPI_MODE_SLAVE;				/* Sensor boardz iz slave to teh Nucleo boradz. */
-	nucleo_SpiHandle.RxISR										= NucleoSPI_RxISR;
+  nucleo_SpiHandle.Init.Direction 			= SPI_DIRECTION_2LINES;
+  nucleo_SpiHandle.Init.CLKPhase 			= SPI_PHASE_1EDGE;
+  nucleo_SpiHandle.Init.CLKPolarity 		= SPI_POLARITY_LOW;
+  nucleo_SpiHandle.Init.CRCCalculation		= SPI_CRCCALCULATION_DISABLED;
+  nucleo_SpiHandle.Init.CRCPolynomial 		= 7;
+  nucleo_SpiHandle.Init.DataSize 			= SPI_DATASIZE_16BIT;
+  nucleo_SpiHandle.Init.FirstBit 			= SPI_FIRSTBIT_MSB;
+  nucleo_SpiHandle.Init.NSS 				= SPI_NSS_SOFT;
+  nucleo_SpiHandle.Init.TIMode 				= SPI_TIMODE_DISABLED;
+  nucleo_SpiHandle.Init.Mode 				= SPI_MODE_SLAVE;				/* Sensor boardz iz slave to teh Nucleo b0radZ. */
+	nucleo_SpiHandle.RxISR					= NucleoSPI_RxISR;
 	
 	if (HAL_SPI_Init(&nucleo_SpiHandle) != HAL_OK) {printf ("ERROR: Error in initialising SPI2 \n");};
   

@@ -46,15 +46,16 @@ void Accelerometer_Process(void)
 		pitch = DiscoverySPI_ReadFloatValue(DISCOVERY_SPI_READ_PITCH_CMD);
 		roll = DiscoverySPI_ReadFloatValue(DISCOVERY_SPI_READ_ROLL_CMD);
 		Accelerometer_ResetDatareadyFlag();
+		
+		if (Accelerometer_DoubleTap()) {
+			Free_Fall_Notify();
+			++doubletap_count;
+			Accelerometer_ResetDoubletapFlag();
+		}
+		
+		bitchNroll.AXIS_X = pitch;
+		bitchNroll.AXIS_Y = roll;
+		bitchNroll.AXIS_Z = 0;
+		Acc_Update(&bitchNroll);
 	}
-	if (Accelerometer_DoubleTap()) {
-    Free_Fall_Notify();
-		++doubletap_count;
-		Accelerometer_ResetDoubletapFlag();
-	}
-	bitchNroll.AXIS_X = pitch;
-	bitchNroll.AXIS_Y = roll;
-	bitchNroll.AXIS_Z = 0;
-	Acc_Update(&bitchNroll);
-
 }

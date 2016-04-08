@@ -1,5 +1,6 @@
 #include "temperature.h"
 #include "discovery_spi.h"
+#include "sensor_service.h"
 
 static volatile int TEMPERATURE_DATAREADY_FLAG;
 
@@ -20,11 +21,12 @@ void Temperature_ResetDatareadyFlag(void)
 
 /* watchpoint!! */
 float temperature;
-
+extern int16_t tempNstuff;
 void Temperature_Process(void)
 {
 	if (Temperature_IsDataReady()) {
 		temperature = DiscoverySPI_ReadFloatValue(DISCOVERY_SPI_READ_TEMP_CMD);
 		Temperature_ResetDatareadyFlag();
+		tempNstuff = temperature;
 	}
 }

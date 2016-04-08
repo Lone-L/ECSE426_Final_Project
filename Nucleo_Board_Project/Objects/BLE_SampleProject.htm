@@ -3,7 +3,7 @@
 <title>Static Call Graph - [.\Objects\BLE_SampleProject.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image .\Objects\BLE_SampleProject.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5050169: Last Updated: Thu Apr 07 17:39:07 2016
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5050169: Last Updated: Fri Apr 08 17:16:58 2016
 <BR><P>
 <H3>Maximum Stack Usage =       1056 bytes + Unknown(Functions without stacksize, Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
@@ -283,7 +283,7 @@ Global Symbols
 <BR><BR>[Calls]<UL><LI><a href="#[6e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_sys_exit
 </UL>
 
-<P><STRONG><a name="[f6]"></a>rand</STRONG> (Thumb, 48 bytes, Stack size 0 bytes, rand.o(.emb_text))
+<P><STRONG><a name="[f7]"></a>rand</STRONG> (Thumb, 48 bytes, Stack size 0 bytes, rand.o(.emb_text))
 <BR><BR>[Called By]<UL><LI><a href="#[e4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Read_Request_CB
 </UL>
 
@@ -473,7 +473,7 @@ Global Symbols
 <BR><BR>[Called By]<UL><LI><a href="#[65]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__user_setup_stackheap
 </UL>
 
-<P><STRONG><a name="[f7]"></a>__aeabi_uldivmod</STRONG> (Thumb, 0 bytes, Stack size 48 bytes, lludivv7m.o(.text))
+<P><STRONG><a name="[f8]"></a>__aeabi_uldivmod</STRONG> (Thumb, 0 bytes, Stack size 48 bytes, lludivv7m.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 48<LI>Call Chain = __aeabi_uldivmod
 </UL>
 <BR>[Called By]<UL><LI><a href="#[e4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Read_Request_CB
@@ -487,7 +487,7 @@ Global Symbols
 </UL>
 <BR>[Calls]<UL><LI><a href="#[70]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_printf_char_file
 </UL>
-<BR>[Called By]<UL><LI><a href="#[f8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Temp_Update
+<BR>[Called By]<UL><LI><a href="#[f6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Temp_Update
 <LI><a href="#[f5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Press_Update
 <LI><a href="#[f2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Humidity_Update
 <LI><a href="#[cf]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GAP_DisconnectionComplete_CB
@@ -1129,7 +1129,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[69]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[a8]"></a>DiscoverySPI_ReadFloatValue</STRONG> (Thumb, 168 bytes, Stack size 16 bytes, discovery_spi.o(i.DiscoverySPI_ReadFloatValue))
+<P><STRONG><a name="[a8]"></a>DiscoverySPI_ReadFloatValue</STRONG> (Thumb, 184 bytes, Stack size 16 bytes, discovery_spi.o(i.DiscoverySPI_ReadFloatValue))
 <BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = DiscoverySPI_ReadFloatValue
 </UL>
 <BR>[Called By]<UL><LI><a href="#[fc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Temperature_Process
@@ -1556,18 +1556,18 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[e4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Read_Request_CB
 </UL>
 
-<P><STRONG><a name="[e4]"></a>Read_Request_CB</STRONG> (Thumb, 210 bytes, Stack size 32 bytes, sensor_service.o(i.Read_Request_CB))
+<P><STRONG><a name="[e4]"></a>Read_Request_CB</STRONG> (Thumb, 180 bytes, Stack size 32 bytes, sensor_service.o(i.Read_Request_CB))
 <BR><BR>[Stack]<UL><LI>Max Depth = 792 + Unknown Stack Size
 <LI>Call Chain = Read_Request_CB &rArr; Acc_Update &rArr; aci_gatt_update_char_value &rArr; hci_send_req &rArr; hci_send_cmd &rArr; hci_write &rArr; Hal_Write_Serial &rArr; BlueNRG_SPI_Write &rArr; HAL_SPI_TransmitReceive &rArr; SPI_WaitOnFlagUntilTimeout
 </UL>
 <BR>[Calls]<UL><LI><a href="#[f9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;aci_gatt_allow_read
 <LI><a href="#[f0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Timer_Set
-<LI><a href="#[f8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Temp_Update
+<LI><a href="#[f6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Temp_Update
 <LI><a href="#[f5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Press_Update
 <LI><a href="#[f2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Humidity_Update
 <LI><a href="#[a4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Acc_Update
-<LI><a href="#[f6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;rand
-<LI><a href="#[f7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_uldivmod
+<LI><a href="#[f7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;rand
+<LI><a href="#[f8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_uldivmod
 </UL>
 <BR>[Called By]<UL><LI><a href="#[e3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HCI_Event_CB
 </UL>
@@ -1594,7 +1594,7 @@ Global Symbols
 <P><STRONG><a name="[4b]"></a>SystemInit</STRONG> (Thumb, 82 bytes, Stack size 0 bytes, system_stm32f4xx.o(i.SystemInit))
 <BR>[Address Reference Count : 1]<UL><LI> startup_stm32f401xe.o(.text)
 </UL>
-<P><STRONG><a name="[f8]"></a>Temp_Update</STRONG> (Thumb, 42 bytes, Stack size 16 bytes, sensor_service.o(i.Temp_Update))
+<P><STRONG><a name="[f6]"></a>Temp_Update</STRONG> (Thumb, 42 bytes, Stack size 16 bytes, sensor_service.o(i.Temp_Update))
 <BR><BR>[Stack]<UL><LI>Max Depth = 752 + Unknown Stack Size
 <LI>Call Chain = Temp_Update &rArr; aci_gatt_update_char_value &rArr; hci_send_req &rArr; hci_send_cmd &rArr; hci_write &rArr; Hal_Write_Serial &rArr; BlueNRG_SPI_Write &rArr; HAL_SPI_TransmitReceive &rArr; SPI_WaitOnFlagUntilTimeout
 </UL>
@@ -1608,7 +1608,7 @@ Global Symbols
 <BR><BR>[Called By]<UL><LI><a href="#[fc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Temperature_Process
 </UL>
 
-<P><STRONG><a name="[fc]"></a>Temperature_Process</STRONG> (Thumb, 28 bytes, Stack size 8 bytes, temperature.o(i.Temperature_Process))
+<P><STRONG><a name="[fc]"></a>Temperature_Process</STRONG> (Thumb, 48 bytes, Stack size 8 bytes, temperature.o(i.Temperature_Process))
 <BR><BR>[Stack]<UL><LI>Max Depth = 24<LI>Call Chain = Temperature_Process &rArr; DiscoverySPI_ReadFloatValue
 </UL>
 <BR>[Calls]<UL><LI><a href="#[fe]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Temperature_ResetDatareadyFlag
@@ -1799,7 +1799,7 @@ Global Symbols
 <LI><a href="#[f4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Osal_MemSet
 <LI><a href="#[104]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;hci_send_req
 </UL>
-<BR>[Called By]<UL><LI><a href="#[f8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Temp_Update
+<BR>[Called By]<UL><LI><a href="#[f6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Temp_Update
 <LI><a href="#[f5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Press_Update
 <LI><a href="#[f2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Humidity_Update
 <LI><a href="#[a4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Acc_Update

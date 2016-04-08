@@ -58,6 +58,7 @@ volatile uint16_t connection_handle = 0;
 volatile uint8_t notification_enabled = FALSE;
 volatile AxesRaw_t axes_data = {0, 0, 0};
 volatile AxesRaw_t bitchNroll = {0 , 0, 0};
+volatile int16_t tempNstuff = 0;
 uint16_t sampleServHandle, TXCharHandle, RXCharHandle;
 uint16_t accServHandle, freeFallCharHandle, accCharHandle;
 uint16_t envSensServHandle, tempCharHandle, pressCharHandle, humidityCharHandle;
@@ -474,14 +475,9 @@ void Read_Request_CB(uint16_t handle)
   if(handle == accCharHandle + 1){
     Acc_Update((AxesRaw_t*)&bitchNroll);
   }  
-  else if(handle == tempCharHandle + 1){
-    int16_t data;
-    data = 210 + ((uint64_t)rand()*15)/RAND_MAX; //sensor emulation        
-    Acc_Update((AxesRaw_t*)&axes_data); //FIXME: to overcome issue on Android App
-                                        // If the user button is not pressed within
-                                        // a short time after the connection,
-                                        // a pop-up reports a "No valid characteristics found" error.
-    Temp_Update(data);
+  else if(handle == tempCharHandle + 1){    
+
+    Temp_Update(tempNstuff);
   }
   else if(handle == pressCharHandle + 1){
     int32_t data;

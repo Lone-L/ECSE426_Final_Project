@@ -19,10 +19,10 @@ extern osMutexId accel_mutex;
 #define DOUBLETAP_THRESHOLD		((float)1.4)
 
 /* SIGNALS used to resume thread */
-#define ACCELEROMETER_SIGNAL								0x0001		/* Accelerometer has new data */
+#define ACCELEROMETER_SIGNAL			0x0001		/* Accelerometer has new data */
 
 /* Milliseconds to keep doubletap pin high upon detection. */
-#define DOUBLETAP_TIMEOUT_MS					10
+#define DOUBLETAP_TIMEOUT_MS			10
 #define ACCEL_DATAREADY_TIMEOUT_MS		10
 
 #endif
