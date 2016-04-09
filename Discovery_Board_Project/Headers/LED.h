@@ -15,12 +15,15 @@ void LED_SET_DUTY_CYCLE(int duty_cycle);
 void init_GPIO_NO_PWM(void);
 
 #define PERIOD 42000
-#define PULSE  1000
 
-
+/* DIFFERENT LED STATES */
 #define ALL_ON_PWN_ON			1
 #define CCW_NO_PWM				2
 #define CW_NO_PWM				3
 #define ALL_OFF					4
+
+/* GPIO MODES FOR CURRENT_GPIO_MODE FLAG */
+#define GPIO_ALTERNATE_MODE		1
+#define GPIO_PP_MODE			0
 
 #endif
