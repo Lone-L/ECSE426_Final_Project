@@ -15,6 +15,7 @@
 #include "hardware_timer.h"
 #include "temperature.h"
 #include "nucleo_spi.h"
+#include "led.h"
 #include "stm32f4xx_hal.h"              // Keil::Device:STM32Cube HAL:Common
 #include "cmsis_os.h"                   // ARM::CMSIS:RTOS:Keil RTX
 #include "RTE_Components.h"             // Component selection
@@ -68,6 +69,12 @@ void SystemClock_Config(void)
   HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_5);
 }
 
+void yolo(void) {
+	unsigned int xx;
+	for (xx = 0; xx < 18641351; xx++) {
+	}
+}
+
 /**
   * Main function
   */
@@ -89,8 +96,11 @@ int main (void)
   start_Thread_TEMPERATURE();
 	
   /* Initialize hardware timer */
-  HardwareTimer4_Init();										/* Temperature reading timer */
-  
+  HardwareTimer3_Init();										/* Temperature reading timer */
+  HardwareTimer4_Init();										/* LED timer init */
+
+  init_GPIO_NO_PWM();
+	
   /* User codes ends here*/
   
   osKernelStart();                          /* start thread execution         */

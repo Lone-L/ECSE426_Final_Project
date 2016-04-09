@@ -467,6 +467,11 @@
               <FileType>1</FileType>
               <FilePath>.\Sources\nucleo_spi.c</FilePath>
             </File>
+            <File>
+              <FileName>LED.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Sources\LED.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -948,6 +953,11 @@
               <FileType>1</FileType>
               <FilePath>.\Sources\nucleo_spi.c</FilePath>
             </File>
+            <File>
+              <FileName>LED.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Sources\LED.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -1428,6 +1438,11 @@
               <FileName>nucleo_spi.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\Sources\nucleo_spi.c</FilePath>
+            </File>
+            <File>
+              <FileName>LED.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Sources\LED.c</FilePath>
             </File>
           </Files>
         </Group>

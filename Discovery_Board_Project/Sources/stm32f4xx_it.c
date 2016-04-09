@@ -53,6 +53,7 @@
 
 /* Global variables ----------------------------------------------------------*/
 extern TIM_HandleTypeDef timmy4;						/* TIM4 configuration struct */
+extern TIM_HandleTypeDef timmy3;						/* TIM3 configuration struct */
 extern SPI_HandleTypeDef nucleo_SpiHandle;	/* Nucleo board SPI handle */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -200,6 +201,16 @@ void EXTI0_IRQHandler(void)
 void TIM4_IRQHandler(void)
 {
 	HAL_TIM_IRQHandler(&timmy4);
+}
+
+/**
+  * @brief  This function handles TIM4 interrupt request.
+  * @param  None
+  * @retval None
+  */
+void TIM3_IRQHandler(void)
+{
+	HAL_TIM_IRQHandler(&timmy3);
 }
 
 /**
