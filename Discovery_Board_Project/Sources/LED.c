@@ -5,7 +5,7 @@ extern TIM_HandleTypeDef timmy4;
 TIM_OC_InitTypeDef OC_CONFIG;
 static int led = 2;
 static int LEDS[] = {GPIO_PIN_13, GPIO_PIN_14, GPIO_PIN_15, GPIO_PIN_12};
-static int LED_STATE = ALL_ON_PWM_ON;			//currently there are 4 different states, CW, CCW, ALL ON PWM, ALL OFF
+static int LED_STATE = ALL_ON_PWN_ON;			//currently there are 4 different states, CW, CCW, ALL ON PWM, ALL OFF
 static int IS_PWM_ON = 0; 						//used to indicate whether PWM is started or stopped
 static int CURRENT_GPIO_MODE = 0;				//used to indicate whether GPIO's are currently initialized to alternate function (PWM) or PP mode (DC to drive CCW and CW LED)
 static int pulse = (int)PERIOD/2;				//used to set the duty cycle
@@ -15,7 +15,7 @@ static int pulse = (int)PERIOD/2;				//used to set the duty cycle
    * @param 
    * @retval None
    */
-void toggle_pwm_flag(void)
+void toggle_PWM_flag(void)
 {
 	IS_PWM_ON = ~IS_PWM_ON;
 }
@@ -26,7 +26,7 @@ void toggle_pwm_flag(void)
    * @param 
    * @retval None
    */
-void toggle_gpio_mode_flag(void)
+void toggle_GPIO_mode_flag(void)
 {
 	CURRENT_GPIO_MODE = ~CURRENT_GPIO_MODE;
 }
@@ -36,7 +36,7 @@ void toggle_gpio_mode_flag(void)
    * @param state : can be any of states 1, 2, 3, 4
    * @retval None
    */
-void set_led_state(int state)
+void set_LED_state(int state)
 {
 	LED_STATE = state;
 }
@@ -47,11 +47,11 @@ void set_led_state(int state)
    * @retval None
    */
 
-void LED_SET_DUTY_CYCLE(int duty_cycle)
+void LED_set_duty_cycle(int duty_cycle)
 {
 	if (!CURRENT_GPIO_MODE)
 	{
-		toggle_gpio_mode();
+		toggle_GPIO_mode_flag();
 		init_GPIO_PWM();
 	}
 	pulse = (int)(duty_cycle * PERIOD / 100);
@@ -73,7 +73,7 @@ void LED_ON_PWM(void)
 	HAL_TIM_PWM_Start(&timmy4,TIM_CHANNEL_2);
 	HAL_TIM_PWM_Start(&timmy4,TIM_CHANNEL_3);
 	HAL_TIM_PWM_Start(&timmy4,TIM_CHANNEL_4);
-	if (!PWM_IS_ON) toggle_pwm_flag();
+	if (!IS_PWM_ON) toggle_PWM_flag();
 }
 /**
    * @brief Stops PWM.
@@ -86,7 +86,7 @@ void LED_OFF_PWM(void)
 	HAL_TIM_PWM_Stop(&timmy4,TIM_CHANNEL_2);
 	HAL_TIM_PWM_Stop(&timmy4,TIM_CHANNEL_3);
 	HAL_TIM_PWM_Stop(&timmy4,TIM_CHANNEL_4);
-	if (PWM_IS_ON) toggle_pwm_flag();
+	if (IS_PWM_ON) toggle_PWM_flag();
 }
 /**
    * @brief Turns on LEDS in counter clockwise direction.
@@ -206,12 +206,12 @@ void HAL_TIM_PWM_PulseFinishedCallback(TIM_HandleTypeDef *htim)
 {
 	switch (LED_STATE)
 	{
-		case ALL_ON_PWM_ON:
+		case ALL_ON_PWN_ON:
 			if (CURRENT_GPIO_MODE == GPIO_PP_MODE)
 			{
-				toggle_gpio_mode_flag();
+				toggle_GPIO_mode_flag();
 				init_GPIO_PWM();
-				LED_ON_PWM();
+				LED_ON_PWM();	
 			}
 
 			break;
@@ -219,7 +219,7 @@ void HAL_TIM_PWM_PulseFinishedCallback(TIM_HandleTypeDef *htim)
 			if (CURRENT_GPIO_MODE == GPIO_ALTERNATE_MODE)
 			{
 				LED_OFF_PWM();
-				toggle_gpio_mode_flag();
+				toggle_GPIO_mode_flag();
 				init_GPIO_NO_PWM();
 			}
 
@@ -228,13 +228,13 @@ void HAL_TIM_PWM_PulseFinishedCallback(TIM_HandleTypeDef *htim)
 		case CW_NO_PWM:
 			if (CURRENT_GPIO_MODE == GPIO_ALTERNATE_MODE)
 			{
-				toggle_gpio_mode_flag();
-				init_GPIO_NO_PWM(;)
+				toggle_GPIO_mode_flag();
+				init_GPIO_NO_PWM();
 			}
 			LED_CW();
 			break;
 		case ALL_OFF:
-			if (PWM_IS_ON) {
+			if (IS_PWM_ON) {
 				LED_OFF_PWM();
 			}
 				LED_OFF();
