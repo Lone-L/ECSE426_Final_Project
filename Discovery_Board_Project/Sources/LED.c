@@ -5,10 +5,10 @@ extern TIM_HandleTypeDef timmy4;
 TIM_OC_InitTypeDef OC_CONFIG;
 static int led = 2;
 static int LEDS[] = {GPIO_PIN_13, GPIO_PIN_14, GPIO_PIN_15, GPIO_PIN_12};
-static int LED_STATE = ALL_ON_PWN_ON;			//currently there are 4 different states, CW, CCW, ALL ON PWM, ALL OFF
-static int IS_PWM_ON = 0; 						//used to indicate whether PWM is started or stopped
-static int CURRENT_GPIO_MODE = 0;				//used to indicate whether GPIO's are currently initialized to alternate function (PWM) or PP mode (DC to drive CCW and CW LED)
-static int pulse = (int)PERIOD/2;				//used to set the duty cycle
+static int LED_STATE = ALL_OFF;								//currently there are 4 different states, CW, CCW, ALL ON PWM, ALL OFF
+static int IS_PWM_ON = 0; 										//used to indicate whether PWM is started or stopped
+static int CURRENT_GPIO_MODE = GPIO_PP_MODE;	//used to indicate whether GPIO's are currently initialized to alternate function (PWM) or PP mode (DC to drive CCW and CW LED)
+static int pulse = (int)PERIOD/2;							//used to set the duty cycle
 
 /**
    * @brief toggles IS_PWM_ON,
@@ -17,7 +17,14 @@ static int pulse = (int)PERIOD/2;				//used to set the duty cycle
    */
 void toggle_PWM_flag(void)
 {
-	IS_PWM_ON = ~IS_PWM_ON;
+	if (IS_PWM_ON == 1) 
+	{
+		IS_PWM_ON = 0;
+	}
+	else
+	{
+		IS_PWM_ON = 1;
+	}
 }
 
 
@@ -28,7 +35,10 @@ void toggle_PWM_flag(void)
    */
 void toggle_GPIO_mode_flag(void)
 {
-	CURRENT_GPIO_MODE = ~CURRENT_GPIO_MODE;
+	if (CURRENT_GPIO_MODE == GPIO_PP_MODE)
+		CURRENT_GPIO_MODE = GPIO_ALTERNATE_MODE;
+	else
+		CURRENT_GPIO_MODE = GPIO_PP_MODE;
 }
 
 /**
@@ -49,11 +59,6 @@ void set_LED_state(int state)
 
 void LED_set_duty_cycle(int duty_cycle)
 {
-	if (!CURRENT_GPIO_MODE)
-	{
-		toggle_GPIO_mode_flag();
-		init_GPIO_PWM();
-	}
 	pulse = (int)(duty_cycle * PERIOD / 100);
 	OC_CONFIG.Pulse = pulse;
 	HAL_TIM_OC_ConfigChannel(&timmy4, &OC_CONFIG, TIM_CHANNEL_1);
@@ -82,6 +87,7 @@ void LED_ON_PWM(void)
    */
 void LED_OFF_PWM(void)
 {
+	/* this also stops the hardware timer... :( */
 	HAL_TIM_PWM_Stop(&timmy4,TIM_CHANNEL_1);
 	HAL_TIM_PWM_Stop(&timmy4,TIM_CHANNEL_2);
 	HAL_TIM_PWM_Stop(&timmy4,TIM_CHANNEL_3);
@@ -97,7 +103,7 @@ void LED_CCW(void)
 {
 	LED_OFF();
 	GPIOD->ODR = GPIOD->ODR | LEDS[led];
-	led = (led + 1) % 4;
+	led = (led + 3) % 4;
 }
 /**
    * @brief Turns on LEDS in clockwise direction.
@@ -108,7 +114,7 @@ void LED_CW(void)
 {
 	LED_OFF();
 	GPIOD->ODR = GPIOD->ODR | LEDS[led];
-	led = (led - 1) % 4;
+	led = (led + 1) % 4;
 }
 
 /**
@@ -137,8 +143,6 @@ void LED_OFF(void)
    */
 void init_PWM(void)
 {
-	
-	
 	OC_CONFIG.OCMode = TIM_OCMODE_PWM2; //set pulse to 1 when count is equal to CCRx 
 	OC_CONFIG.OCIdleState = TIM_OCIDLESTATE_SET;
 	OC_CONFIG.Pulse = pulse; // ?
@@ -172,7 +176,6 @@ void init_GPIO_PWM(void)
 
 	/* Initialize GPIO pins configuration */
 	HAL_GPIO_Init(GPIOD, &LED_PINS_D);
-
 }
 
 /**
@@ -204,40 +207,55 @@ void init_GPIO_NO_PWM(void)
    */
 void HAL_TIM_PWM_PulseFinishedCallback(TIM_HandleTypeDef *htim)
 {
+	static int counter;
+	
 	switch (LED_STATE)
 	{
-		case ALL_ON_PWN_ON:
+		case ALL_ON_PWM_ON:
 			if (CURRENT_GPIO_MODE == GPIO_PP_MODE)
 			{
 				toggle_GPIO_mode_flag();
 				init_GPIO_PWM();
-				LED_ON_PWM();	
+				LED_ON_PWM();
 			}
 
 			break;
 		case CCW_NO_PWM:
 			if (CURRENT_GPIO_MODE == GPIO_ALTERNATE_MODE)
 			{
-				LED_OFF_PWM();
 				toggle_GPIO_mode_flag();
 				init_GPIO_NO_PWM();
+				counter = 0;
 			}
 
-			LED_CCW();
+			if (counter == 0)
+				LED_CCW();
+			
+			counter = (counter + 1) % ROTATION_COUNT;
 			break;
 		case CW_NO_PWM:
 			if (CURRENT_GPIO_MODE == GPIO_ALTERNATE_MODE)
 			{
 				toggle_GPIO_mode_flag();
 				init_GPIO_NO_PWM();
+				counter = 0;
 			}
-			LED_CW();
+
+			if (counter == 0)
+				LED_CW();
+			
+			counter = (counter + 1) % ROTATION_COUNT;
 			break;
 		case ALL_OFF:
 			if (IS_PWM_ON) {
-				LED_OFF_PWM();
+				/* because otherwise PWM doesn't turn off :( */
+				toggle_GPIO_mode_flag();
+				init_GPIO_NO_PWM();
 			}
-				LED_OFF();
-	
+			
+			LED_OFF();
+			break;
+		default:
+			break;
 	}
 }

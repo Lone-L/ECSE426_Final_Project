@@ -51,7 +51,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 	if (htim->Instance == TIM3) {
 		osSignalSet(tid_Thread_TEMPERATURE, TEMPERATURE_SIGNAL);
 	} else if (htim->Instance == TIM4) {
-		
+		HAL_TIM_PWM_PulseFinishedCallback(htim);
 	}
 }
 

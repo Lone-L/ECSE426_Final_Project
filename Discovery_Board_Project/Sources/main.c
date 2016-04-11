@@ -99,8 +99,49 @@ int main (void)
   HardwareTimer3_Init();										/* Temperature reading timer */
   HardwareTimer4_Init();										/* LED timer init */
 
-  init_GPIO_NO_PWM();
+	init_PWM();
+	init_GPIO_NO_PWM();
+  set_LED_state(CCW_NO_PWM);
+	yolo();
+	yolo();
+	yolo();
 	
+	set_LED_state(CW_NO_PWM);
+	yolo();
+	yolo();
+	yolo();
+	
+	set_LED_state(ALL_OFF);
+	yolo();
+	yolo();
+	yolo();
+	
+	set_LED_state(ALL_ON_PWM_ON);
+	LED_set_duty_cycle(20);
+	yolo();
+	yolo();
+	yolo();
+
+  set_LED_state(CCW_NO_PWM);
+	yolo();
+	yolo();
+	yolo();
+	
+	set_LED_state(ALL_ON_PWM_ON);
+	LED_set_duty_cycle(60);
+	yolo();
+	yolo();
+	yolo();
+	
+	set_LED_state(ALL_OFF);
+	yolo();
+	yolo();
+	yolo();
+	
+	set_LED_state(CW_NO_PWM);
+	yolo();
+	yolo();
+	yolo();
   /* User codes ends here*/
   
   osKernelStart();                          /* start thread execution         */
