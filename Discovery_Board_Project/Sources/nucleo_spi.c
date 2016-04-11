@@ -9,7 +9,7 @@ SPI_HandleTypeDef nucleo_SpiHandle;
 void NucleoSPI_RxISR(SPI_HandleTypeDef *hspi)
 {
 	uint16_t cmd;
-	uint16_t pattern;
+	uint16_t value;
 	
 	__disable_irq();
 	__HAL_SPI_DISABLE_IT(hspi, SPI_FLAG_RXNE);
@@ -30,9 +30,9 @@ void NucleoSPI_RxISR(SPI_HandleTypeDef *hspi)
 			NucleoSPI_ResetTempDataready();
 			break;
 		case NUCLEO_SPI_WRITE_LED_PATTERN_CMD:
-			pattern = NucleoSPI_ReadShortValue();
+			value = NucleoSPI_ReadShortValue();
 		
-			switch (pattern) {
+			switch (value) {
 				case PATTERN_CMD_OFF:
 					set_LED_state(ALL_OFF);
 					break;
@@ -50,6 +50,11 @@ void NucleoSPI_RxISR(SPI_HandleTypeDef *hspi)
 			}
 			
 			break;
+		case NUCLEO_SPI_WRITE_LED_DUTYCYCLE_CMD:
+			value = NucleoSPI_ReadShortValue();
+			LED_set_duty_cycle(value);
+			break;
+		
 		case 0x0000:
 			/* Dummy command */
 			break;

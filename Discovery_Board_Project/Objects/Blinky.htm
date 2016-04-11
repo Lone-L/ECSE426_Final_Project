@@ -3,7 +3,7 @@
 <title>Static Call Graph - [.\Objects\Blinky.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image .\Objects\Blinky.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5050169: Last Updated: Mon Apr 11 17:32:28 2016
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5050169: Last Updated: Mon Apr 11 18:18:10 2016
 <BR><P>
 <H3>Maximum Stack Usage =        180 bytes + Unknown(Functions without stacksize, Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
@@ -406,7 +406,7 @@ Global Symbols
 <BR>[Address Reference Count : 1]<UL><LI> startup_stm32f407xx.o(RESET)
 </UL>
 <P><STRONG><a name="[2e]"></a>SPI2_IRQHandler</STRONG> (Thumb, 10 bytes, Stack size 8 bytes, stm32f4xx_it.o(.text))
-<BR><BR>[Stack]<UL><LI>Max Depth = 64<LI>Call Chain = SPI2_IRQHandler &rArr; NucleoSPI_RxISR &rArr; NucleoSPI_SendFloat &rArr; NucleoSPI_ResetTempDataready
+<BR><BR>[Stack]<UL><LI>Max Depth = 68<LI>Call Chain = SPI2_IRQHandler &rArr; NucleoSPI_RxISR &rArr; LED_set_duty_cycle &rArr; HAL_TIM_OC_ConfigChannel &rArr; TIM_OC2_SetConfig
 </UL>
 <BR>[Calls]<UL><LI><a href="#[c2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;NucleoSPI_RxISR
 </UL>
@@ -470,7 +470,7 @@ Global Symbols
 <BR>[Calls]<UL><LI><a href="#[cd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GPIO_WritePin
 <LI><a href="#[cc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GPIO_Init
 </UL>
-<BR>[Called By]<UL><LI><a href="#[d5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_SPI_Init
+<BR>[Called By]<UL><LI><a href="#[d6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_SPI_Init
 </UL>
 
 <P><STRONG><a name="[c6]"></a>NucleoSPI_ResetTempDataready</STRONG> (Thumb, 14 bytes, Stack size 8 bytes, nucleo_spi.o(.text))
@@ -513,10 +513,11 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[c2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;NucleoSPI_RxISR
 </UL>
 
-<P><STRONG><a name="[c2]"></a>NucleoSPI_RxISR</STRONG> (Thumb, 276 bytes, Stack size 24 bytes, nucleo_spi.o(.text))
-<BR><BR>[Stack]<UL><LI>Max Depth = 56<LI>Call Chain = NucleoSPI_RxISR &rArr; NucleoSPI_SendFloat &rArr; NucleoSPI_ResetTempDataready
+<P><STRONG><a name="[c2]"></a>NucleoSPI_RxISR</STRONG> (Thumb, 298 bytes, Stack size 24 bytes, nucleo_spi.o(.text))
+<BR><BR>[Stack]<UL><LI>Max Depth = 60<LI>Call Chain = NucleoSPI_RxISR &rArr; LED_set_duty_cycle &rArr; HAL_TIM_OC_ConfigChannel &rArr; TIM_OC2_SetConfig
 </UL>
 <BR>[Calls]<UL><LI><a href="#[d3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;set_LED_state
+<LI><a href="#[d4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LED_set_duty_cycle
 <LI><a href="#[cf]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;NucleoSPI_SendFloat
 <LI><a href="#[ce]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;NucleoSPI_ReadShortValue
 <LI><a href="#[c6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;NucleoSPI_ResetTempDataready
@@ -532,8 +533,8 @@ Global Symbols
 <P><STRONG><a name="[9a]"></a>NucleoSPI_Init</STRONG> (Thumb, 162 bytes, Stack size 8 bytes, nucleo_spi.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 72<LI>Call Chain = NucleoSPI_Init &rArr; HAL_SPI_Init &rArr; HAL_SPI_MspInit &rArr; HAL_GPIO_Init
 </UL>
-<BR>[Calls]<UL><LI><a href="#[d5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_SPI_Init
-<LI><a href="#[d4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_SPI_DeInit
+<BR>[Calls]<UL><LI><a href="#[d6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_SPI_Init
+<LI><a href="#[d5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_SPI_DeInit
 <LI><a href="#[a5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_NVIC_SetPriority
 <LI><a href="#[a6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_NVIC_EnableIRQ
 <LI><a href="#[b4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2printf
@@ -544,7 +545,7 @@ Global Symbols
 <P><STRONG><a name="[bd]"></a>NucleoSPI_SetAccelDataready</STRONG> (Thumb, 26 bytes, Stack size 16 bytes, nucleo_spi.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = NucleoSPI_SetAccelDataready
 </UL>
-<BR>[Calls]<UL><LI><a href="#[d6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osTimerStart
+<BR>[Calls]<UL><LI><a href="#[d7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osTimerStart
 <LI><a href="#[cd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GPIO_WritePin
 </UL>
 <BR>[Called By]<UL><LI><a href="#[84]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Thread_ACCELEROMETER
@@ -553,7 +554,7 @@ Global Symbols
 <P><STRONG><a name="[c5]"></a>NucleoSPI_SetTempDataready</STRONG> (Thumb, 26 bytes, Stack size 16 bytes, nucleo_spi.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = NucleoSPI_SetTempDataready
 </UL>
-<BR>[Calls]<UL><LI><a href="#[d6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osTimerStart
+<BR>[Calls]<UL><LI><a href="#[d7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osTimerStart
 <LI><a href="#[cd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GPIO_WritePin
 </UL>
 <BR>[Called By]<UL><LI><a href="#[87]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Thread_TEMPERATURE
@@ -562,7 +563,7 @@ Global Symbols
 <P><STRONG><a name="[bc]"></a>NucleoSPI_SetDoubletap</STRONG> (Thumb, 26 bytes, Stack size 16 bytes, nucleo_spi.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = NucleoSPI_SetDoubletap
 </UL>
-<BR>[Calls]<UL><LI><a href="#[d6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osTimerStart
+<BR>[Calls]<UL><LI><a href="#[d7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osTimerStart
 <LI><a href="#[cd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GPIO_WritePin
 </UL>
 <BR>[Called By]<UL><LI><a href="#[84]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Thread_ACCELEROMETER
@@ -589,8 +590,12 @@ Global Symbols
 <BR><BR>[Called By]<UL><LI><a href="#[c2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;NucleoSPI_RxISR
 </UL>
 
-<P><STRONG><a name="[d7]"></a>LED_set_duty_cycle</STRONG> (Thumb, 68 bytes, Stack size 8 bytes, led.o(.text), UNUSED)
-<BR><BR>[Calls]<UL><LI><a href="#[d8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_TIM_OC_ConfigChannel
+<P><STRONG><a name="[d4]"></a>LED_set_duty_cycle</STRONG> (Thumb, 74 bytes, Stack size 8 bytes, led.o(.text))
+<BR><BR>[Stack]<UL><LI>Max Depth = 36<LI>Call Chain = LED_set_duty_cycle &rArr; HAL_TIM_OC_ConfigChannel &rArr; TIM_OC2_SetConfig
+</UL>
+<BR>[Calls]<UL><LI><a href="#[d8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_TIM_OC_ConfigChannel
+</UL>
+<BR>[Called By]<UL><LI><a href="#[c2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;NucleoSPI_RxISR
 </UL>
 
 <P><STRONG><a name="[d9]"></a>LED_ON_PWM</STRONG> (Thumb, 46 bytes, Stack size 8 bytes, led.o(.text))
@@ -657,7 +662,7 @@ Global Symbols
 <LI><a href="#[8a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[a9]"></a>HAL_TIM_PWM_PulseFinishedCallback</STRONG> (Thumb, 180 bytes, Stack size 8 bytes, led.o(.text))
+<P><STRONG><a name="[a9]"></a>HAL_TIM_PWM_PulseFinishedCallback</STRONG> (Thumb, 268 bytes, Stack size 8 bytes, led.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 64<LI>Call Chain = HAL_TIM_PWM_PulseFinishedCallback &rArr; init_GPIO_PWM &rArr; HAL_GPIO_Init
 </UL>
 <BR>[Calls]<UL><LI><a href="#[e2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;init_GPIO_PWM
@@ -702,8 +707,8 @@ Global Symbols
 <BR><BR>[Stack]<UL><LI>Max Depth = 80<LI>Call Chain = LIS3DSH_Init &rArr; HAL_SPI_Init &rArr; HAL_SPI_MspInit &rArr; HAL_GPIO_Init
 </UL>
 <BR>[Calls]<UL><LI><a href="#[e8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LIS3DSH_Write
-<LI><a href="#[d5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_SPI_Init
-<LI><a href="#[d4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_SPI_DeInit
+<LI><a href="#[d6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_SPI_Init
+<LI><a href="#[d5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_SPI_DeInit
 <LI><a href="#[b4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2printf
 </UL>
 <BR>[Called By]<UL><LI><a href="#[9b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Accelerometer_Init
@@ -1184,7 +1189,7 @@ Global Symbols
 <BR><BR>[Calls]<UL><LI><a href="#[117]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_RCC_CSSCallback
 </UL>
 
-<P><STRONG><a name="[d5]"></a>HAL_SPI_Init</STRONG> (Thumb, 136 bytes, Stack size 8 bytes, stm32f4xx_hal_spi.o(.text))
+<P><STRONG><a name="[d6]"></a>HAL_SPI_Init</STRONG> (Thumb, 136 bytes, Stack size 8 bytes, stm32f4xx_hal_spi.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 64<LI>Call Chain = HAL_SPI_Init &rArr; HAL_SPI_MspInit &rArr; HAL_GPIO_Init
 </UL>
 <BR>[Calls]<UL><LI><a href="#[cb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_SPI_MspInit
@@ -1194,10 +1199,10 @@ Global Symbols
 </UL>
 
 <P><STRONG><a name="[118]"></a>HAL_SPI_MspDeInit</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, stm32f4xx_hal_spi.o(.text))
-<BR><BR>[Called By]<UL><LI><a href="#[d4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_SPI_DeInit
+<BR><BR>[Called By]<UL><LI><a href="#[d5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_SPI_DeInit
 </UL>
 
-<P><STRONG><a name="[d4]"></a>HAL_SPI_DeInit</STRONG> (Thumb, 48 bytes, Stack size 8 bytes, stm32f4xx_hal_spi.o(.text))
+<P><STRONG><a name="[d5]"></a>HAL_SPI_DeInit</STRONG> (Thumb, 48 bytes, Stack size 8 bytes, stm32f4xx_hal_spi.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = HAL_SPI_DeInit
 </UL>
 <BR>[Calls]<UL><LI><a href="#[118]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_SPI_MspDeInit
@@ -1673,7 +1678,7 @@ Global Symbols
 <LI><a href="#[169]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM_OC3_SetConfig
 <LI><a href="#[16a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM_OC4_SetConfig
 </UL>
-<BR>[Called By]<UL><LI><a href="#[d7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LED_set_duty_cycle
+<BR>[Called By]<UL><LI><a href="#[d4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LED_set_duty_cycle
 <LI><a href="#[a1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;init_PWM
 </UL>
 
@@ -2387,7 +2392,7 @@ Global Symbols
 <LI><a href="#[84]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Thread_ACCELEROMETER
 </UL>
 
-<P><STRONG><a name="[d6]"></a>osTimerStart</STRONG> (Thumb, 18 bytes, Stack size 0 bytes, rt_cmsis.o(i.osTimerStart))
+<P><STRONG><a name="[d7]"></a>osTimerStart</STRONG> (Thumb, 18 bytes, Stack size 0 bytes, rt_cmsis.o(i.osTimerStart))
 <BR><BR>[Called By]<UL><LI><a href="#[c5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;NucleoSPI_SetTempDataready
 <LI><a href="#[bc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;NucleoSPI_SetDoubletap
 <LI><a href="#[bd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;NucleoSPI_SetAccelDataready

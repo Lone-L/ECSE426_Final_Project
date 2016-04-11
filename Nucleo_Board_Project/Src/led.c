@@ -8,5 +8,5 @@ void Led_SetPattern(uint16_t pattern)
 
 void Led_SetDutyCycle(int duty_cycle)
 {
-	//
+	DiscoverySPI_SendShort(DISCOVERY_SPI_WRITE_LED_DUTYCYCLE_CMD, duty_cycle);
 }

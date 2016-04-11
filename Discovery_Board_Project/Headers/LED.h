@@ -19,7 +19,7 @@ void set_LED_state(int state);
 
 
 #define PERIOD 42000
-#define ROTATION_COUNT 20
+#define ROTATION_COUNT 40
 
 /* DIFFERENT LED STATES */
 #define ALL_ON_PWM_ON			1

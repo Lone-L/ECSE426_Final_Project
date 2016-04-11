@@ -59,6 +59,9 @@ void set_LED_state(int state)
 
 void LED_set_duty_cycle(int duty_cycle)
 {
+	if (duty_cycle > 100)
+		duty_cycle = 100;
+	
 	pulse = (int)(duty_cycle * PERIOD / 100);
 	OC_CONFIG.Pulse = pulse;
 	HAL_TIM_OC_ConfigChannel(&timmy4, &OC_CONFIG, TIM_CHANNEL_1);
@@ -208,7 +211,9 @@ void init_GPIO_NO_PWM(void)
 void HAL_TIM_PWM_PulseFinishedCallback(TIM_HandleTypeDef *htim)
 {
 	static int counter;
-	
+	static uint8_t delay = ROTATION_COUNT;
+	static uint16_t yolo = 123;
+
 	switch (LED_STATE)
 	{
 		case ALL_ON_PWM_ON:
@@ -231,7 +236,25 @@ void HAL_TIM_PWM_PulseFinishedCallback(TIM_HandleTypeDef *htim)
 			if (counter == 0)
 				LED_CCW();
 			
-			counter = (counter + 1) % ROTATION_COUNT;
+
+
+			counter = (counter + 1) % delay;
+			if (counter == 0) {
+					delay = (delay - 1) % ROTATION_COUNT;
+					if (delay == 2) {
+						if (yolo > 0) {
+							yolo--;
+							delay += 1;
+						} else {
+							yolo = 123;
+						}
+					}
+				
+					if (delay == 1) {
+						delay = ROTATION_COUNT;
+					}
+			}
+			
 			break;
 		case CW_NO_PWM:
 			if (CURRENT_GPIO_MODE == GPIO_ALTERNATE_MODE)

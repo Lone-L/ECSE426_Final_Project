@@ -327,6 +327,7 @@ void User_Process(AxesRaw_t* p_axes)
 			state = 2;
 		} else if (state == 2) {
 			Led_SetPattern(PATTERN_CMD_PWM);
+			Led_SetDutyCycle(20);
 			state = 3;
 		} else if (state == 3) {
 			Led_SetPattern(PATTERN_CMD_OFF);
