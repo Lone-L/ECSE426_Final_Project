@@ -47,3 +47,4 @@
 .\objects\nucleo_spi.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stddef.h
 .\objects\nucleo_spi.o: .\Headers\accelerometer.h
 .\objects\nucleo_spi.o: .\Headers\temperature.h
+.\objects\nucleo_spi.o: .\Headers\led.h

@@ -472,6 +472,11 @@
               <FileType>1</FileType>
               <FilePath>.\Src\fput_debug.c</FilePath>
             </File>
+            <File>
+              <FileName>led.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Src\led.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

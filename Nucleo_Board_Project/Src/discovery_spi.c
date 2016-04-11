@@ -56,3 +56,20 @@ float DiscoverySPI_ReadFloatValue(uint16_t cmd)
 	x = lower | (upper << 16);
 	return *(float *)&x;
 }
+
+void DiscoverySPI_SendShort(uint16_t cmd, uint16_t value)
+{
+	uint16_t dummy;
+	
+	while (__HAL_SPI_GET_FLAG(&discovery_SpiHandle, SPI_FLAG_TXE) == RESET);
+	discovery_SpiHandle.Instance->DR = cmd;
+	while (__HAL_SPI_GET_FLAG(&discovery_SpiHandle, SPI_FLAG_TXE) == RESET);
+	while (__HAL_SPI_GET_FLAG(&discovery_SpiHandle, SPI_FLAG_RXNE) == RESET);
+	dummy = discovery_SpiHandle.Instance->DR;
+	
+	discovery_SpiHandle.Instance->DR = value;
+	while (__HAL_SPI_GET_FLAG(&discovery_SpiHandle, SPI_FLAG_TXE) == RESET);
+	while (__HAL_SPI_GET_FLAG(&discovery_SpiHandle, SPI_FLAG_RXNE) == RESET);
+	dummy = discovery_SpiHandle.Instance->DR;
+	while (__HAL_SPI_GET_FLAG(&discovery_SpiHandle, SPI_FLAG_BSY) != RESET);
+}

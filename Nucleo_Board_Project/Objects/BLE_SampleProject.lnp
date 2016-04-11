@@ -11,6 +11,7 @@
 ".\objects\temperature.o"
 ".\objects\accelerometer.o"
 ".\objects\fput_debug.o"
+".\objects\led.o"
 ".\objects\hci.o"
 ".\objects\bluenrg_gap_aci.o"
 ".\objects\bluenrg_gatt_aci.o"

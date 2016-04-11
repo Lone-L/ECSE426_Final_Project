@@ -61,3 +61,4 @@
 .\objects\main.o: .\Inc\accelerometer.h
 .\objects\main.o: .\Inc\temperature.h
 .\objects\main.o: .\Inc\discovery_spi.h
+.\objects\main.o: .\Inc\led.h

@@ -69,12 +69,6 @@ void SystemClock_Config(void)
   HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_5);
 }
 
-void yolo(void) {
-	unsigned int xx;
-	for (xx = 0; xx < 18641351; xx++) {
-	}
-}
-
 /**
   * Main function
   */
@@ -101,47 +95,6 @@ int main (void)
 
 	init_PWM();
 	init_GPIO_NO_PWM();
-  set_LED_state(CCW_NO_PWM);
-	yolo();
-	yolo();
-	yolo();
-	
-	set_LED_state(CW_NO_PWM);
-	yolo();
-	yolo();
-	yolo();
-	
-	set_LED_state(ALL_OFF);
-	yolo();
-	yolo();
-	yolo();
-	
-	set_LED_state(ALL_ON_PWM_ON);
-	LED_set_duty_cycle(20);
-	yolo();
-	yolo();
-	yolo();
-
-  set_LED_state(CCW_NO_PWM);
-	yolo();
-	yolo();
-	yolo();
-	
-	set_LED_state(ALL_ON_PWM_ON);
-	LED_set_duty_cycle(60);
-	yolo();
-	yolo();
-	yolo();
-	
-	set_LED_state(ALL_OFF);
-	yolo();
-	yolo();
-	yolo();
-	
-	set_LED_state(CW_NO_PWM);
-	yolo();
-	yolo();
-	yolo();
   /* User codes ends here*/
   
   osKernelStart();                          /* start thread execution         */

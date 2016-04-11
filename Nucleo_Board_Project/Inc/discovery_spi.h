@@ -9,6 +9,7 @@
 
 void DiscoverySPI_Init(void);
 float DiscoverySPI_ReadFloatValue(uint16_t cmd);
+void DiscoverySPI_SendShort(uint16_t cmd, uint16_t value);
 
 extern SPI_HandleTypeDef discovery_SpiHandle;
 
@@ -90,6 +91,12 @@ extern SPI_HandleTypeDef discovery_SpiHandle;
 #define DISCOVERY_SPI_READ_PITCH_CMD									0x5555
 #define DISCOVERY_SPI_READ_TEMP_CMD										0x1234
 #define DISCOVERY_SPI_WRITE_LED_PATTERN_CMD						0xbeef
+
+#define PATTERN_CMD_OFF		0x0001
+#define PATTERN_CMD_CCW		0x0002
+#define PATTERN_CMD_CW		0x0003
+#define PATTERN_CMD_PWM		0x0004
+
 // add commands for PWM...
 
 #endif

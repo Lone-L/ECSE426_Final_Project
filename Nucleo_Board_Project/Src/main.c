@@ -50,6 +50,7 @@
 #include "accelerometer.h"
 #include "temperature.h"
 #include "discovery_spi.h"
+#include "led.h"
 
 #include <string.h>
 #include <stdio.h>
@@ -287,7 +288,6 @@ int main(void)
   while(1)
   {
 
-		//HAL_Delay(100);
     HCI_Process();
 		Accelerometer_Process();
 		Temperature_Process();
@@ -316,10 +316,25 @@ void User_Process(AxesRaw_t* p_axes)
   /* Check if the user has pushed the button */
   if(BSP_PB_GetState(BUTTON_KEY) == RESET)
   {
+		static int state = 0;
     while (BSP_PB_GetState(BUTTON_KEY) == RESET);
     
+		if (state == 0) {
+			Led_SetPattern(PATTERN_CMD_CCW);
+			state = 1;
+		} else if (state == 1) {
+			Led_SetPattern(PATTERN_CMD_CW);
+			state = 2;
+		} else if (state == 2) {
+			Led_SetPattern(PATTERN_CMD_PWM);
+			state = 3;
+		} else if (state == 3) {
+			Led_SetPattern(PATTERN_CMD_OFF);
+			state = 0;
+		}
+		
     BSP_LED_Toggle(LED2); //used for debugging (BSP_LED_Init() above must be also enabled)
-    
+    		
     if(connected)
     {
       /* Update acceleration data */
