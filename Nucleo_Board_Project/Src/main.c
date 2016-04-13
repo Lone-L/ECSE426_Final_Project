@@ -127,7 +127,7 @@ void User_Process(AxesRaw_t* p_axes);
 int main(void)
 {
   const char *name = "BlueNRG";
-  uint8_t SERVER_BDADDR[] = {0x12, 0x34, 0x00, 0xE1, 0x80, 0x03};
+  uint8_t SERVER_BDADDR[] = {0x12, 0x34, 0x00, 0xE1, 0x80, 0xA4};
   uint8_t bdaddr[BDADDR_SIZE];
   uint16_t service_handle, dev_name_char_handle, appearance_char_handle;
   
@@ -254,6 +254,14 @@ int main(void)
   else
     PRINTF("Error while adding Environmental Sensor service.\n");
 
+	ret = Add_LED_CTRL_Service();
+  
+  if(ret == BLE_STATUS_SUCCESS)
+    PRINTF("LED_CTRL service added successfully.\n");
+  else
+    PRINTF("Error while adding LED_CTRL service.\n");
+	
+	
 #if NEW_SERVICES
   /* Instantiate Timer Service with two characteristics:
    * - seconds characteristic (Readable only)

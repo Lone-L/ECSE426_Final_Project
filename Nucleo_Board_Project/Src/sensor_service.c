@@ -35,6 +35,7 @@
   ******************************************************************************
   */
 #include "sensor_service.h"
+#include <math.h>
 
 /** @addtogroup X-CUBE-BLE1_Applications
  *  @{
@@ -62,6 +63,7 @@ volatile int16_t tempNstuff = 0;
 uint16_t sampleServHandle, TXCharHandle, RXCharHandle;
 uint16_t accServHandle, freeFallCharHandle, accCharHandle;
 uint16_t envSensServHandle, tempCharHandle, pressCharHandle, humidityCharHandle;
+uint16_t ledCtrlServHandle, ledTglCharHandle;
 
 #if NEW_SERVICES
   uint16_t timeServHandle, secondsCharHandle, minuteCharHandle;
@@ -114,6 +116,9 @@ do {\
   #define COPY_TEMP_CHAR_UUID(uuid_struct)         COPY_UUID_128(uuid_struct,0xa3,0x2e,0x55,0x20, 0xe4,0x77, 0x11,0xe2, 0xa9,0xe3, 0x00,0x02,0xa5,0xd5,0xc5,0x1b)
   #define COPY_PRESS_CHAR_UUID(uuid_struct)        COPY_UUID_128(uuid_struct,0xcd,0x20,0xc4,0x80, 0xe4,0x8b, 0x11,0xe2, 0x84,0x0b, 0x00,0x02,0xa5,0xd5,0xc5,0x1b)
   #define COPY_HUMIDITY_CHAR_UUID(uuid_struct)     COPY_UUID_128(uuid_struct,0x01,0xc5,0x0b,0x60, 0xe4,0x8c, 0x11,0xe2, 0xa0,0x73, 0x00,0x02,0xa5,0xd5,0xc5,0x1b)
+	
+	#define COPY_LED_CTRL_SERVICE_UUID(uuid_struct)		COPY_UUID_128(uuid_struct,0x37,0x82,0x1a,0x40, 0xd4,0x97, 0x11,0xe3, 0x32,0xd0, 0x00,0x02,0xa5,0xd5,0xc5,0x1b)
+	#define COPY_LED_TGL_CHAR_UUID(uuid_struct)				COPY_UUID_128(uuid_struct,0xf3,0x2e,0x55,0x20, 0xe4,0x77, 0x11,0xe2, 0xa9,0xe3, 0x00,0x02,0xa5,0xd5,0xc5,0x1b)
 #endif
 
 /* Store Value into a buffer in Little Endian Format */
@@ -125,7 +130,41 @@ do {\
 
 /** @defgroup SENSOR_SERVICE_Exported_Functions 
  * @{
- */ 
+ */
+ /**
+ * @brief  Add an accelerometer service using a vendor specific profile.
+ *
+ * @param  None
+ * @retval tBleStatus Status
+ */
+tBleStatus Add_LED_CTRL_Service(void)
+{
+  tBleStatus ret;
+
+  uint8_t uuid[16];
+  
+  COPY_LED_CTRL_SERVICE_UUID(uuid);
+  ret = aci_gatt_add_serv(UUID_TYPE_128,  uuid, PRIMARY_SERVICE, 7,
+                          &ledCtrlServHandle);
+  if (ret != BLE_STATUS_SUCCESS) goto fail;    
+  
+  COPY_LED_TGL_CHAR_UUID(uuid);
+  ret =  aci_gatt_add_char(ledCtrlServHandle, UUID_TYPE_128, uuid, 7,
+                           CHAR_PROP_WRITE | CHAR_PROP_WRITE_WITHOUT_RESP , ATTR_PERMISSION_NONE, GATT_NOTIFY_ATTRIBUTE_WRITE,
+                           16, 0, &ledTglCharHandle);
+  if (ret != BLE_STATUS_SUCCESS) goto fail;
+  
+  
+  PRINTF("Service LED_CTRL added. Handle 0x%04X, LED toggle Charac handle: 0x%04X\n",ledCtrlServHandle, ledTglCharHandle);	
+  return BLE_STATUS_SUCCESS; 
+  
+fail:
+  PRINTF("Error while adding LED service.\n");
+  return BLE_STATUS_ERROR ;
+    
+}
+
+
 /**
  * @brief  Add an accelerometer service using a vendor specific profile.
  *
@@ -499,6 +538,33 @@ void Read_Request_CB(uint16_t handle)
     aci_gatt_allow_read(connection_handle);
 }
 
+int rec_data = 0;
+uint8_t rec_data_1 = 0;
+uint8_t rec_data_2 = 0;
+uint8_t rec_len = 0;
+/**
+ * @brief  Write request callback.
+ * @param  uint16_t Handle of the attribute
+ * @retval None
+ */
+void Write_Request_CB(uint16_t handle, uint8_t data_length, uint8_t*data)
+{  
+	rec_data = 0;
+  if(handle == ledTglCharHandle + 1){
+		int i;
+		for (i=0; i<data_length; i++){
+			rec_data += data[i]<<(8*(data_length-(i+1)));
+		}
+		rec_data_1 = data[0];
+		rec_data_2 = data[1];
+		rec_len = data_length;
+  }  
+	
+  //EXIT:
+  if(connection_handle != 0)
+    aci_gatt_allow_read(connection_handle);
+}
+
 /**
  * @brief  Callback processing the ACI events.
  * @note   Inside this function each event must be identified and correctly
@@ -508,6 +574,7 @@ void Read_Request_CB(uint16_t handle)
  */
 void HCI_Event_CB(void *pckt)
 {
+
   hci_uart_pckt *hci_pckt = pckt;
   /* obtain event packet */
   hci_event_pckt *event_pckt = (hci_event_pckt*)hci_pckt->data;
@@ -564,6 +631,12 @@ void HCI_Event_CB(void *pckt)
         {
           evt_gatt_read_permit_req *pr = (void*)blue_evt->data;                    
           Read_Request_CB(pr->attr_handle);                    
+        }
+        break;
+			case EVT_BLUE_GATT_ATTRIBUTE_MODIFIED:
+        {
+          evt_gatt_write_permit_req *pr = (void*)blue_evt->data;                    
+          Write_Request_CB(pr->attr_handle,pr->data_length,pr->data);                    
         }
         break;
       }
@@ -772,6 +845,8 @@ void Attribute_Modified_CB(uint16_t handle, uint8_t data_length, uint8_t *att_da
   }
 }
 #endif /* NEW_SERVICES */
+
+
 /**
  * @}
  */

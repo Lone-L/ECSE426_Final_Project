@@ -54,3 +54,4 @@
 .\objects\sensor_service.o: .\BLE\STM32_BlueNRG\SimpleBlueNRG_HCI\includes\sm.h
 .\objects\sensor_service.o: .\BLE\STM32_BlueNRG\SimpleBlueNRG_HCI\includes\debug.h
 .\objects\sensor_service.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h
+.\objects\sensor_service.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\math.h

@@ -117,6 +117,7 @@ typedef struct {
 tBleStatus Add_Acc_Service(void);
 tBleStatus Acc_Update(AxesRaw_t *data);
 tBleStatus Add_Environmental_Sensor_Service(void);
+tBleStatus Add_LED_CTRL_Service(void);
 void       setConnectable(void);
 void       enableNotification(void);
 void       GAP_ConnectionComplete_CB(uint8_t addr[6], uint16_t handle);
