@@ -539,6 +539,7 @@ void Read_Request_CB(uint16_t handle)
 
 int rec_data_1 = 0;
 int led_enable = 0;
+int led_brightness = 20;
 /**
  * @brief  Write request callback.
  * @param  uint16_t Handle of the attribute
@@ -547,7 +548,12 @@ int led_enable = 0;
 void Write_Request_CB(uint16_t handle, uint8_t data_length, uint8_t*data)
 {  
   if(handle == ledTglCharHandle + 1){
-		rec_data_1 = (int) data[0];
+		
+		int i;
+		for (i=0; i<500000; i++);		// arbitrary delay (there were issues with timing, not sure why)
+		rec_data_1 = (int) data[0];		// the data_length is always 1 byte for this characteristic
+		
+		/* Command to Toggle LED */
 		if (rec_data_1 == 255){
 			led_enable = (led_enable+1)%2;
 			if (!led_enable) {
@@ -555,24 +561,42 @@ void Write_Request_CB(uint16_t handle, uint8_t data_length, uint8_t*data)
 				for (i=0; i<500000; i++);		// arbitrary delay (there were issues with timing, not sure why)
 				Led_SetPattern(PATTERN_CMD_OFF);	// we got a command to turn off the LED
 			} else {
+				Led_SetPattern(PATTERN_CMD_OFF);
 				int i;
 				for (i=0; i<500000; i++);		// arbitrary delay (there were issues with timing, not sure why)
 				Led_SetPattern(PATTERN_CMD_PWM);
-				Led_SetDutyCycle(20);
+				Led_SetDutyCycle(led_brightness);
 			}
+			
+			
+		/* Speed commands range from [0,100)*/
+		/* Command to set LED speed/direction - Still need to update API to receive a speed number */
 		} else if (rec_data_1 < 50){
 			int i;
 			for (i=0; i<500000; i++);		// arbitrary delay (there were issues with timing, not sure why)
 			Led_SetPattern(PATTERN_CMD_CCW);
-		} else if (rec_data_1 > 50) {
+		} else if (rec_data_1 > 50  && rec_data_1 < 100) {
 			int i;
 			for (i=0; i<500000; i++);		// arbitrary delay (there were issues with timing, not sure why)
 			Led_SetPattern(PATTERN_CMD_CW);
 		} else if (rec_data_1 ==50) {
+			Led_SetPattern(PATTERN_CMD_OFF);
 			int i;
 			for (i=0; i<500000; i++);		// arbitrary delay (there were issues with timing, not sure why)
 			Led_SetPattern(PATTERN_CMD_PWM);
-			Led_SetDutyCycle(20);
+			Led_SetDutyCycle(led_brightness);
+			
+			
+			
+		/* Brightness commands range from [100,200) */
+		/* Command to set LED brightness */	
+		} else if (rec_data_1 >= 100 && rec_data_1 < 200) {
+			led_brightness = rec_data_1-100;
+			Led_SetPattern(PATTERN_CMD_OFF);
+			int i;
+			for (i=0; i<500000; i++);		// arbitrary delay (there were issues with timing, not sure why)
+			Led_SetPattern(PATTERN_CMD_PWM);
+			Led_SetDutyCycle(led_brightness);
 		}
   }  
 	

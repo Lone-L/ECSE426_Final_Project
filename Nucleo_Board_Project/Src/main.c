@@ -314,6 +314,7 @@ int main(void)
  * @param  AxesRaw_t* p_axes
  * @retval None
  */
+int state = 0;
 void User_Process(AxesRaw_t* p_axes)
 {
   if(set_connectable){
@@ -324,7 +325,6 @@ void User_Process(AxesRaw_t* p_axes)
   /* Check if the user has pushed the button */
   if(BSP_PB_GetState(BUTTON_KEY) == RESET)
   {
-		static int state = 0;
     while (BSP_PB_GetState(BUTTON_KEY) == RESET);
     
 		if (state == 0) {
@@ -335,9 +335,23 @@ void User_Process(AxesRaw_t* p_axes)
 			state = 2;
 		} else if (state == 2) {
 			Led_SetPattern(PATTERN_CMD_PWM);
-			Led_SetDutyCycle(20);
+			Led_SetDutyCycle(10);
 			state = 3;
 		} else if (state == 3) {
+			Led_SetPattern(PATTERN_CMD_OFF);
+			int i;
+			for (i=0; i<500000; i++);		// arbitrary delay (there were issues with timing, not sure why)
+			Led_SetPattern(PATTERN_CMD_PWM);
+			Led_SetDutyCycle(80);
+			state = 4;
+		} else if (state == 4) {
+			Led_SetPattern(PATTERN_CMD_OFF);
+			int i;
+			for (i=0; i<500000; i++);		// arbitrary delay (there were issues with timing, not sure why)
+			Led_SetPattern(PATTERN_CMD_PWM);
+			Led_SetDutyCycle(50);
+			state = 5;
+		} else if (state == 5) {
 			Led_SetPattern(PATTERN_CMD_OFF);
 			state = 0;
 		}

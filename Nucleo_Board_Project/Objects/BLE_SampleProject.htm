@@ -3,7 +3,7 @@
 <title>Static Call Graph - [.\Objects\BLE_SampleProject.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image .\Objects\BLE_SampleProject.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060061: Last Updated: Wed Apr 13 20:56:56 2016
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060061: Last Updated: Wed Apr 13 22:01:31 2016
 <BR><P>
 <H3>Maximum Stack Usage =       1056 bytes + Unknown(Functions without stacksize, Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
@@ -1674,8 +1674,8 @@ Global Symbols
 <LI><a href="#[107]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;hci_send_req
 </UL>
 
-<P><STRONG><a name="[102]"></a>User_Process</STRONG> (Thumb, 172 bytes, Stack size 8 bytes, main.o(i.User_Process))
-<BR><BR>[Stack]<UL><LI>Max Depth = 760 + Unknown Stack Size
+<P><STRONG><a name="[102]"></a>User_Process</STRONG> (Thumb, 264 bytes, Stack size 16 bytes, main.o(i.User_Process))
+<BR><BR>[Stack]<UL><LI>Max Depth = 768 + Unknown Stack Size
 <LI>Call Chain = User_Process &rArr; Free_Fall_Notify &rArr; aci_gatt_update_char_value &rArr; hci_send_req &rArr; hci_send_cmd &rArr; hci_write &rArr; Hal_Write_Serial &rArr; BlueNRG_SPI_Write &rArr; HAL_SPI_TransmitReceive &rArr; SPI_WaitOnFlagUntilTimeout
 </UL>
 <BR>[Calls]<UL><LI><a href="#[103]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;setConnectable
@@ -1688,7 +1688,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[69]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[e4]"></a>Write_Request_CB</STRONG> (Thumb, 214 bytes, Stack size 24 bytes, sensor_service.o(i.Write_Request_CB))
+<P><STRONG><a name="[e4]"></a>Write_Request_CB</STRONG> (Thumb, 334 bytes, Stack size 24 bytes, sensor_service.o(i.Write_Request_CB))
 <BR><BR>[Stack]<UL><LI>Max Depth = 608 + Unknown Stack Size
 <LI>Call Chain = Write_Request_CB &rArr; aci_gatt_allow_read &rArr; hci_send_req &rArr; hci_send_cmd &rArr; hci_write &rArr; Hal_Write_Serial &rArr; BlueNRG_SPI_Write &rArr; HAL_SPI_TransmitReceive &rArr; SPI_WaitOnFlagUntilTimeout
 </UL>
