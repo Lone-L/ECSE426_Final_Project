@@ -3,7 +3,7 @@
 <title>Static Call Graph - [.\Objects\Blinky.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image .\Objects\Blinky.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060061: Last Updated: Thu Apr 14 13:38:23 2016
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5050169: Last Updated: Thu Apr 14 15:12:58 2016
 <BR><P>
 <H3>Maximum Stack Usage =        180 bytes + Unknown(Functions without stacksize, Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
@@ -599,7 +599,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[c2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;NucleoSPI_RxISR
 </UL>
 
-<P><STRONG><a name="[d5]"></a>LED_set_speed</STRONG> (Thumb, 16 bytes, Stack size 0 bytes, led.o(.text))
+<P><STRONG><a name="[d5]"></a>LED_set_speed</STRONG> (Thumb, 26 bytes, Stack size 0 bytes, led.o(.text))
 <BR><BR>[Called By]<UL><LI><a href="#[c2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;NucleoSPI_RxISR
 </UL>
 
@@ -812,8 +812,7 @@ Global Symbols
 <P><STRONG><a name="[1ec]"></a>HAL_IncTick</STRONG> (Thumb, 12 bytes, Stack size 0 bytes, stm32f4xx_hal.o(.text), UNUSED)
 
 <P><STRONG><a name="[f6]"></a>HAL_GetTick</STRONG> (Thumb, 6 bytes, Stack size 0 bytes, stm32f4xx_hal.o(.text))
-<BR><BR>[Called By]<UL><LI><a href="#[104]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_DMA_Abort
-<LI><a href="#[fb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_ADC_PollForEvent
+<BR><BR>[Called By]<UL><LI><a href="#[fb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_ADC_PollForEvent
 <LI><a href="#[f5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_Delay
 <LI><a href="#[c3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_ADC_PollForConversion
 <LI><a href="#[97]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_RCC_OscConfig
@@ -821,6 +820,7 @@ Global Symbols
 <LI><a href="#[11a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SPI_WaitOnFlagUntilTimeout
 <LI><a href="#[112]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_DMA_PollForTransfer
 <LI><a href="#[105]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_ADCEx_InjectedPollForConversion
+<LI><a href="#[104]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_DMA_Abort
 </UL>
 
 <P><STRONG><a name="[f5]"></a>HAL_Delay</STRONG> (Thumb, 26 bytes, Stack size 16 bytes, stm32f4xx_hal.o(.text), UNUSED)
@@ -913,10 +913,10 @@ Global Symbols
 <P><STRONG><a name="[c1]"></a>HAL_ADC_IRQHandler</STRONG> (Thumb, 348 bytes, Stack size 16 bytes, stm32f4xx_hal_adc.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = HAL_ADC_IRQHandler
 </UL>
-<BR>[Calls]<UL><LI><a href="#[fd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_ADCEx_InjectedConvCpltCallback
-<LI><a href="#[fc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_ADC_ConvCpltCallback
+<BR>[Calls]<UL><LI><a href="#[fc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_ADC_ConvCpltCallback
 <LI><a href="#[fe]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_ADC_LevelOutOfWindowCallback
 <LI><a href="#[ff]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_ADC_ErrorCallback
+<LI><a href="#[fd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_ADCEx_InjectedConvCpltCallback
 </UL>
 <BR>[Called By]<UL><LI><a href="#[1c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ADC_IRQHandler
 </UL>
@@ -1059,8 +1059,7 @@ Global Symbols
 <P><STRONG><a name="[102]"></a>HAL_DMA_Start_IT</STRONG> (Thumb, 106 bytes, Stack size 24 bytes, stm32f4xx_hal_dma.o(.text), UNUSED)
 <BR><BR>[Calls]<UL><LI><a href="#[111]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DMA_SetConfig
 </UL>
-<BR>[Called By]<UL><LI><a href="#[101]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_ADC_Start_DMA
-<LI><a href="#[195]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_TIMEx_PWMN_Start_DMA
+<BR>[Called By]<UL><LI><a href="#[195]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_TIMEx_PWMN_Start_DMA
 <LI><a href="#[18f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_TIMEx_OCN_Start_DMA
 <LI><a href="#[188]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_TIMEx_HallSensor_Start_DMA
 <LI><a href="#[175]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_TIM_DMABurst_ReadStart
@@ -1074,16 +1073,17 @@ Global Symbols
 <LI><a href="#[12b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_SPI_TransmitReceive_DMA
 <LI><a href="#[127]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_SPI_Transmit_DMA
 <LI><a href="#[106]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_ADCEx_MultiModeStart_DMA
+<LI><a href="#[101]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_ADC_Start_DMA
 </UL>
 
 <P><STRONG><a name="[104]"></a>HAL_DMA_Abort</STRONG> (Thumb, 94 bytes, Stack size 16 bytes, stm32f4xx_hal_dma.o(.text), UNUSED)
 <BR><BR>[Calls]<UL><LI><a href="#[f6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GetTick
 </UL>
-<BR>[Called By]<UL><LI><a href="#[103]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_ADC_Stop_DMA
-<LI><a href="#[176]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_TIM_DMABurst_ReadStop
+<BR>[Called By]<UL><LI><a href="#[176]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_TIM_DMABurst_ReadStop
 <LI><a href="#[174]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_TIM_DMABurst_WriteStop
 <LI><a href="#[12d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_SPI_DMAStop
 <LI><a href="#[107]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_ADCEx_MultiModeStop_DMA
+<LI><a href="#[103]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_ADC_Stop_DMA
 </UL>
 
 <P><STRONG><a name="[112]"></a>HAL_DMA_PollForTransfer</STRONG> (Thumb, 412 bytes, Stack size 40 bytes, stm32f4xx_hal_dma.o(.text), UNUSED)
@@ -1290,8 +1290,8 @@ Global Symbols
 </UL>
 
 <P><STRONG><a name="[12c]"></a>HAL_SPI_Receive_DMA</STRONG> (Thumb, 288 bytes, Stack size 24 bytes, stm32f4xx_hal_spi.o(.text), UNUSED)
-<BR><BR>[Calls]<UL><LI><a href="#[102]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_DMA_Start_IT
-<LI><a href="#[12b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_SPI_TransmitReceive_DMA
+<BR><BR>[Calls]<UL><LI><a href="#[12b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_SPI_TransmitReceive_DMA
+<LI><a href="#[102]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_DMA_Start_IT
 </UL>
 
 <P><STRONG><a name="[21d]"></a>HAL_SPI_DMAPause</STRONG> (Thumb, 62 bytes, Stack size 0 bytes, stm32f4xx_hal_spi.o(.text), UNUSED)
@@ -1456,8 +1456,8 @@ Global Symbols
 <LI> stm32f4xx_hal_tim_ex.o(.text)
 </UL>
 <P><STRONG><a name="[13d]"></a>HAL_TIM_OC_Start_DMA</STRONG> (Thumb, 312 bytes, Stack size 24 bytes, stm32f4xx_hal_tim.o(.text), UNUSED)
-<BR><BR>[Calls]<UL><LI><a href="#[102]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_DMA_Start_IT
-<LI><a href="#[139]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM_CCxChannelCmd
+<BR><BR>[Calls]<UL><LI><a href="#[139]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM_CCxChannelCmd
+<LI><a href="#[102]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_DMA_Start_IT
 </UL>
 
 <P><STRONG><a name="[13e]"></a>HAL_TIM_OC_Stop_DMA</STRONG> (Thumb, 202 bytes, Stack size 12 bytes, stm32f4xx_hal_tim.o(.text), UNUSED)
@@ -1504,8 +1504,8 @@ Global Symbols
 </UL>
 
 <P><STRONG><a name="[145]"></a>HAL_TIM_PWM_Start_DMA</STRONG> (Thumb, 312 bytes, Stack size 24 bytes, stm32f4xx_hal_tim.o(.text), UNUSED)
-<BR><BR>[Calls]<UL><LI><a href="#[102]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_DMA_Start_IT
-<LI><a href="#[139]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM_CCxChannelCmd
+<BR><BR>[Calls]<UL><LI><a href="#[139]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM_CCxChannelCmd
+<LI><a href="#[102]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_DMA_Start_IT
 </UL>
 
 <P><STRONG><a name="[146]"></a>HAL_TIM_PWM_Stop_DMA</STRONG> (Thumb, 202 bytes, Stack size 12 bytes, stm32f4xx_hal_tim.o(.text), UNUSED)
@@ -1559,8 +1559,8 @@ Global Symbols
 <LI> stm32f4xx_hal_tim_ex.o(.text)
 </UL>
 <P><STRONG><a name="[150]"></a>HAL_TIM_IC_Start_DMA</STRONG> (Thumb, 276 bytes, Stack size 24 bytes, stm32f4xx_hal_tim.o(.text), UNUSED)
-<BR><BR>[Calls]<UL><LI><a href="#[102]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_DMA_Start_IT
-<LI><a href="#[139]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM_CCxChannelCmd
+<BR><BR>[Calls]<UL><LI><a href="#[139]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM_CCxChannelCmd
+<LI><a href="#[102]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_DMA_Start_IT
 </UL>
 
 <P><STRONG><a name="[151]"></a>HAL_TIM_IC_Stop_DMA</STRONG> (Thumb, 140 bytes, Stack size 12 bytes, stm32f4xx_hal_tim.o(.text), UNUSED)
@@ -1634,8 +1634,8 @@ Global Symbols
 </UL>
 
 <P><STRONG><a name="[162]"></a>HAL_TIM_Encoder_Start_DMA</STRONG> (Thumb, 328 bytes, Stack size 24 bytes, stm32f4xx_hal_tim.o(.text), UNUSED)
-<BR><BR>[Calls]<UL><LI><a href="#[102]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_DMA_Start_IT
-<LI><a href="#[139]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM_CCxChannelCmd
+<BR><BR>[Calls]<UL><LI><a href="#[139]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM_CCxChannelCmd
+<LI><a href="#[102]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_DMA_Start_IT
 </UL>
 
 <P><STRONG><a name="[163]"></a>HAL_TIM_Encoder_Stop_DMA</STRONG> (Thumb, 152 bytes, Stack size 12 bytes, stm32f4xx_hal_tim.o(.text), UNUSED)
@@ -1803,8 +1803,8 @@ Global Symbols
 </UL>
 
 <P><STRONG><a name="[188]"></a>HAL_TIMEx_HallSensor_Start_DMA</STRONG> (Thumb, 106 bytes, Stack size 16 bytes, stm32f4xx_hal_tim_ex.o(.text), UNUSED)
-<BR><BR>[Calls]<UL><LI><a href="#[102]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_DMA_Start_IT
-<LI><a href="#[139]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM_CCxChannelCmd
+<BR><BR>[Calls]<UL><LI><a href="#[139]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM_CCxChannelCmd
+<LI><a href="#[102]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_DMA_Start_IT
 </UL>
 
 <P><STRONG><a name="[189]"></a>HAL_TIMEx_HallSensor_Stop_DMA</STRONG> (Thumb, 68 bytes, Stack size 8 bytes, stm32f4xx_hal_tim_ex.o(.text), UNUSED)
@@ -1828,8 +1828,8 @@ Global Symbols
 </UL>
 
 <P><STRONG><a name="[18f]"></a>HAL_TIMEx_OCN_Start_DMA</STRONG> (Thumb, 272 bytes, Stack size 24 bytes, stm32f4xx_hal_tim_ex.o(.text), UNUSED)
-<BR><BR>[Calls]<UL><LI><a href="#[102]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_DMA_Start_IT
-<LI><a href="#[18b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM_CCxNChannelCmd
+<BR><BR>[Calls]<UL><LI><a href="#[18b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM_CCxNChannelCmd
+<LI><a href="#[102]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_DMA_Start_IT
 </UL>
 
 <P><STRONG><a name="[190]"></a>HAL_TIMEx_OCN_Stop_DMA</STRONG> (Thumb, 192 bytes, Stack size 16 bytes, stm32f4xx_hal_tim_ex.o(.text), UNUSED)
@@ -1853,8 +1853,8 @@ Global Symbols
 </UL>
 
 <P><STRONG><a name="[195]"></a>HAL_TIMEx_PWMN_Start_DMA</STRONG> (Thumb, 272 bytes, Stack size 24 bytes, stm32f4xx_hal_tim_ex.o(.text), UNUSED)
-<BR><BR>[Calls]<UL><LI><a href="#[102]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_DMA_Start_IT
-<LI><a href="#[18b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM_CCxNChannelCmd
+<BR><BR>[Calls]<UL><LI><a href="#[18b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM_CCxNChannelCmd
+<LI><a href="#[102]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_DMA_Start_IT
 </UL>
 
 <P><STRONG><a name="[196]"></a>HAL_TIMEx_PWMN_Stop_DMA</STRONG> (Thumb, 178 bytes, Stack size 16 bytes, stm32f4xx_hal_tim_ex.o(.text), UNUSED)
@@ -3048,8 +3048,8 @@ Local Symbols
 </UL>
 
 <P><STRONG><a name="[111]"></a>DMA_SetConfig</STRONG> (Thumb, 44 bytes, Stack size 12 bytes, stm32f4xx_hal_dma.o(.text), UNUSED)
-<BR><BR>[Called By]<UL><LI><a href="#[102]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_DMA_Start_IT
-<LI><a href="#[110]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_DMA_Start
+<BR><BR>[Called By]<UL><LI><a href="#[110]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_DMA_Start
+<LI><a href="#[102]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_DMA_Start_IT
 </UL>
 
 <P><STRONG><a name="[11a]"></a>SPI_WaitOnFlagUntilTimeout</STRONG> (Thumb, 276 bytes, Stack size 24 bytes, stm32f4xx_hal_spi.o(.text))

@@ -75,8 +75,10 @@ void LED_set_speed(uint16_t speed)
 {
 	if (speed >= 100)
 		speed = 99;
+	if (speed <= 50)
+		speed = 100 - speed;
 	
-	ROTATION_COUNT = 99 - speed;
+	ROTATION_COUNT = (110-speed);
 }
 
 /**

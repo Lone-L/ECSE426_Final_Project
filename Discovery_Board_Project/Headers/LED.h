@@ -2,6 +2,7 @@
 #define LED_H
 
 #include "stdint.h"
+#include "stdlib.h"
 
 void toggle_PWM_flag(void);
 void toggle_GPIO_mode_flag(void);

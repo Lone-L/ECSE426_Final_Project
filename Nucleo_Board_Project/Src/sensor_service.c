@@ -585,7 +585,7 @@ void Write_Request_CB(uint16_t handle, uint8_t data_length, uint8_t*data)
 			Led_SetPattern(PATTERN_CMD_CCW);
 			Led_SetSpeed(rec_data_1);
 
-		} else if (rec_data_1 > 50  && rec_data_1 < 100) {
+		} else if ((rec_data_1 > 50)  && (rec_data_1 < 100)) {
 			int i;
 			for (i=0; i<500000; i++);		// arbitrary delay (there were issues with timing, not sure why)
 			Led_SetPattern(PATTERN_CMD_CW);
@@ -600,9 +600,9 @@ void Write_Request_CB(uint16_t handle, uint8_t data_length, uint8_t*data)
 			
 			
 			
-		/* Brightness commands range from [100,200) */
+		/* Brightness commands range from [100,200] */
 		/* Command to set LED brightness */	
-		} else if (rec_data_1 >= 100 && rec_data_1 < 200) {
+		} else if ((rec_data_1 >= 100) && (rec_data_1 <= 200)) {
 			led_brightness = rec_data_1-100;
 			Led_SetPattern(PATTERN_CMD_OFF);
 			int i;
