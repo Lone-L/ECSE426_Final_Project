@@ -583,10 +583,14 @@ void Write_Request_CB(uint16_t handle, uint8_t data_length, uint8_t*data)
 			int i;
 			for (i=0; i<500000; i++);		// arbitrary delay (there were issues with timing, not sure why)
 			Led_SetPattern(PATTERN_CMD_CCW);
+			Led_SetSpeed(rec_data_1);
+
 		} else if (rec_data_1 > 50  && rec_data_1 < 100) {
 			int i;
 			for (i=0; i<500000; i++);		// arbitrary delay (there were issues with timing, not sure why)
 			Led_SetPattern(PATTERN_CMD_CW);
+			Led_SetSpeed(rec_data_1);
+
 		} else if (rec_data_1 ==50) {
 			Led_SetPattern(PATTERN_CMD_OFF);
 			int i;

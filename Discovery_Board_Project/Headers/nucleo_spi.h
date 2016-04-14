@@ -49,6 +49,7 @@ typedef void (*timeout_cb_fn)(void);
 #define NUCLEO_SPI_READ_TEMP_CMD						0x1234
 #define NUCLEO_SPI_WRITE_LED_PATTERN_CMD		0xbeef
 #define NUCLEO_SPI_WRITE_LED_DUTYCYCLE_CMD	0xdead
+#define NUCLEO_SPI_WRITE_LED_SPEED_CMD			0xcafe
 
 #define PATTERN_CMD_OFF			0x0001
 #define PATTERN_CMD_CCW			0x0002

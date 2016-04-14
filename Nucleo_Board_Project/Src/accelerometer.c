@@ -56,6 +56,5 @@ void Accelerometer_Process(void)
 		bitchNroll.AXIS_X = pitch*10;
 		bitchNroll.AXIS_Y = roll*10;
 		bitchNroll.AXIS_Z = 0;
-		Acc_Update(&bitchNroll);
 	}
 }

@@ -15,11 +15,12 @@ void init_PWM(void);
 void init_GPIO_PWM(void);
 void init_GPIO_NO_PWM(void);
 void LED_set_duty_cycle(int duty_cycle);
+void LED_set_speed(uint16_t speed);
 void set_LED_state(int state);
 
 
 #define PERIOD 42000
-#define ROTATION_COUNT 40
+#define DEFAULT_ROTATION_COUNT 40
 
 /* DIFFERENT LED STATES */
 #define ALL_ON_PWM_ON			1

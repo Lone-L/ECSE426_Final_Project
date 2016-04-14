@@ -365,7 +365,7 @@ void User_Process(AxesRaw_t* p_axes)
       p_axes->AXIS_Y -= 1;
       p_axes->AXIS_Z += 2;
       PRINTF("ACC: X=%6d Y=%6d Z=%6d\r\n", p_axes->AXIS_X, p_axes->AXIS_Y, p_axes->AXIS_Z);
-      Free_Fall_Notify();
+      //Free_Fall_Notify();
     }
   }
 }

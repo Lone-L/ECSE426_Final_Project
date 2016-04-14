@@ -54,7 +54,10 @@ void NucleoSPI_RxISR(SPI_HandleTypeDef *hspi)
 			value = NucleoSPI_ReadShortValue();
 			LED_set_duty_cycle(value);
 			break;
-		
+		case NUCLEO_SPI_WRITE_LED_SPEED_CMD:
+			value = NucleoSPI_ReadShortValue();
+			LED_set_speed(value);
+			break;
 		case 0x0000:
 			/* Dummy command */
 			break;

@@ -140,8 +140,8 @@ I (.\Drivers\BSP\STM32F4xx-Nucleo\stm32f4xx_nucleo.h)(0x5709A660)
 I (.\Drivers\BSP\STM32F4xx-Nucleo\stm32f4xx_nucleo_bluenrg.h)(0x5709A660)
 I (.\BLE\STM32_BlueNRG\SimpleBlueNRG_HCI\includes\debug.h)(0x5709A660)
 I (C:\Keil_v5\ARM\ARMCC\include\string.h)(0x569EAF1A)
-I (.\Inc\discovery_spi.h)(0x570C3116)
-F (.\Src\main.c)(0x570EF848)(--c99 -c --cpu Cortex-M4.fp -D__EVAL -g -O0 --apcs=interwork --split_sections -I .\Inc -I .\Drivers\CMSIS\Device\ST\STM32F4xx\Include -I .\Drivers\STM32F4xx_HAL_Driver\Inc -I .\Drivers\BSP\STM32F4xx-Nucleo -I .\Drivers\BSP\X-NUCLEO-IDB04A1 -I .\BLE\STM32_BlueNRG\SimpleBlueNRG_HCI\includes -I .\Drivers\CMSIS\Include -I .\RTE --C99 --gnu -D__UVISION_VERSION="518" -D_RTE_ -DSTM32F401xE -DUSE_HAL_DRIVER -DSTM32F401xE -DUSE_STM32F4XX_NUCLEO -DDEBUG-o .\objects\main.o --omf_browse .\objects\main.crf --depend .\objects\main.d)
+I (.\Inc\discovery_spi.h)(0x570FD39D)
+F (.\Src\main.c)(0x570F5FD8)(--c99 -c --cpu Cortex-M4.fp -D__EVAL -g -O0 --apcs=interwork --split_sections -I .\Inc -I .\Drivers\CMSIS\Device\ST\STM32F4xx\Include -I .\Drivers\STM32F4xx_HAL_Driver\Inc -I .\Drivers\BSP\STM32F4xx-Nucleo -I .\Drivers\BSP\X-NUCLEO-IDB04A1 -I .\BLE\STM32_BlueNRG\SimpleBlueNRG_HCI\includes -I .\Drivers\CMSIS\Include -I .\RTE --C99 --gnu -D__UVISION_VERSION="518" -D_RTE_ -DSTM32F401xE -DUSE_HAL_DRIVER -DSTM32F401xE -DUSE_STM32F4XX_NUCLEO -DDEBUG-o .\objects\main.o --omf_browse .\objects\main.crf --depend .\objects\main.d)
 I (.\Inc\cube_hal.h)(0x5709A660)
 I (.\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal.h)(0x5709A660)
 I (.\Inc\stm32f4xx_hal_conf.h)(0x5709A660)
@@ -195,14 +195,14 @@ I (.\BLE\STM32_BlueNRG\SimpleBlueNRG_HCI\includes\hal.h)(0x5709A660)
 I (.\BLE\STM32_BlueNRG\SimpleBlueNRG_HCI\includes\sm.h)(0x5709A660)
 I (.\BLE\STM32_BlueNRG\SimpleBlueNRG_HCI\includes\debug.h)(0x5709A660)
 I (C:\Keil_v5\ARM\ARMCC\include\math.h)(0x569EAF1A)
-I (.\Inc\led.h)(0x570C3116)
-I (.\Inc\discovery_spi.h)(0x570C3116)
+I (.\Inc\led.h)(0x570FD349)
+I (.\Inc\discovery_spi.h)(0x570FD39D)
 I (C:\Keil_v5\ARM\ARMCC\include\stdlib.h)(0x569EAF1A)
 I (.\Drivers\BSP\X-NUCLEO-IDB04A1\stm32_bluenrg_ble.h)(0x5709A660)
 I (.\BLE\STM32_BlueNRG\SimpleBlueNRG_HCI\includes\bluenrg_utils.h)(0x5709A660)
 I (.\Inc\accelerometer.h)(0x5709A660)
 I (.\Inc\temperature.h)(0x5709A660)
-F (.\Src\sensor_service.c)(0x570F2447)(--c99 -c --cpu Cortex-M4.fp -D__EVAL -g -O0 --apcs=interwork --split_sections -I .\Inc -I .\Drivers\CMSIS\Device\ST\STM32F4xx\Include -I .\Drivers\STM32F4xx_HAL_Driver\Inc -I .\Drivers\BSP\STM32F4xx-Nucleo -I .\Drivers\BSP\X-NUCLEO-IDB04A1 -I .\BLE\STM32_BlueNRG\SimpleBlueNRG_HCI\includes -I .\Drivers\CMSIS\Include -I .\RTE --C99 --gnu -D__UVISION_VERSION="518" -D_RTE_ -DSTM32F401xE -DUSE_HAL_DRIVER -DSTM32F401xE -DUSE_STM32F4XX_NUCLEO -DDEBUG-o .\objects\sensor_service.o --omf_browse .\objects\sensor_service.crf --depend .\objects\sensor_service.d)
+F (.\Src\sensor_service.c)(0x570FD31F)(--c99 -c --cpu Cortex-M4.fp -D__EVAL -g -O0 --apcs=interwork --split_sections -I .\Inc -I .\Drivers\CMSIS\Device\ST\STM32F4xx\Include -I .\Drivers\STM32F4xx_HAL_Driver\Inc -I .\Drivers\BSP\STM32F4xx-Nucleo -I .\Drivers\BSP\X-NUCLEO-IDB04A1 -I .\BLE\STM32_BlueNRG\SimpleBlueNRG_HCI\includes -I .\Drivers\CMSIS\Include -I .\RTE --C99 --gnu -D__UVISION_VERSION="518" -D_RTE_ -DSTM32F401xE -DUSE_HAL_DRIVER -DSTM32F401xE -DUSE_STM32F4XX_NUCLEO -DDEBUG-o .\objects\sensor_service.o --omf_browse .\objects\sensor_service.crf --depend .\objects\sensor_service.d)
 I (.\Inc\sensor_service.h)(0x570EAAB7)
 I (.\Inc\cube_hal.h)(0x5709A660)
 I (.\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal.h)(0x5709A660)
@@ -255,11 +255,11 @@ I (.\BLE\STM32_BlueNRG\SimpleBlueNRG_HCI\includes\hal.h)(0x5709A660)
 I (.\BLE\STM32_BlueNRG\SimpleBlueNRG_HCI\includes\sm.h)(0x5709A660)
 I (.\BLE\STM32_BlueNRG\SimpleBlueNRG_HCI\includes\debug.h)(0x5709A660)
 I (C:\Keil_v5\ARM\ARMCC\include\math.h)(0x569EAF1A)
-I (.\Inc\led.h)(0x570C3116)
-I (.\Inc\discovery_spi.h)(0x570C3116)
+I (.\Inc\led.h)(0x570FD349)
+I (.\Inc\discovery_spi.h)(0x570FD39D)
 I (C:\Keil_v5\ARM\ARMCC\include\stdlib.h)(0x569EAF1A)
-F (.\Src\discovery_spi.c)(0x570C3116)(--c99 -c --cpu Cortex-M4.fp -D__EVAL -g -O0 --apcs=interwork --split_sections -I .\Inc -I .\Drivers\CMSIS\Device\ST\STM32F4xx\Include -I .\Drivers\STM32F4xx_HAL_Driver\Inc -I .\Drivers\BSP\STM32F4xx-Nucleo -I .\Drivers\BSP\X-NUCLEO-IDB04A1 -I .\BLE\STM32_BlueNRG\SimpleBlueNRG_HCI\includes -I .\Drivers\CMSIS\Include -I .\RTE --C99 --gnu -D__UVISION_VERSION="518" -D_RTE_ -DSTM32F401xE -DUSE_HAL_DRIVER -DSTM32F401xE -DUSE_STM32F4XX_NUCLEO -DDEBUG-o .\objects\discovery_spi.o --omf_browse .\objects\discovery_spi.crf --depend .\objects\discovery_spi.d)
-I (.\Inc\discovery_spi.h)(0x570C3116)
+F (.\Src\discovery_spi.c)(0x570FD35A)(--c99 -c --cpu Cortex-M4.fp -D__EVAL -g -O0 --apcs=interwork --split_sections -I .\Inc -I .\Drivers\CMSIS\Device\ST\STM32F4xx\Include -I .\Drivers\STM32F4xx_HAL_Driver\Inc -I .\Drivers\BSP\STM32F4xx-Nucleo -I .\Drivers\BSP\X-NUCLEO-IDB04A1 -I .\BLE\STM32_BlueNRG\SimpleBlueNRG_HCI\includes -I .\Drivers\CMSIS\Include -I .\RTE --C99 --gnu -D__UVISION_VERSION="518" -D_RTE_ -DSTM32F401xE -DUSE_HAL_DRIVER -DSTM32F401xE -DUSE_STM32F4XX_NUCLEO -DDEBUG-o .\objects\discovery_spi.o --omf_browse .\objects\discovery_spi.crf --depend .\objects\discovery_spi.d)
+I (.\Inc\discovery_spi.h)(0x570FD39D)
 I (.\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal.h)(0x5709A660)
 I (.\Inc\stm32f4xx_hal_conf.h)(0x5709A660)
 I (.\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_rcc.h)(0x5709A660)
@@ -320,7 +320,7 @@ I (.\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_pwr_ex.h)(0x5709A660)
 I (.\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_spi.h)(0x5709A660)
 I (.\Drivers\BSP\STM32F4xx-Nucleo\stm32f4xx_nucleo.h)(0x5709A660)
 I (.\Drivers\BSP\STM32F4xx-Nucleo\stm32f4xx_nucleo_bluenrg.h)(0x5709A660)
-I (.\Inc\discovery_spi.h)(0x570C3116)
+I (.\Inc\discovery_spi.h)(0x570FD39D)
 F (.\Src\EXTI_handler_cb.c)(0x5709A660)(--c99 -c --cpu Cortex-M4.fp -D__EVAL -g -O0 --apcs=interwork --split_sections -I .\Inc -I .\Drivers\CMSIS\Device\ST\STM32F4xx\Include -I .\Drivers\STM32F4xx_HAL_Driver\Inc -I .\Drivers\BSP\STM32F4xx-Nucleo -I .\Drivers\BSP\X-NUCLEO-IDB04A1 -I .\BLE\STM32_BlueNRG\SimpleBlueNRG_HCI\includes -I .\Drivers\CMSIS\Include -I .\RTE --C99 --gnu -D__UVISION_VERSION="518" -D_RTE_ -DSTM32F401xE -DUSE_HAL_DRIVER -DSTM32F401xE -DUSE_STM32F4XX_NUCLEO -DDEBUG-o .\objects\exti_handler_cb.o --omf_browse .\objects\exti_handler_cb.crf --depend .\objects\exti_handler_cb.d)
 I (.\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal.h)(0x5709A660)
 I (.\Inc\stm32f4xx_hal_conf.h)(0x5709A660)
@@ -357,10 +357,10 @@ I (.\BLE\STM32_BlueNRG\SimpleBlueNRG_HCI\includes\ble_status.h)(0x5709A660)
 I (.\BLE\STM32_BlueNRG\SimpleBlueNRG_HCI\includes\list.h)(0x5709A660)
 I (.\Inc\accelerometer.h)(0x5709A660)
 I (.\Inc\temperature.h)(0x5709A660)
-I (.\Inc\discovery_spi.h)(0x570C3116)
+I (.\Inc\discovery_spi.h)(0x570FD39D)
 F (.\Src\temperature.c)(0x570F1F69)(--c99 -c --cpu Cortex-M4.fp -D__EVAL -g -O0 --apcs=interwork --split_sections -I .\Inc -I .\Drivers\CMSIS\Device\ST\STM32F4xx\Include -I .\Drivers\STM32F4xx_HAL_Driver\Inc -I .\Drivers\BSP\STM32F4xx-Nucleo -I .\Drivers\BSP\X-NUCLEO-IDB04A1 -I .\BLE\STM32_BlueNRG\SimpleBlueNRG_HCI\includes -I .\Drivers\CMSIS\Include -I .\RTE --C99 --gnu -D__UVISION_VERSION="518" -D_RTE_ -DSTM32F401xE -DUSE_HAL_DRIVER -DSTM32F401xE -DUSE_STM32F4XX_NUCLEO -DDEBUG-o .\objects\temperature.o --omf_browse .\objects\temperature.crf --depend .\objects\temperature.d)
 I (.\Inc\temperature.h)(0x5709A660)
-I (.\Inc\discovery_spi.h)(0x570C3116)
+I (.\Inc\discovery_spi.h)(0x570FD39D)
 I (.\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal.h)(0x5709A660)
 I (.\Inc\stm32f4xx_hal_conf.h)(0x5709A660)
 I (.\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_rcc.h)(0x5709A660)
@@ -413,11 +413,11 @@ I (.\BLE\STM32_BlueNRG\SimpleBlueNRG_HCI\includes\hal.h)(0x5709A660)
 I (.\BLE\STM32_BlueNRG\SimpleBlueNRG_HCI\includes\sm.h)(0x5709A660)
 I (.\BLE\STM32_BlueNRG\SimpleBlueNRG_HCI\includes\debug.h)(0x5709A660)
 I (C:\Keil_v5\ARM\ARMCC\include\math.h)(0x569EAF1A)
-I (.\Inc\led.h)(0x570C3116)
+I (.\Inc\led.h)(0x570FD349)
 I (C:\Keil_v5\ARM\ARMCC\include\stdlib.h)(0x569EAF1A)
-F (.\Src\accelerometer.c)(0x570F1F78)(--c99 -c --cpu Cortex-M4.fp -D__EVAL -g -O0 --apcs=interwork --split_sections -I .\Inc -I .\Drivers\CMSIS\Device\ST\STM32F4xx\Include -I .\Drivers\STM32F4xx_HAL_Driver\Inc -I .\Drivers\BSP\STM32F4xx-Nucleo -I .\Drivers\BSP\X-NUCLEO-IDB04A1 -I .\BLE\STM32_BlueNRG\SimpleBlueNRG_HCI\includes -I .\Drivers\CMSIS\Include -I .\RTE --C99 --gnu -D__UVISION_VERSION="518" -D_RTE_ -DSTM32F401xE -DUSE_HAL_DRIVER -DSTM32F401xE -DUSE_STM32F4XX_NUCLEO -DDEBUG-o .\objects\accelerometer.o --omf_browse .\objects\accelerometer.crf --depend .\objects\accelerometer.d)
+F (.\Src\accelerometer.c)(0x570F6217)(--c99 -c --cpu Cortex-M4.fp -D__EVAL -g -O0 --apcs=interwork --split_sections -I .\Inc -I .\Drivers\CMSIS\Device\ST\STM32F4xx\Include -I .\Drivers\STM32F4xx_HAL_Driver\Inc -I .\Drivers\BSP\STM32F4xx-Nucleo -I .\Drivers\BSP\X-NUCLEO-IDB04A1 -I .\BLE\STM32_BlueNRG\SimpleBlueNRG_HCI\includes -I .\Drivers\CMSIS\Include -I .\RTE --C99 --gnu -D__UVISION_VERSION="518" -D_RTE_ -DSTM32F401xE -DUSE_HAL_DRIVER -DSTM32F401xE -DUSE_STM32F4XX_NUCLEO -DDEBUG-o .\objects\accelerometer.o --omf_browse .\objects\accelerometer.crf --depend .\objects\accelerometer.d)
 I (.\Inc\accelerometer.h)(0x5709A660)
-I (.\Inc\discovery_spi.h)(0x570C3116)
+I (.\Inc\discovery_spi.h)(0x570FD39D)
 I (.\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal.h)(0x5709A660)
 I (.\Inc\stm32f4xx_hal_conf.h)(0x5709A660)
 I (.\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_rcc.h)(0x5709A660)
@@ -470,7 +470,7 @@ I (.\BLE\STM32_BlueNRG\SimpleBlueNRG_HCI\includes\hal.h)(0x5709A660)
 I (.\BLE\STM32_BlueNRG\SimpleBlueNRG_HCI\includes\sm.h)(0x5709A660)
 I (.\BLE\STM32_BlueNRG\SimpleBlueNRG_HCI\includes\debug.h)(0x5709A660)
 I (C:\Keil_v5\ARM\ARMCC\include\math.h)(0x569EAF1A)
-I (.\Inc\led.h)(0x570C3116)
+I (.\Inc\led.h)(0x570FD349)
 I (C:\Keil_v5\ARM\ARMCC\include\stdlib.h)(0x569EAF1A)
 F (.\Src\fput_debug.c)(0x5709A660)(--c99 -c --cpu Cortex-M4.fp -D__EVAL -g -O0 --apcs=interwork --split_sections -I .\Inc -I .\Drivers\CMSIS\Device\ST\STM32F4xx\Include -I .\Drivers\STM32F4xx_HAL_Driver\Inc -I .\Drivers\BSP\STM32F4xx-Nucleo -I .\Drivers\BSP\X-NUCLEO-IDB04A1 -I .\BLE\STM32_BlueNRG\SimpleBlueNRG_HCI\includes -I .\Drivers\CMSIS\Include -I .\RTE --C99 --gnu -D__UVISION_VERSION="518" -D_RTE_ -DSTM32F401xE -DUSE_HAL_DRIVER -DSTM32F401xE -DUSE_STM32F4XX_NUCLEO -DDEBUG-o .\objects\fput_debug.o --omf_browse .\objects\fput_debug.crf --depend .\objects\fput_debug.d)
 I (C:\Keil_v5\ARM\ARMCC\include\stdio.h)(0x569EAF1A)
@@ -501,9 +501,9 @@ I (.\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_flash_ramfunc.h)(0x5709A660)
 I (.\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_pwr.h)(0x5709A660)
 I (.\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_pwr_ex.h)(0x5709A660)
 I (.\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_spi.h)(0x5709A660)
-F (.\Src\led.c)(0x570C3116)(--c99 -c --cpu Cortex-M4.fp -D__EVAL -g -O0 --apcs=interwork --split_sections -I .\Inc -I .\Drivers\CMSIS\Device\ST\STM32F4xx\Include -I .\Drivers\STM32F4xx_HAL_Driver\Inc -I .\Drivers\BSP\STM32F4xx-Nucleo -I .\Drivers\BSP\X-NUCLEO-IDB04A1 -I .\BLE\STM32_BlueNRG\SimpleBlueNRG_HCI\includes -I .\Drivers\CMSIS\Include -I .\RTE --C99 --gnu -D__UVISION_VERSION="518" -D_RTE_ -DSTM32F401xE -DUSE_HAL_DRIVER -DSTM32F401xE -DUSE_STM32F4XX_NUCLEO -DDEBUG-o .\objects\led.o --omf_browse .\objects\led.crf --depend .\objects\led.d)
+F (.\Src\led.c)(0x570FD33B)(--c99 -c --cpu Cortex-M4.fp -D__EVAL -g -O0 --apcs=interwork --split_sections -I .\Inc -I .\Drivers\CMSIS\Device\ST\STM32F4xx\Include -I .\Drivers\STM32F4xx_HAL_Driver\Inc -I .\Drivers\BSP\STM32F4xx-Nucleo -I .\Drivers\BSP\X-NUCLEO-IDB04A1 -I .\BLE\STM32_BlueNRG\SimpleBlueNRG_HCI\includes -I .\Drivers\CMSIS\Include -I .\RTE --C99 --gnu -D__UVISION_VERSION="518" -D_RTE_ -DSTM32F401xE -DUSE_HAL_DRIVER -DSTM32F401xE -DUSE_STM32F4XX_NUCLEO -DDEBUG-o .\objects\led.o --omf_browse .\objects\led.crf --depend .\objects\led.d)
 I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x569EAF1A)
-I (.\Inc\discovery_spi.h)(0x570C3116)
+I (.\Inc\discovery_spi.h)(0x570FD39D)
 I (.\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal.h)(0x5709A660)
 I (.\Inc\stm32f4xx_hal_conf.h)(0x5709A660)
 I (.\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_rcc.h)(0x5709A660)

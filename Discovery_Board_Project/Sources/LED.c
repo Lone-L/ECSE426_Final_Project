@@ -9,6 +9,7 @@ static int LED_STATE = ALL_OFF;								//currently there are 4 different states,
 static int IS_PWM_ON = 0; 										//used to indicate whether PWM is started or stopped
 static int CURRENT_GPIO_MODE = GPIO_PP_MODE;	//used to indicate whether GPIO's are currently initialized to alternate function (PWM) or PP mode (DC to drive CCW and CW LED)
 static int pulse = (int)PERIOD/2;							//used to set the duty cycle
+static int ROTATION_COUNT = DEFAULT_ROTATION_COUNT;
 
 /**
    * @brief toggles IS_PWM_ON,
@@ -68,6 +69,14 @@ void LED_set_duty_cycle(int duty_cycle)
 	HAL_TIM_OC_ConfigChannel(&timmy4, &OC_CONFIG, TIM_CHANNEL_2);
 	HAL_TIM_OC_ConfigChannel(&timmy4, &OC_CONFIG, TIM_CHANNEL_3);
 	HAL_TIM_OC_ConfigChannel(&timmy4, &OC_CONFIG, TIM_CHANNEL_4);
+}
+
+void LED_set_speed(uint16_t speed)
+{
+	if (speed >= 100)
+		speed = 99;
+	
+	ROTATION_COUNT = 99 - speed;
 }
 
 /**
@@ -211,8 +220,8 @@ void init_GPIO_NO_PWM(void)
 void HAL_TIM_PWM_PulseFinishedCallback(TIM_HandleTypeDef *htim)
 {
 	static int counter;
-	static uint8_t delay = ROTATION_COUNT;
-	static uint16_t yolo = 123;
+//	static uint8_t delay = ROTATION_COUNT;
+//	static uint16_t yolo = 123;
 
 	switch (LED_STATE)
 	{
@@ -237,23 +246,22 @@ void HAL_TIM_PWM_PulseFinishedCallback(TIM_HandleTypeDef *htim)
 				LED_CCW();
 			
 
-
-			counter = (counter + 1) % delay;
-			if (counter == 0) {
-					delay = (delay - 1) % ROTATION_COUNT;
-					if (delay == 2) {
-						if (yolo > 0) {
-							yolo--;
-							delay += 1;
-						} else {
-							yolo = 123;
-						}
-					}
-				
-					if (delay == 1) {
-						delay = ROTATION_COUNT;
-					}
-			}
+			counter = (counter + 1) % ROTATION_COUNT;
+//			if (counter == 0) {
+//					delay = (delay - 1) % ROTATION_COUNT;
+//					if (delay == 2) {
+//						if (yolo > 0) {
+//							yolo--;
+//							delay += 1;
+//						} else {
+//							yolo = 123;
+//						}
+//					}
+//				
+//					if (delay == 1) {
+//						delay = ROTATION_COUNT;
+//					}
+//			}
 			
 			break;
 		case CW_NO_PWM:
