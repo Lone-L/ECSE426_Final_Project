@@ -123,6 +123,12 @@ do {\
 /* Store Value into a buffer in Little Endian Format */
 #define STORE_LE_16(buf, val)    ( ((buf)[0] =  (uint8_t) (val)    ) , \
                                    ((buf)[1] =  (uint8_t) (val>>8) ) )
+																	 
+																	 /* Store Value into a buffer in Little Endian Format */
+#define STORE_LE_32(buf, val)    ( ((buf)[0] =  (uint8_t) (val)    ) , \
+                                   ((buf)[1] =  (uint8_t) (val>>8) ) , \
+																	 ((buf)[2] =	(uint8_t) (val>>16) ) , \
+																	 ((buf)[3] = 	(uint8_t) (val>>24)) )
 /**
  * @}
  */
@@ -188,7 +194,7 @@ tBleStatus Add_Acc_Service(void)
   if (ret != BLE_STATUS_SUCCESS) goto fail;
   
   COPY_ACC_UUID(uuid);  
-  ret =  aci_gatt_add_char(accServHandle, UUID_TYPE_128, uuid, 6,
+  ret =  aci_gatt_add_char(accServHandle, UUID_TYPE_128, uuid, 8,
                            CHAR_PROP_NOTIFY|CHAR_PROP_READ,
                            ATTR_PERMISSION_NONE,
                            GATT_NOTIFY_READ_REQ_AND_WAIT_FOR_APPL_RESP,
@@ -235,13 +241,13 @@ tBleStatus Free_Fall_Notify(void)
 tBleStatus Acc_Update(AxesRaw_t *data)
 {  
   tBleStatus ret;    
-  uint8_t buff[6];
+  uint8_t buff[8];
     
-  STORE_LE_16(buff,data->AXIS_X);
-  STORE_LE_16(buff+2,data->AXIS_Y);
-  STORE_LE_16(buff+4,data->AXIS_Z);
+  STORE_LE_32(buff,data->AXIS_X);
+  STORE_LE_32(buff+4,data->AXIS_Y);
+
 	
-  ret = aci_gatt_update_char_value(accServHandle, accCharHandle, 0, 6, buff);
+  ret = aci_gatt_update_char_value(accServHandle, accCharHandle, 0, 8, buff);
 	//printf("hello world");
   if (ret != BLE_STATUS_SUCCESS){
     PRINTF("Error while updating ACC characteristic.\n") ;
@@ -382,9 +388,11 @@ fail:
 tBleStatus Temp_Update(int16_t temp)
 {  
   tBleStatus ret;
-  
-  ret = aci_gatt_update_char_value(envSensServHandle, tempCharHandle, 0, 2,
-                                   (uint8_t*)&temp);
+  uint8_t buff[2];
+    
+  STORE_LE_16(buff,temp);
+	
+  ret = aci_gatt_update_char_value(envSensServHandle, tempCharHandle, 0, 2,buff);
   
   if (ret != BLE_STATUS_SUCCESS){
     PRINTF("Error while updating TEMP characteristic.\n") ;

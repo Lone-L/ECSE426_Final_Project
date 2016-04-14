@@ -27,6 +27,6 @@ void Temperature_Process(void)
 	if (Temperature_IsDataReady()) {
 		temperature = DiscoverySPI_ReadFloatValue(DISCOVERY_SPI_READ_TEMP_CMD);
 		Temperature_ResetDatareadyFlag();
-		tempNstuff = temperature;
+		tempNstuff = temperature*10;
 	}
 }
