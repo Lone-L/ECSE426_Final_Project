@@ -59,7 +59,9 @@
 #include "hal.h"
 #include "sm.h"
 #include "debug.h"
-
+#include <math.h>
+#include "led.h"
+#include "discovery_spi.h"
 #include <stdlib.h>
 
 /** @addtogroup X-CUBE-BLE1_Applications
@@ -118,6 +120,7 @@ tBleStatus Add_Acc_Service(void);
 tBleStatus Acc_Update(AxesRaw_t *data);
 tBleStatus Add_Environmental_Sensor_Service(void);
 tBleStatus Add_LED_CTRL_Service(void);
+tBleStatus Free_Fall_Notify(void);
 void       setConnectable(void);
 void       enableNotification(void);
 void       GAP_ConnectionComplete_CB(uint8_t addr[6], uint16_t handle);

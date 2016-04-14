@@ -35,7 +35,6 @@
   ******************************************************************************
   */
 #include "sensor_service.h"
-#include <math.h>
 
 /** @addtogroup X-CUBE-BLE1_Applications
  *  @{
@@ -149,7 +148,7 @@ tBleStatus Add_LED_CTRL_Service(void)
   if (ret != BLE_STATUS_SUCCESS) goto fail;    
   
   COPY_LED_TGL_CHAR_UUID(uuid);
-  ret =  aci_gatt_add_char(ledCtrlServHandle, UUID_TYPE_128, uuid, 7,
+  ret =  aci_gatt_add_char(ledCtrlServHandle, UUID_TYPE_128, uuid, 1,
                            CHAR_PROP_WRITE | CHAR_PROP_WRITE_WITHOUT_RESP , ATTR_PERMISSION_NONE, GATT_NOTIFY_ATTRIBUTE_WRITE,
                            16, 0, &ledTglCharHandle);
   if (ret != BLE_STATUS_SUCCESS) goto fail;
@@ -538,10 +537,8 @@ void Read_Request_CB(uint16_t handle)
     aci_gatt_allow_read(connection_handle);
 }
 
-int rec_data = 0;
-uint8_t rec_data_1 = 0;
-uint8_t rec_data_2 = 0;
-uint8_t rec_len = 0;
+int rec_data_1 = 0;
+int led_enable = 0;
 /**
  * @brief  Write request callback.
  * @param  uint16_t Handle of the attribute
@@ -549,15 +546,34 @@ uint8_t rec_len = 0;
  */
 void Write_Request_CB(uint16_t handle, uint8_t data_length, uint8_t*data)
 {  
-	rec_data = 0;
   if(handle == ledTglCharHandle + 1){
-		int i;
-		for (i=0; i<data_length; i++){
-			rec_data += data[i]<<(8*(data_length-(i+1)));
+		rec_data_1 = (int) data[0];
+		if (rec_data_1 == 255){
+			led_enable = (led_enable+1)%2;
+			if (!led_enable) {
+				int i;
+				for (i=0; i<500000; i++);		// arbitrary delay (there were issues with timing, not sure why)
+				Led_SetPattern(PATTERN_CMD_OFF);	// we got a command to turn off the LED
+			} else {
+				int i;
+				for (i=0; i<500000; i++);		// arbitrary delay (there were issues with timing, not sure why)
+				Led_SetPattern(PATTERN_CMD_PWM);
+				Led_SetDutyCycle(20);
+			}
+		} else if (rec_data_1 < 50){
+			int i;
+			for (i=0; i<500000; i++);		// arbitrary delay (there were issues with timing, not sure why)
+			Led_SetPattern(PATTERN_CMD_CCW);
+		} else if (rec_data_1 > 50) {
+			int i;
+			for (i=0; i<500000; i++);		// arbitrary delay (there were issues with timing, not sure why)
+			Led_SetPattern(PATTERN_CMD_CW);
+		} else if (rec_data_1 ==50) {
+			int i;
+			for (i=0; i<500000; i++);		// arbitrary delay (there were issues with timing, not sure why)
+			Led_SetPattern(PATTERN_CMD_PWM);
+			Led_SetDutyCycle(20);
 		}
-		rec_data_1 = data[0];
-		rec_data_2 = data[1];
-		rec_len = data_length;
   }  
 	
   //EXIT:

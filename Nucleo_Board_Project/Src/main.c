@@ -342,7 +342,7 @@ void User_Process(AxesRaw_t* p_axes)
 			state = 0;
 		}
 		
-    BSP_LED_Toggle(LED2); //used for debugging (BSP_LED_Init() above must be also enabled)
+    //BSP_LED_Toggle(LED2); //used for debugging (BSP_LED_Init() above must be also enabled)
     		
     if(connected)
     {

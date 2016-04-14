@@ -55,4 +55,6 @@
 .\objects\accelerometer.o: .\BLE\STM32_BlueNRG\SimpleBlueNRG_HCI\includes\hal.h
 .\objects\accelerometer.o: .\BLE\STM32_BlueNRG\SimpleBlueNRG_HCI\includes\sm.h
 .\objects\accelerometer.o: .\BLE\STM32_BlueNRG\SimpleBlueNRG_HCI\includes\debug.h
+.\objects\accelerometer.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\math.h
+.\objects\accelerometer.o: .\Inc\led.h
 .\objects\accelerometer.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h

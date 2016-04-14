@@ -55,4 +55,6 @@
 .\objects\temperature.o: .\BLE\STM32_BlueNRG\SimpleBlueNRG_HCI\includes\hal.h
 .\objects\temperature.o: .\BLE\STM32_BlueNRG\SimpleBlueNRG_HCI\includes\sm.h
 .\objects\temperature.o: .\BLE\STM32_BlueNRG\SimpleBlueNRG_HCI\includes\debug.h
+.\objects\temperature.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\math.h
+.\objects\temperature.o: .\Inc\led.h
 .\objects\temperature.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h

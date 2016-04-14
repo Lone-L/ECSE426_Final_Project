@@ -54,11 +54,12 @@
 .\objects\main.o: .\BLE\STM32_BlueNRG\SimpleBlueNRG_HCI\includes\hal.h
 .\objects\main.o: .\BLE\STM32_BlueNRG\SimpleBlueNRG_HCI\includes\sm.h
 .\objects\main.o: .\BLE\STM32_BlueNRG\SimpleBlueNRG_HCI\includes\debug.h
+.\objects\main.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\math.h
+.\objects\main.o: .\Inc\led.h
+.\objects\main.o: .\Inc\discovery_spi.h
 .\objects\main.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h
 .\objects\main.o: .\Drivers\BSP\X-NUCLEO-IDB04A1\stm32_bluenrg_ble.h
 .\objects\main.o: .\BLE\STM32_BlueNRG\SimpleBlueNRG_HCI\includes\bluenrg_utils.h
 .\objects\main.o: .\BLE\STM32_BlueNRG\SimpleBlueNRG_HCI\includes\compiler.h
 .\objects\main.o: .\Inc\accelerometer.h
 .\objects\main.o: .\Inc\temperature.h
-.\objects\main.o: .\Inc\discovery_spi.h
-.\objects\main.o: .\Inc\led.h
